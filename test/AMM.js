@@ -15,17 +15,18 @@ describe('AMM', () => {
     deployer = accounts[0]
     
     const Token = await ethers.getContractFactory('Token')
-    token1 = await Token.deploy("Dapp UNniversity", "DAPP", "1000000")
+    token1 = await Token.deploy("Dapp University", "DAPP", "1000000")
     token2 = await Token.deploy("USD Token", "USD", "1000000")
+
     const AMM = await ethers.getContractFactory('AMM')
     amm = await AMM.deploy()
 
-    
   })
 
   describe('Deployment', () => {
 
-    it('', async () => {
+    it('has an address', async () => {
+        expect(amm.address).to.not.equal(0x0)
     })
     it('', async () => {
     })
