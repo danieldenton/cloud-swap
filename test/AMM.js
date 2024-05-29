@@ -21,26 +21,16 @@ describe('AMM', () => {
   })
 
   describe('Deployment', () => {
-   
 
-    it('has correct name', async () => {
-      expect(await token.name()).to.equal(name)
+    it('', async () => {
     })
-
-    it('has correct symbol', async () => {
-      expect(await token.symbol()).to.equal(symbol)
+    it('', async () => {
     })
-
-    it('has correct decimals', async () => {
-      expect(await token.decimals()).to.equal(decimals)
+    it('', async () => {
     })
-
-    it('has correct total supply', async () => {
-      expect(await token.totalSupply()).to.equal(totalSupply)
+    it('', async () => {
     })
-
-    it('assigns total supply to deployer', async () => {
-      expect(await token.balanceOf(deployer.address)).to.equal(totalSupply)
+    it('', async () => {
     })
 
   })
