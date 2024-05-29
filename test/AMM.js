@@ -8,16 +8,19 @@ const tokens = (n) => {
 const ether = tokens
 
 describe('AMM', () => {
-  let amm, accounts, deployer, receiver, exchange
+  let amm, accounts, deployer, token1, token2
 
   beforeEach(async () => {
-    const AMM = await ethers.getContractFactory('AMM')
-    amm = await AMM.deploy('Dapp University', 'DAPP', '1000000')
-
     accounts = await ethers.getSigners()
     deployer = accounts[0]
-    receiver = accounts[1]
-    exchange = accounts[2]
+    
+    const Token = await ethers.getContractFactory('Token')
+    token1 = await Token.deploy("Dapp UNniversity", "DAPP", "1000000")
+    token2 = await Token.deploy("USD Token", "USD", "1000000")
+    const AMM = await ethers.getContractFactory('AMM')
+    amm = await AMM.deploy()
+
+    
   })
 
   describe('Deployment', () => {
