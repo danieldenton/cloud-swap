@@ -216,18 +216,22 @@ describe("AMM", () => {
         .removeLiquidity(shares(50));
       await transaction.wait();
 
-      balance = await token1.balanceOf(liquidityProvider.address)
+      balance = await token1.balanceOf(liquidityProvider.address);
       console.log(
         `liquidity provider's token 1 balance after removing funds: ${ethers.utils.formatEther(
           balance
         )}`
       );
-      balance = await token2.balanceOf(liquidityProvider.address)
+      balance = await token2.balanceOf(liquidityProvider.address);
       console.log(
         `liquidity provider's token 2 balance after removing funds: ${ethers.utils.formatEther(
           balance
         )}`
       );
+
+      expect(await amm.shares(liquidityProvider.address)).to.equal(0);
+      expect(await amm.shares(deployer.address)).to.equal(shares(100));
+      expect(await amm.totalShares()).to.equal(shares(100));
     });
   });
 });
