@@ -8,6 +8,8 @@ const tokens = (n) => {
 
 const ether = tokens;
 
+const shares = ether;
+
 describe("AMM", () => {
   let amm,
     accounts,
@@ -165,16 +167,67 @@ describe("AMM", () => {
       transaction = await amm.connect(investor2).swapToken2(tokens(1));
       await transaction.wait();
 
-      await expect(transaction).to.emit(amm, "Swap").withArgs(
-        investor2.address,
-        token2.address,
-        tokens(1),
-        token1.address,
-        estimate,
-        await amm.token1Balance(),
-        await amm.token2Balance(),
-        (await ethers.provider.getBlock(await ethers.provider.getBlockNumber())).timestamp
-      )
+      await expect(transaction)
+        .to.emit(amm, "Swap")
+        .withArgs(
+          investor2.address,
+          token2.address,
+          tokens(1),
+          token1.address,
+          estimate,
+          await amm.token1Balance(),
+          await amm.token2Balance(),
+          (
+            await ethers.provider.getBlock(
+              await ethers.provider.getBlockNumber()
+            )
+          ).timestamp
+        );
+
+      //   Removing Liquidity
+
+      console.log(
+        `token 1 balance: ${ethers.utils.formatEther(
+          await amm.token1Balance()
+        )}`
+      );
+      console.log(
+        `token 2 balance: ${ethers.utils.formatEther(
+          await amm.token2Balance()
+        )}`
+      );
+
+      balance = await token1.balanceOf(liquidityProvider.address);
+      console.log(
+        `liquidity provider's token 1 balance before removing funds: ${ethers.utils.formatEther(
+          balance
+        )}`
+      );
+
+      balance = await token2.balanceOf(liquidityProvider.address);
+      console.log(
+        `liquidity provider's token 2 balance before removing funds: ${ethers.utils.formatEther(
+          balance
+        )}`
+      );
+
+      transaction = await amm
+        .connect(liquidityProvider)
+        .removeLiquidity(shares(50));
+      await transaction.wait();
+
+      balance = await token1.balanceOf(liquidityProvider.address)
+      console.log(
+        `liquidity provider's token 1 balance after removing funds: ${ethers.utils.formatEther(
+          balance
+        )}`
+      );
+      balance = await token2.balanceOf(liquidityProvider.address)
+      console.log(
+        `liquidity provider's token 2 balance after removing funds: ${ethers.utils.formatEther(
+          balance
+        )}`
+      );
     });
   });
 });
