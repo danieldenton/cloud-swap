@@ -15,7 +15,7 @@ async function main() {
 
   let usd = await Token.deploy("USD Token", "USD", "1000000");
   await usd.deployed();
-  console.log(`Dapp Token deployed to: ${usd.address}\n`);
+  console.log(`USD Token deployed to: ${usd.address}\n`);
 
   const AMM = await hre.ethers.getContractFactory("AMM");
   let amm = await AMM.deploy(dapp.address, usd.address);
