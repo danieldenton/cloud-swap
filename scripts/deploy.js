@@ -7,18 +7,21 @@
 const hre = require("hardhat");
 
 async function main() {
-  const NAME = 'Dapp University'
-  const SYMBOL = 'DAPP'
-  const MAX_SUPPLY = '1000000'
+  const Token = await hre.ethers.getContractFactory("Token");
 
-  // Deploy Token
-  const Token = await hre.ethers.getContractFactory('Token')
-  let token = await Token.deploy(NAME, SYMBOL, MAX_SUPPLY)
+  let dapp = await Token.deploy("Dapp Token", "DAPP", "1000000");
+  await dapp.deployed();
+  console.log(`Dapp Token deployed to: ${dapp.address}\n`);
 
-  await token.deployed()
-  console.log(`Token deployed to: ${token.address}\n`)
+  let usd = await Token.deploy("USD Token", "USD", "1000000");
+  await usd.deployed();
+  console.log(`Dapp Token deployed to: ${usd.address}\n`);
+
+  const AMM = await hre.ethers.getContractFactory("AMM");
+  let amm = await AMM.deploy(dapp.address, usd.address);
+  await amm.deployed();
+  console.log(`AMM deployed to: ${amm.address}\n`);
 }
-
 // We recommend this pattern to be able to use async/await everywhere
 // and properly handle errors.
 main().catch((error) => {
