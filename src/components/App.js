@@ -8,6 +8,7 @@ import Navigation from "./Navigation";
 import Loading from "./Loading";
 
 import { loadProvider, loadNetwork, loadAccount } from "../store/interactions";
+import { setContracts } from "../store/reducers/tokens";
 
 // ABIs: Import your contract ABIs here
 // import TOKEN_ABI from '../abis/Token.json'
