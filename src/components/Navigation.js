@@ -1,10 +1,24 @@
-import Navbar from 'react-bootstrap/Navbar';
+import { useSelector, useDispatch } from "react-redux";
+import Navbar from "react-bootstrap/Navbar";
+import Button from "react-bootstrap/Button";
+import Blockies from "react-blockies";
 
-import logo from '../logo.png';
+import logo from "../logo.png";
 
-const Navigation = ({ account }) => {
+import { loadAccount, loadBalances } from "../store/interactions";
+import tokens from "../store/reducers/tokens";
+
+const Navigation = () => {
+  const account = useSelector((state) => state.provider.account);
+  const tokens = useSelector(state => state.tokens.contracts)
+  const dispatch = useDispatch();
+  const handleConnect = async () => {
+    const account = await loadAccount(dispatch);
+    await loadBalances(tokens, account, dispatch);
+  };
+
   return (
-    <Navbar className='my-3'>
+    <Navbar className="my-3">
       <img
         alt="logo"
         src={logo}
@@ -14,12 +28,25 @@ const Navigation = ({ account }) => {
       />
       <Navbar.Brand href="#">Dapp University Template</Navbar.Brand>
       <Navbar.Collapse className="justify-content-end">
-        <Navbar.Text>
-          {account}
-        </Navbar.Text>
+        {account ? (
+          <Navbar.Text>
+            {account.slice(0, 5) + "..." + account.slice(38, 42)}
+            <Blockies
+              seed={account}
+              size={10}
+              scale={3}
+              color="#2187D0"
+              bgColor="#F1F2F9"
+              spotColor="#767F92"
+              className="identicon mx-2"
+            />
+          </Navbar.Text>
+        ) : (
+          <Button onClick={handleConnect}>Connect</Button>
+        )}
       </Navbar.Collapse>
     </Navbar>
   );
-}
+};
 
 export default Navigation;

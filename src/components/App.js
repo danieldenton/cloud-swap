@@ -32,13 +32,12 @@ function App() {
 
     const chainId = await loadNetwork(provider, dispatch);
 
-    await loadAccount(dispatch);
+    window.ethereum.on("accountChanged", async () => {
+      await loadAccount(dispatch);
+    });
 
     await loadTokens(provider, chainId, dispatch);
-
     await loadAMM(provider, chainId, dispatch);
-
-    // await loadBalances()
   };
 
   useEffect(() => {
@@ -47,7 +46,7 @@ function App() {
 
   return (
     <Container>
-      <Navigation account={account} />
+      <Navigation />
 
       <h1 className="my-4 text-center">React Hardhat Template</h1>
 
