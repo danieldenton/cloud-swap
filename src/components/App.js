@@ -21,12 +21,10 @@ function App() {
   const dispatch = useDispatch();
 
   const loadBlockchainData = async () => {
-    // Initiate provider
     const provider = loadProvider(dispatch);
 
     const chainId = await loadNetwork(provider, dispatch);
 
-    // Fetch accounts
     await loadAccount(dispatch);
 
   };
