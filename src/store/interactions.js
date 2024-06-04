@@ -1,5 +1,6 @@
 import { ethers } from "ethers";
 import { setProvider, setNetwork, setAccount } from "./reducers/provider";
+import { setContracts, setSymbols } from "./reducers/tokens";
 import TOKEN_ABI from "../abis/Token.json";
 import AMM_ABI from "../abis/AMM.json";
 import config from "../config.json";
@@ -35,5 +36,7 @@ export const loadTokens = async (provider, chainId, dispatch) => {
     TOKEN_ABI,
     provider
   );
-  dispatch(setContracts(dapp, usd))
+  console.log(usd.symbol())
+  dispatch(setContracts([dapp, usd]));
+  dispatch(setSymbols([await dapp.symbol(), await usd.symbol()]));
 };

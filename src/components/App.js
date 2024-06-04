@@ -7,7 +7,12 @@ import { useDispatch } from "react-redux";
 import Navigation from "./Navigation";
 import Loading from "./Loading";
 
-import { loadProvider, loadNetwork, loadAccount } from "../store/interactions";
+import {
+  loadProvider,
+  loadNetwork,
+  loadAccount,
+  loadTokens,
+} from "../store/interactions";
 import { setContracts } from "../store/reducers/tokens";
 
 // ABIs: Import your contract ABIs here
@@ -28,6 +33,7 @@ function App() {
 
     await loadAccount(dispatch);
 
+    await loadTokens(provider, chainId, dispatch);
   };
 
   useEffect(() => {
@@ -40,9 +46,9 @@ function App() {
 
       <h1 className="my-4 text-center">React Hardhat Template</h1>
 
-        <>
-          <p className="text-center">Edit App.js to add your code here.</p>
-        </>
+      <>
+        <p className="text-center">Edit App.js to add your code here.</p>
+      </>
     </Container>
   );
 }
