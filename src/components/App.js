@@ -32,7 +32,7 @@ function App() {
 
     const chainId = await loadNetwork(provider, dispatch);
 
-    window.ethereum.on("accountChanged", async () => {
+    window.ethereum.on("accountsChanged", async () => {
       await loadAccount(dispatch);
     });
 
