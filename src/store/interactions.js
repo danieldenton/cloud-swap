@@ -1,6 +1,7 @@
 import { ethers } from "ethers";
 import { setProvider, setNetwork, setAccount } from "./reducers/provider";
-import { setContracts, setSymbols } from "./reducers/tokens";
+import { setContracts, setSymbols, balancesLoaded } from "./reducers/tokens";
+import { setContract } from "./reducers/amm";
 import TOKEN_ABI from "../abis/Token.json";
 import AMM_ABI from "../abis/AMM.json";
 import config from "../config.json";
@@ -36,7 +37,23 @@ export const loadTokens = async (provider, chainId, dispatch) => {
     TOKEN_ABI,
     provider
   );
-  console.log(usd.symbol())
   dispatch(setContracts([dapp, usd]));
   dispatch(setSymbols([await dapp.symbol(), await usd.symbol()]));
+};
+
+export const loadAMM = async (provider, chainId, dispatch) => {
+  const amm = new ethers.Contract(
+    config[chainId].amm.address,
+    AMM_ABI,
+    provider
+  );
+ 
+  dispatch(setContract(amm));
+  return amm
+};
+
+export const loadBalances = async (tokens, account, dispatch) => {
+  const balance1 = await tokens[0].balanceOf(account);
+  const balance2 = await tokens[1].balanceOf(account);
+  dispatch(balancesLoaded(balance1, balance2));
 };

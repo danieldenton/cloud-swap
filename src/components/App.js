@@ -12,8 +12,9 @@ import {
   loadNetwork,
   loadAccount,
   loadTokens,
+  loadBalances,
+  loadAMM,
 } from "../store/interactions";
-import { setContracts } from "../store/reducers/tokens";
 
 // ABIs: Import your contract ABIs here
 // import TOKEN_ABI from '../abis/Token.json'
@@ -34,6 +35,10 @@ function App() {
     await loadAccount(dispatch);
 
     await loadTokens(provider, chainId, dispatch);
+
+    await loadAMM(provider, chainId, dispatch);
+
+    // await loadBalances()
   };
 
   useEffect(() => {
