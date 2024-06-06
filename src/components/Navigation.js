@@ -13,11 +13,12 @@ const Navigation = () => {
   const chainId = useSelector((state) => state.provider.chainId);
   const account = useSelector((state) => state.provider.account);
   const tokens = useSelector((state) => state.tokens.contracts);
+  const amm = useSelector((state) => state.amm.contract)
   const dispatch = useDispatch();
 
   const handleConnect = async () => {
     const account = await loadAccount(dispatch);
-    await loadBalances(tokens, account, dispatch);
+    await loadBalances(amm, tokens, account, dispatch);
   };
 
   const handleNetwork = async (e) => {
@@ -29,7 +30,7 @@ const Navigation = () => {
   };
 
   return (
-    <Navbar className="my-3">
+    <Navbar className="my-3" expand="lg">
       <img
         alt="logo"
         src={logo}
@@ -37,8 +38,9 @@ const Navigation = () => {
         height="40"
         className="d-inline-block align-top mx-3"
       />
-      <Navbar.Brand href="#">Dapp University Template</Navbar.Brand>
-      <Navbar.Collapse className="justify-content-end">
+      <Navbar.Brand href="#">Dapp University AMM</Navbar.Brand>
+      <Navbar.Toggle aria-controls="nav" />
+      <Navbar.Collapse id="nav" className="justify-content-end">
         <div className="d-flex justify-content-end mt-3">
           <Form.Select
             aria-label="Network Selector"
@@ -50,11 +52,11 @@ const Navigation = () => {
               Select Network
             </option>
             <option value="0x7A69">Localhost</option>
-            <option value="0x5">Goerli</option>
+            <option value="0xaa36a7">Sepolia</option>
           </Form.Select>
 
           {account ? (
-            <Navbar.Text>
+            <Navbar.Text className="d-flex align-items-center">
               {account.slice(0, 5) + "..." + account.slice(38, 42)}
               <Blockies
                 seed={account}
