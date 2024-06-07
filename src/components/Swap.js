@@ -63,6 +63,10 @@ export const Swap = () => {
                 </DropdownButton>
               </InputGroup>
             </Row>
+            <Row>
+              <Button type="submit">Swap</Button>
+              <Form.Text muted>Exchange Rate:</Form.Text>
+            </Row>
           </Form>
         ) : (
           <p
