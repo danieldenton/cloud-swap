@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
+import { ethers } from "ethers";
 import Card from "react-bootstrap/Card";
 import Form from "react-bootstrap/Form";
 import InputGroup from "react-bootstrap/InputGroup";
@@ -11,10 +12,44 @@ import Row from "react-bootstrap/Row";
 export const Swap = () => {
   const [inputToken, setInputToken] = useState(null);
   const [outputToken, setOutputToken] = useState(null);
+  const [inputAmount, setInputAmount] = useState(0);
+  const [outputAmount, setOutputAmount] = useState(0);
   const [price, setPrice] = useState(0);
   const account = useSelector((state) => state.provider.account);
   const tokens = useSelector((state) => state.tokens.contracts);
   const amm = useSelector((state) => state.amm.contract);
+
+  const handleInput = async (e) => {
+    if (!inputToken || !outputToken) {
+      window.alert("Please select a token");
+      return;
+    }
+
+    if (inputToken === outputToken) {
+      window.alert("Invalid token pair");
+      return;
+    }
+
+    if (inputToken === "DAPP") {
+      setInputAmount(e.target.value);
+      const _token1Amount = ethers.utils.parseUnits(e.target.value, "ether");
+      const result = await amm.calculateToken1Swap(_token1Amount);
+      const _token2Amount = ethers.utils.formatUnits(
+        result.toString(),
+        "ether"
+      );
+      setOutputAmount(_token2Amount);
+    } else {
+      setInputAmount(e.target.value);
+      const _token2Amount = ethers.utils.parseUnits(e.target.value, "ether");
+      const result = await amm.calculateToken2Swap(_token2Amount);
+      const _token1Amount = ethers.utils.formatUnits(
+        result.toString(),
+        "ether"
+      );
+      setOutputAmount(_token1Amount);
+    }
+  };
 
   const getPrice = async () => {
     if (inputToken === outputToken) {
@@ -52,7 +87,8 @@ export const Swap = () => {
                   placeholder="0.0"
                   min="0.0"
                   step="any"
-                  disabled={false}
+                  onChange={(e) => handleInput(e)}
+                  disabled={!inputToken}
                 />
                 <DropdownButton
                   variant="outline-secondary"
@@ -79,7 +115,12 @@ export const Swap = () => {
                 <Form.Text muted>Balance:</Form.Text>
               </div>
               <InputGroup>
-                <Form.Control type="number" placeholder="0.0" disabled />
+                <Form.Control
+                  type="number"
+                  placeholder="0.0"
+                  value={outputAmount === 0 ? "" : outputAmount}
+                  disabled
+                />
                 <DropdownButton
                   variant="outline-secondary"
                   title={outputToken ? outputToken : "Select Token"}
