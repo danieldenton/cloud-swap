@@ -17,6 +17,8 @@ export const Swap = () => {
   const [price, setPrice] = useState(0);
   const account = useSelector((state) => state.provider.account);
   const tokens = useSelector((state) => state.tokens.contracts);
+  const symbols = useSelector((state) => state.tokens.symbols);
+  const balances = useSelector((state) => state.tokens.balances);
   const amm = useSelector((state) => state.amm.contract);
 
   const handleInput = async (e) => {
@@ -79,7 +81,14 @@ export const Swap = () => {
                 <Form.Label>
                   <strong>Input:</strong>
                 </Form.Label>
-                <Form.Text muted>Balance:</Form.Text>
+                <Form.Text muted>
+                  Balance:{" "}
+                  {inputToken === symbols[0]
+                    ? balances[0]
+                    : inputToken === symbols[1]
+                    ? balances[1]
+                    : 0}
+                </Form.Text>
               </div>
               <InputGroup>
                 <Form.Control
@@ -112,7 +121,12 @@ export const Swap = () => {
                 <Form.Label>
                   <strong>Output:</strong>
                 </Form.Label>
-                <Form.Text muted>Balance:</Form.Text>
+                <Form.Text muted>Balance:{" "}
+                  {outputToken === symbols[0]
+                    ? balances[0]
+                    : outputToken === symbols[1]
+                    ? balances[1]
+                    : 0}</Form.Text>
               </div>
               <InputGroup>
                 <Form.Control
