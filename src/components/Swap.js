@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { ethers } from "ethers";
 import Card from "react-bootstrap/Card";
 import Form from "react-bootstrap/Form";
@@ -8,6 +8,9 @@ import Dropdown from "react-bootstrap/Dropdown";
 import DropdownButton from "react-bootstrap/DropdownButton";
 import Button from "react-bootstrap/Button";
 import Row from "react-bootstrap/Row";
+import Spinner from "react-bootstrap/Spinner";
+
+import { swap } from "../store/interactions";
 
 export const Swap = () => {
   const [inputToken, setInputToken] = useState(null);
@@ -15,11 +18,14 @@ export const Swap = () => {
   const [inputAmount, setInputAmount] = useState(0);
   const [outputAmount, setOutputAmount] = useState(0);
   const [price, setPrice] = useState(0);
+  const dispatch = useDispatch();
+  const provider = useSelector((state) => state.provider.connection);
   const account = useSelector((state) => state.provider.account);
   const tokens = useSelector((state) => state.tokens.contracts);
   const symbols = useSelector((state) => state.tokens.symbols);
   const balances = useSelector((state) => state.tokens.balances);
   const amm = useSelector((state) => state.amm.contract);
+  const isSwapping = useSelector((state) => state.amm.swapping.isSwapping);
 
   const handleInput = async (e) => {
     if (!inputToken || !outputToken) {
@@ -53,6 +59,22 @@ export const Swap = () => {
     }
   };
 
+  const handleSwap = async (e) => {
+    e.preventDefault();
+    if (inputToken === outputToken) {
+      window.alert("Invalid token pair");
+      return;
+    }
+
+    const _inputAmount = ethers.utils.parseUnits(inputAmount, "ether");
+
+    if (inputToken === "DAPP") {
+      await swap(provider, amm, tokens[0], inputToken, _inputAmount, dispatch);
+    } else {
+      await swap(provider, amm, tokens[1], inputToken, _inputAmount, dispatch);
+    }
+  };
+
   const getPrice = async () => {
     if (inputToken === outputToken) {
       setPrice(0);
@@ -75,7 +97,10 @@ export const Swap = () => {
     <div>
       <Card style={{ maxWidth: "450px" }} className="mx-auto px-4">
         {account ? (
-          <Form style={{ maxWidth: "450px", margin: "50px auto" }}>
+          <Form
+            onSubmit={handleSwap}
+            style={{ maxWidth: "450px", margin: "50px auto" }}
+          >
             <Row className="my-3">
               <div className="d-flex justify-content-between">
                 <Form.Label>
@@ -121,12 +146,14 @@ export const Swap = () => {
                 <Form.Label>
                   <strong>Output:</strong>
                 </Form.Label>
-                <Form.Text muted>Balance:{" "}
+                <Form.Text muted>
+                  Balance:{" "}
                   {outputToken === symbols[0]
                     ? balances[0]
                     : outputToken === symbols[1]
                     ? balances[1]
-                    : 0}</Form.Text>
+                    : 0}
+                </Form.Text>
               </div>
               <InputGroup>
                 <Form.Control
@@ -153,8 +180,17 @@ export const Swap = () => {
               </InputGroup>
             </Row>
             <Row>
-              <Button type="submit">Swap</Button>
-              <Form.Text muted>Exchange Rate: {price}</Form.Text>
+              {isSwapping ? (
+                <Spinner
+                  animation="border"
+                  style={{ display: "block", margin: "0 auto" }}
+                />
+              ) : (
+                <>
+                  <Button type="submit">Swap</Button>
+                  <Form.Text muted>Exchange Rate: {price}</Form.Text>
+                </>
+              )}
             </Row>
           </Form>
         ) : (
