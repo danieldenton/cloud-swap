@@ -4,6 +4,9 @@ import { setContracts, setSymbols, balancesLoaded } from "./reducers/tokens";
 import {
   setContract,
   sharesLoaded,
+  depositRequest,
+  depositSuccess,
+  depositFail,
   swapRequest,
   swapSuccess,
   swapFail,
@@ -80,18 +83,25 @@ export const addLiquidity = async (
   dispatch
 ) => {
   const signer = await provider.getSigner();
-  let transaction;
-
-  transaction = await tokens[0]
-    .connect(signer)
-    .approve(amm.address, amounts[0]);
-  await transaction.wait();
-  transaction = await tokens[1]
-    .connect(signer)
-    .approve(amm.address, amounts[1]);
-  await transaction.wait();
-  transaction = await amm.connect(signer).addLiquidity(amounts[0], amounts[1]);
-  await transaction.wait();
+  try {
+    dispatch(depositRequest());
+    let transaction;
+    transaction = await tokens[0]
+      .connect(signer)
+      .approve(amm.address, amounts[0]);
+    await transaction.wait();
+    transaction = await tokens[1]
+      .connect(signer)
+      .approve(amm.address, amounts[1]);
+    await transaction.wait();
+    transaction = await amm
+      .connect(signer)
+      .addLiquidity(amounts[0], amounts[1]);
+    await transaction.wait();
+    dispatch(depositSuccess(transaction.hash));
+  } catch (error) {
+    dispatch(depositFail());
+  }
 };
 
 export const swap = async (provider, amm, token, symbol, amount, dispatch) => {

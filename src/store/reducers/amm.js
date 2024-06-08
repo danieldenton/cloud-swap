@@ -57,6 +57,6 @@ export const amm = createSlice({
   },
 });
 
-export const { setContract, sharesLoaded, swapRequest, swapSuccess, swapFail } = amm.actions;
+export const { setContract, sharesLoaded, depositRequest, depositSuccess, depositFail, swapRequest, swapSuccess, swapFail } = amm.actions;
 
 export default amm.reducer;
