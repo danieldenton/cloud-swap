@@ -1,5 +1,5 @@
 import { ethers } from "ethers";
-import { setProvider, setNetwork, setAccount } from "./reducers/provider";
+import provider, { setProvider, setNetwork, setAccount } from "./reducers/provider";
 import { setContracts, setSymbols, balancesLoaded } from "./reducers/tokens";
 import {
   setContract,
@@ -10,6 +10,9 @@ import {
   swapRequest,
   swapSuccess,
   swapFail,
+  withdrawRequest,
+  withdrawSuccess,
+  withdrawFail,
 } from "./reducers/amm";
 import TOKEN_ABI from "../abis/Token.json";
 import AMM_ABI from "../abis/AMM.json";
@@ -82,9 +85,11 @@ export const addLiquidity = async (
   amounts,
   dispatch
 ) => {
-  const signer = await provider.getSigner();
+  
   try {
     dispatch(depositRequest());
+    const signer = await provider.getSigner();
+
     let transaction;
     transaction = await tokens[0]
       .connect(signer)
@@ -103,6 +108,21 @@ export const addLiquidity = async (
     dispatch(depositFail());
   }
 };
+
+export const removeLiquidity = async (provider, amm, shares, dispatch) => {
+  try {
+    dispatch(withdrawRequest());
+    const signer = await provider.getSigner();
+  
+    let transaction = await amm
+      .connect(signer)
+      .removeLiquidity(shares);
+    await transaction.wait();
+    dispatch(withdrawSuccess(transaction.hash));
+  } catch (error) {
+    dispatch(withdrawFail());
+  }
+}
 
 export const swap = async (provider, amm, token, symbol, amount, dispatch) => {
   try {

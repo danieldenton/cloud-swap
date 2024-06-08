@@ -8,12 +8,14 @@ import Button from "react-bootstrap/Button";
 import Row from "react-bootstrap/Row";
 import Spinner from "react-bootstrap/Spinner";
 
-import { loadBalances, addLiquidity } from "../store/interactions";
+import { removeLiquidity } from "../store/interactions";
 
 import Alert from "./Alert";
 
 export const Withdraw = () => {
+  const [amount, setAmount] = useState(0);
   const [showAlert, setShowAlert] = useState(false);
+
   const dispatch = useDispatch();
 
   const provider = useSelector((state) => state.provider.connection);
@@ -34,7 +36,7 @@ export const Withdraw = () => {
   const handleWithdraw = async (e) => {
     e.preventDefault();
     setShowAlert(false);
-
+   removeLiquidity(provider, amm, amount, dispatch)
     setShowAlert(true);
   };
   return (
@@ -55,9 +57,8 @@ export const Withdraw = () => {
                   placeholder="0.0"
                   min="0.0"
                   step="any"
-                  id="token1"
-                  //   onChange={}
-                  value={""}
+                  id="shares"
+                  onChange={(e) => setAmount(e.target.value)}
                 />
                 <InputGroup.Text
                   style={{ width: "100px" }}
