@@ -158,6 +158,7 @@ contract AMM {
         token2Amount = (_share * token2Balance) / totalShares;
     }
 
+
     function removeLiquidity(
         uint256 _share
     ) external returns (uint256 token1Amount, uint256 token2Amount) {
@@ -170,9 +171,13 @@ contract AMM {
 
         shares[msg.sender] -= _share;
         totalShares -= _share;
+
+        token1Balance -= token1Amount;
+        token2Balance -= token2Amount;
         K = token1Balance * token2Balance;
 
         token1.transfer(msg.sender, token1Amount);
         token2.transfer(msg.sender, token2Amount);
     }
+    
 }

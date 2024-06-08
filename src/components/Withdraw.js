@@ -8,7 +8,7 @@ import Button from "react-bootstrap/Button";
 import Row from "react-bootstrap/Row";
 import Spinner from "react-bootstrap/Spinner";
 
-import { removeLiquidity } from "../store/interactions";
+import { removeLiquidity, loadShares } from "../store/interactions";
 
 import Alert from "./Alert";
 
@@ -36,9 +36,11 @@ export const Withdraw = () => {
   const handleWithdraw = async (e) => {
     e.preventDefault();
     setShowAlert(false);
-   removeLiquidity(provider, amm, amount, dispatch)
+    const _shares = ethers.utils.parseUnits(amount.toString(), "ether");
+    await removeLiquidity(provider, amm, _shares, dispatch);
     setShowAlert(true);
   };
+
   return (
     <div>
       <Card style={{ maxWidth: "450px" }} className="mx-auto px-4">
