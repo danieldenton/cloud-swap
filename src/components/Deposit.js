@@ -10,12 +10,14 @@ import Button from "react-bootstrap/Button";
 import Row from "react-bootstrap/Row";
 import Spinner from "react-bootstrap/Spinner";
 
-import { swap, loadBalances } from "../store/interactions";
+import { loadBalances, addLiquidity } from "../store/interactions";
 
 import Alert from "./Alert";
 export const Deposit = () => {
   const [token1Amount, setToken1Amount] = useState(0);
   const [token2Amount, setToken2Amount] = useState(0);
+
+  const dispatch = useDispatch();
 
   const provider = useSelector((state) => state.provider.connection);
   const account = useSelector((state) => state.provider.account);
@@ -48,7 +50,16 @@ export const Deposit = () => {
 
   const handleDeposit = async (e) => {
     e.preventDefault();
-    console.log("handleDeposit");
+    const _token1Amount = ethers.utils.parseUnits(token1Amount, "ether");
+    const _token2Amount = ethers.utils.parseUnits(token2Amount, "ether");
+    await addLiquidity(
+      provider,
+      amm,
+      tokens,
+      [_token1Amount, _token2Amount],
+      dispatch
+    );
+    await loadBalances(amm, tokens, account, dispatch);
   };
 
   return (
