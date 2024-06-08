@@ -23,7 +23,7 @@ export const Swap = () => {
   const [showAlert, setShowAlert] = useState(false);
 
   const dispatch = useDispatch();
-  
+
   const provider = useSelector((state) => state.provider.connection);
   const account = useSelector((state) => state.provider.account);
   const tokens = useSelector((state) => state.tokens.contracts);
@@ -218,7 +218,7 @@ export const Swap = () => {
       </Card>
       {isSwapping ? (
         <Alert
-          message={"Swap pending..."}
+          message={"Swap Pending..."}
           transactionHash={null}
           variant={"info"}
           setShowAlert={setShowAlert}
