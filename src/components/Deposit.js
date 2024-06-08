@@ -71,7 +71,6 @@ export const Deposit = () => {
     await loadBalances(amm, tokens, account, dispatch);
     setShowAlert(true);
   };
-  
 
   return (
     <div>
@@ -125,7 +124,14 @@ export const Deposit = () => {
               </InputGroup>
             </Row>
             <Row>
-              <Button type="submit">Deposit</Button>
+              {isDepositing ? (
+                <Spinner
+                  animation="border"
+                  style={{ display: "block", margin: "0 auto" }}
+                />
+              ) : (
+                <Button type="submit">Deposit</Button>
+              )}
             </Row>
           </Form>
         ) : (
