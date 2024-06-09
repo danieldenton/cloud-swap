@@ -7,9 +7,11 @@ import "./Token.sol";
 contract AMM {
     Token public token1;
     Token public token2;
+
     uint256 public token1Balance;
     uint256 public token2Balance;
     uint256 public K;
+
     uint256 public totalShares;
     mapping(address => uint) public shares;
     uint256 constant PRECISION = 10 ** 18;
@@ -153,18 +155,17 @@ contract AMM {
     function calculateWithdrawAmount(
         uint256 _share
     ) public view returns (uint256 token1Amount, uint256 token2Amount) {
-        require(_share <= totalShares, "must be less than totak shares.");
+        require(_share <= totalShares, "must be less than total shares");
         token1Amount = (_share * token1Balance) / totalShares;
         token2Amount = (_share * token2Balance) / totalShares;
     }
-
 
     function removeLiquidity(
         uint256 _share
     ) external returns (uint256 token1Amount, uint256 token2Amount) {
         require(
             _share <= shares[msg.sender],
-            "cannot withdraw more share  than you have."
+            "cannot withdraw more shares than you have"
         );
 
         (token1Amount, token2Amount) = calculateWithdrawAmount(_share);
@@ -179,5 +180,4 @@ contract AMM {
         token1.transfer(msg.sender, token1Amount);
         token2.transfer(msg.sender, token2Amount);
     }
-    
 }
