@@ -37,7 +37,7 @@ export const Withdraw = () => {
     const _shares = ethers.utils.parseUnits(amount.toString(), "ether");
     await removeLiquidity(provider, amm, _shares, dispatch);
     setShowAlert(true);
-
+    setAmount(0);
   };
 
   return (
@@ -59,6 +59,7 @@ export const Withdraw = () => {
                   min="0.0"
                   step="any"
                   id="shares"
+                  value={amount === 0 ? "" : amount}
                   onChange={(e) => setAmount(e.target.value)}
                 />
                 <InputGroup.Text

@@ -114,12 +114,10 @@ export const removeLiquidity = async (provider, amm, shares, dispatch) => {
 
     const signer = await provider.getSigner();
 
-    console.log("hey");
     let transaction = await amm.connect(signer).removeLiquidity(shares);
     await transaction.wait();
     dispatch(withdrawSuccess(transaction.hash));
   } catch (error) {
-    console.log('fail')
     dispatch(withdrawFail());
   }
 };
