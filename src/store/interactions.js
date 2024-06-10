@@ -111,17 +111,18 @@ export const addLiquidity = async (
 export const removeLiquidity = async (provider, amm, shares, dispatch) => {
   try {
     dispatch(withdrawRequest());
-  const signer = await provider.getSigner();
-    console.log(signer, await amm.removeLiquidity(), shares)
+
+    const signer = await provider.getSigner();
+
+    console.log("hey");
     let transaction = await amm.connect(signer).removeLiquidity(shares);
     await transaction.wait();
     dispatch(withdrawSuccess(transaction.hash));
   } catch (error) {
+    console.log('fail')
     dispatch(withdrawFail());
   }
-  console.log(signer, amm, shares);
 };
-
 
 export const swap = async (provider, amm, token, symbol, amount, dispatch) => {
   try {
