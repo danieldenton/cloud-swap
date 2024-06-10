@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import Table from "react-bootstrap/Table";
 import { ethers } from "ethers";
 import Loading from "./Loading";
 import { loadAllSwaps } from "../store/interactions";
@@ -14,12 +15,25 @@ export const Charts = () => {
 
   useEffect(() => {
     if (provider && amm) {
-        loadAllSwaps(provider, amm, dispatch);
+      loadAllSwaps(provider, amm, dispatch);
     }
   }, [provider, amm, dispatch]);
 
-  
-  return <div>Charts</div>;
+  return (
+    <Table striped bordered hover>
+      <thead>
+        <tr>
+          <th>Transaction Hash</th>
+          <th>Token Give</th>
+          <th>Amount Give</th>
+          <th>Token Get</th>
+          <th>Amount Get</th>
+          <th>User</th>
+          <th>Time</th>
+        </tr>
+      </thead>
+    </Table>
+  );
 };
 
 export default Charts;
