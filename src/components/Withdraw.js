@@ -8,7 +8,7 @@ import Button from "react-bootstrap/Button";
 import Row from "react-bootstrap/Row";
 import Spinner from "react-bootstrap/Spinner";
 
-import { removeLiquidity, loadShares } from "../store/interactions";
+import { removeLiquidity, loadShares, loadBalances } from "../store/interactions";
 
 import Alert from "./Alert";
 
@@ -20,6 +20,7 @@ export const Withdraw = () => {
 
   const provider = useSelector((state) => state.provider.connection);
   const account = useSelector((state) => state.provider.account);
+  const tokens = useSelector((state) => state.tokens.contracts)
   const balances = useSelector((state) => state.tokens.balances);
   const amm = useSelector((state) => state.amm.contract);
   const shares = useSelector((state) => state.amm.shares);
@@ -36,6 +37,7 @@ export const Withdraw = () => {
     setShowAlert(false);
     const _shares = ethers.utils.parseUnits(amount.toString(), "ether");
     await removeLiquidity(provider, amm, _shares, dispatch);
+    await loadBalances(amm, tokens, account, dispatch)
     setShowAlert(true);
     setAmount(0);
   };
