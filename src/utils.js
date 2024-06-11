@@ -1,3 +1,5 @@
+
+import { ethers } from "ethers";
 export const formatEther = (amount) => {
   const formattedEther = ethers.utils.formatUnits(amount.toString(), "ether");
   return formattedEther;

@@ -1,10 +1,18 @@
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import Table from "react-bootstrap/Table";
-import { ethers } from "ethers";
+import Chart from "react-apexcharts";
+import { chartSelector } from "../store/selectors";
 import Loading from "./Loading";
 import { loadAllSwaps } from "../store/interactions";
-import { formatEther, formatAddress, formatHash, formatDate, getSymbol } from "../utils";
+import { options, series } from "./Chart.config";
+import {
+  formatEther,
+  formatAddress,
+  formatHash,
+  formatDate,
+  getSymbol,
+} from "../utils";
 
 export const Charts = () => {
   const dispatch = useDispatch();
@@ -14,6 +22,7 @@ export const Charts = () => {
   const symbols = useSelector((state) => state.tokens.symbols);
   const amm = useSelector((state) => state.amm.contract);
   const swaps = useSelector((state) => state.amm.swaps);
+  const chart = useSelector(chartSelector)
 
   useEffect(() => {
     if (provider && amm) {
@@ -21,6 +30,7 @@ export const Charts = () => {
     }
   }, [provider, amm, dispatch]);
 
+  
 
   const tabledSwaps =
     swaps &&
@@ -39,20 +49,31 @@ export const Charts = () => {
     });
 
   return (
-    <Table striped bordered hover>
-      <thead>
-        <tr>
-          <th>Transaction string</th>
-          <th>Token Give</th>
-          <th>Amount Give</th>
-          <th>Token Get</th>
-          <th>Amount Get</th>
-          <th>User</th>
-          <th>Time</th>
-        </tr>
-      </thead>
-      <tbody>{tabledSwaps}</tbody>
-    </Table>
+    <div>
+        {chart}
+      <Chart
+        options={options}
+        series={series}
+        type="line"
+        width="100%"
+        height="100%"
+      />
+      <hr />
+      <Table striped bordered hover>
+        <thead>
+          <tr>
+            <th>Transaction string</th>
+            <th>Token Give</th>
+            <th>Amount Give</th>
+            <th>Token Get</th>
+            <th>Amount Get</th>
+            <th>User</th>
+            <th>Time</th>
+          </tr>
+        </thead>
+        <tbody>{tabledSwaps}</tbody>
+      </Table>
+    </div>
   );
 };
 
