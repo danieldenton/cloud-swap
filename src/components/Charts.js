@@ -4,6 +4,7 @@ import Table from "react-bootstrap/Table";
 import { ethers } from "ethers";
 import Loading from "./Loading";
 import { loadAllSwaps } from "../store/interactions";
+import { formatEther, formatAddress, formatHash, formatDate, getSymbol } from "../utils";
 
 export const Charts = () => {
   const dispatch = useDispatch();
@@ -20,44 +21,6 @@ export const Charts = () => {
     }
   }, [provider, amm, dispatch]);
 
-  const formatHash = (hash) => {
-    const formattedString = hash.slice(0, 5) + "..." + hash.slice(61, 66);
-    return formattedString;
-  };
-
-  const formatAddress = (address) => {
-    const formattedAddy = address.slice(0, 5) + "..." + address.slice(38, 42);
-    return formattedAddy;
-  };
-
-  const getSymbol = (token) => {
-    if (token === tokens[0].address) {
-      return symbols[0];
-    } else if (token === tokens[1].address) {
-      return symbols[1];
-    } else {
-      return "";
-    }
-  };
-
-  const formatEther = (amount) => {
-    const formattedEther = ethers.utils.formatUnits(amount.toString(), "ether");
-    return formattedEther;
-  };
-
-  const formatDate = (date) => {
-    const formattedDate = new Date(
-      Number(date.toString() + "000")
-    ).toLocaleDateString(undefined, {
-      year: "numeric",
-      month: "long",
-      day: "numeric",
-      hour: "numeric",
-      minute: "numeric",
-      second: "numeric",
-    });
-    return formattedDate;
-  };
 
   const tabledSwaps =
     swaps &&
@@ -65,9 +28,9 @@ export const Charts = () => {
       return (
         <tr key={idx}>
           <td>{formatHash(swap.hash)}</td>
-          <td>{getSymbol(swap.args.tokenGive)}</td>
+          <td>{getSymbol(swap.args.tokenGive, tokens, symbols)}</td>
           <td>{formatEther(swap.args.tokenGiveAmount)}</td>
-          <td>{getSymbol(swap.args.tokenGet)}</td>
+          <td>{getSymbol(swap.args.tokenGet, tokens, symbols)}</td>
           <td>{formatEther(swap.args.tokenGetAmount)}</td>
           <td>{formatAddress(swap.args.user)}</td>
           <td>{formatDate(swap.args.timestamp)}</td>
