@@ -21,18 +21,18 @@ export const Charts = () => {
   const tokens = useSelector((state) => state.tokens.contracts);
   const symbols = useSelector((state) => state.tokens.symbols);
   const amm = useSelector((state) => state.amm.contract);
-  const swaps = useSelector((state) => state.amm.swaps);
   const chart = useSelector(chartSelector);
 
   useEffect(() => {
     if (provider && amm) {
       loadAllSwaps(provider, amm, dispatch);
     }
+    console.log(chart);
   }, [provider, amm, dispatch]);
 
   const tabledSwaps =
-    swaps &&
-    swaps.map((swap, idx) => {
+    chart.swaps &&
+    chart.swaps.map((swap, idx) => {
       return (
         <tr key={idx}>
           <td>{formatHash(swap.hash)}</td>
