@@ -22,15 +22,13 @@ export const Charts = () => {
   const symbols = useSelector((state) => state.tokens.symbols);
   const amm = useSelector((state) => state.amm.contract);
   const swaps = useSelector((state) => state.amm.swaps);
-  const chart = useSelector(chartSelector)
+  const chart = useSelector(chartSelector);
 
   useEffect(() => {
     if (provider && amm) {
       loadAllSwaps(provider, amm, dispatch);
     }
   }, [provider, amm, dispatch]);
-
-  
 
   const tabledSwaps =
     swaps &&
@@ -49,31 +47,36 @@ export const Charts = () => {
     });
 
   return (
-    <div>
-        {chart}
-      <Chart
-        options={options}
-        series={series}
-        type="line"
-        width="100%"
-        height="100%"
-      />
-      <hr />
-      <Table striped bordered hover>
-        <thead>
-          <tr>
-            <th>Transaction string</th>
-            <th>Token Give</th>
-            <th>Amount Give</th>
-            <th>Token Get</th>
-            <th>Amount Get</th>
-            <th>User</th>
-            <th>Time</th>
-          </tr>
-        </thead>
-        <tbody>{tabledSwaps}</tbody>
-      </Table>
-    </div>
+    <>
+      {provider && amm ? (
+        <div>
+          <Chart
+            options={options}
+            series={chart ? chart.series : series}
+            type="line"
+            width="100%"
+            height="100%"
+          />
+          <hr />
+          <Table striped bordered hover>
+            <thead>
+              <tr>
+                <th>Transaction string</th>
+                <th>Token Give</th>
+                <th>Amount Give</th>
+                <th>Token Get</th>
+                <th>Amount Get</th>
+                <th>User</th>
+                <th>Time</th>
+              </tr>
+            </thead>
+            <tbody>{tabledSwaps}</tbody>
+          </Table>
+        </div>
+      ) : (
+        <Loading />
+      )}
+    </>
   );
 };
 
