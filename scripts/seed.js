@@ -19,11 +19,11 @@ async function main() {
 
   const { chainId } = await hre.ethers.provider.getNetwork();
 
-  const dapp = await hre.ethers.getContractAt(
+  const rump = await hre.ethers.getContractAt(
     "Token",
-    config[chainId].dapp.address
+    config[chainId].rump.address
   );
-  console.log(`Dapp Token fetched at: ${dapp.address}\n`);
+  console.log(`Rumpelina Token fetched at: ${rump.address}\n`);
   const usd = await hre.ethers.getContractAt(
     "Token",
     config[chainId].usd.address
@@ -32,13 +32,13 @@ async function main() {
 
   let transaction;
 
-  transaction = await dapp
+  transaction = await rump
     .connect(deployer)
     .transfer(investor1.address, tokens(10));
   transaction = await usd
     .connect(deployer)
     .transfer(investor2.address, tokens(10));
-  transaction = await dapp
+  transaction = await rump
     .connect(deployer)
     .transfer(investor3.address, tokens(10));
   transaction = await usd
@@ -53,7 +53,7 @@ async function main() {
   );
   console.log(`AMM Token fetched at: ${amm.address}\n`);
 
-  transaction = await dapp.connect(deployer).approve(amm.address, amount);
+  transaction = await rump.connect(deployer).approve(amm.address, amount);
   await transaction.wait();
   transaction = await usd.connect(deployer).approve(amm.address, amount);
   await transaction.wait();
@@ -63,7 +63,7 @@ async function main() {
   await transaction.wait();
 
   console.log("Swapping");
-  transaction = await dapp.connect(investor1).approve(amm.address, tokens(10));
+  transaction = await rump.connect(investor1).approve(amm.address, tokens(10));
   await transaction.wait();
 
   transaction = await amm.connect(investor1).swapToken1(tokens(1));
@@ -75,7 +75,7 @@ async function main() {
   transaction = await amm.connect(investor2).swapToken2(tokens(1));
   await transaction.wait();
 
-  transaction = await dapp.connect(investor3).approve(amm.address, tokens(10));
+  transaction = await rump.connect(investor3).approve(amm.address, tokens(10));
   await transaction.wait();
 
   transaction = await amm.connect(investor3).swapToken1(tokens(10));
