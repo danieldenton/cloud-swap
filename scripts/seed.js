@@ -66,25 +66,33 @@ async function main() {
   transaction = await rump.connect(investor1).approve(amm.address, tokens(10));
   await transaction.wait();
 
-  transaction = await amm.connect(investor1).swapToken1(tokens(1));
+  transaction = await amm
+    .connect(investor1)
+    .swapToken(rump.address, usd.address, tokens(1));
   await transaction.wait();
 
   transaction = await usd.connect(investor2).approve(amm.address, tokens(10));
   await transaction.wait();
 
-  transaction = await amm.connect(investor2).swapToken2(tokens(1));
+  transaction = await amm
+    .connect(investor2)
+    .swapToken(usd.address, rump.address, tokens(1));
   await transaction.wait();
 
   transaction = await rump.connect(investor3).approve(amm.address, tokens(10));
   await transaction.wait();
 
-  transaction = await amm.connect(investor3).swapToken1(tokens(10));
+  transaction = await amm
+    .connect(investor3)
+    .swapToken(rump.address, usd.address, tokens(10));
   await transaction.wait();
 
   transaction = await usd.connect(investor4).approve(amm.address, tokens(10));
   await transaction.wait();
 
-  transaction = await amm.connect(investor4).swapToken2(tokens(5));
+  transaction = await amm
+    .connect(investor4)
+    .swapToken(usd.address, rump.address, tokens(5));
   await transaction.wait();
 
   console.log("finished");
