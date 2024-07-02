@@ -2,12 +2,12 @@
   {
     "inputs": [
       {
-        "internalType": "contract Token",
+        "internalType": "contract IERC20",
         "name": "_token1",
         "type": "address"
       },
       {
-        "internalType": "contract Token",
+        "internalType": "contract IERC20",
         "name": "_token2",
         "type": "address"
       }
@@ -21,7 +21,7 @@
       {
         "indexed": false,
         "internalType": "address",
-        "name": "user",
+        "name": "swapCaller",
         "type": "address"
       },
       {
@@ -105,30 +105,40 @@
     "inputs": [
       {
         "internalType": "uint256",
-        "name": "_token2Amount",
+        "name": "_amount",
         "type": "uint256"
       }
     ],
-    "name": "calculateToken1Deposit",
+    "name": "calculateFee",
     "outputs": [
       {
         "internalType": "uint256",
-        "name": "token1Amount",
+        "name": "fee",
         "type": "uint256"
       }
     ],
-    "stateMutability": "view",
+    "stateMutability": "pure",
     "type": "function"
   },
   {
     "inputs": [
       {
+        "internalType": "address",
+        "name": "_token1Address",
+        "type": "address"
+      },
+      {
         "internalType": "uint256",
         "name": "_token1Amount",
         "type": "uint256"
+      },
+      {
+        "internalType": "address",
+        "name": "_token2Address",
+        "type": "address"
       }
     ],
-    "name": "calculateToken1Swap",
+    "name": "calculateTokenDeposit",
     "outputs": [
       {
         "internalType": "uint256",
@@ -142,35 +152,31 @@
   {
     "inputs": [
       {
+        "internalType": "address",
+        "name": "_tokenGiveAddress",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "_tokenGetAddress",
+        "type": "address"
+      },
+      {
         "internalType": "uint256",
-        "name": "_token1Amount",
+        "name": "_amount",
         "type": "uint256"
       }
     ],
-    "name": "calculateToken2Deposit",
+    "name": "calculateTokenSwap",
     "outputs": [
       {
         "internalType": "uint256",
-        "name": "token2Amount",
+        "name": "tokenGetAmount",
         "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
+      },
       {
         "internalType": "uint256",
-        "name": "_token2Amount",
-        "type": "uint256"
-      }
-    ],
-    "name": "calculateToken2Swap",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "token1Amount",
+        "name": "fee",
         "type": "uint256"
       }
     ],
@@ -247,38 +253,23 @@
   {
     "inputs": [
       {
-        "internalType": "uint256",
-        "name": "_token1Amount",
-        "type": "uint256"
-      }
-    ],
-    "name": "swapToken1",
-    "outputs": [
+        "internalType": "address",
+        "name": "_tokenGiveAddress",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "_tokenGetAddress",
+        "type": "address"
+      },
       {
         "internalType": "uint256",
-        "name": "token2Amount",
+        "name": "_amount",
         "type": "uint256"
       }
     ],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "_token2Amount",
-        "type": "uint256"
-      }
-    ],
-    "name": "swapToken2",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "token1Amount",
-        "type": "uint256"
-      }
-    ],
+    "name": "swapToken",
+    "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
   },
@@ -287,7 +278,7 @@
     "name": "token1",
     "outputs": [
       {
-        "internalType": "contract Token",
+        "internalType": "contract IERC20",
         "name": "",
         "type": "address"
       }
@@ -313,7 +304,7 @@
     "name": "token2",
     "outputs": [
       {
-        "internalType": "contract Token",
+        "internalType": "contract IERC20",
         "name": "",
         "type": "address"
       }
