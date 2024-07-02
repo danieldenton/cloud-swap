@@ -9,9 +9,9 @@ const hre = require("hardhat");
 async function main() {
   const Token = await hre.ethers.getContractFactory("Token");
 
-  let dapp = await Token.deploy("Dapp Token", "DAPP", "1000000");
+  let dapp = await Token.deploy("Rumpelina Token", "RUMP", "1000000");
   await dapp.deployed();
-  console.log(`Dapp Token deployed to: ${dapp.address}\n`);
+  console.log(`Rumpelina Token deployed to: ${dapp.address}\n`);
 
   let usd = await Token.deploy("USD Token", "USD", "1000000");
   await usd.deployed();
