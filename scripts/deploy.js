@@ -9,16 +9,16 @@ const hre = require("hardhat");
 async function main() {
   const Token = await hre.ethers.getContractFactory("Token");
 
-  let dapp = await Token.deploy("Rumpelina Token", "RUMP", "1000000");
-  await dapp.deployed();
-  console.log(`Rumpelina Token deployed to: ${dapp.address}\n`);
+  let rump = await Token.deploy("Rumpelina Token", "RUMP", "1000000");
+  await rump.deployed();
+  console.log(`Rumpelina Token deployed to: ${rump.address}\n`);
 
   let usd = await Token.deploy("USD Token", "USD", "1000000");
   await usd.deployed();
   console.log(`USD Token deployed to: ${usd.address}\n`);
 
   const AMM = await hre.ethers.getContractFactory("AMM");
-  let amm = await AMM.deploy(dapp.address, usd.address);
+  let amm = await AMM.deploy(rump.address, usd.address);
   await amm.deployed();
   console.log(`AMM deployed to: ${amm.address}\n`);
 
