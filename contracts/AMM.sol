@@ -2,14 +2,32 @@
 pragma solidity ^0.8.0;
 
 import "hardhat/console.sol";
-import "./Token.sol";
+// import "./Token.sol";
+
+interface IERC20 {
+    function transfer(
+        address recipient,
+        uint256 amount
+    ) external returns (bool);
+
+    function transferFrom(
+        address sender,
+        address recipient,
+        uint256 amount
+    ) external returns (bool);
+
+    function approve(address spender, uint256 amount) external returns (bool);
+
+    function balanceOf(address account) external view returns (uint256);
+}
 
 contract AMM {
-    Token public token1;
-    Token public token2;
+    IERC20 public token1;
+    IERC20 public token2;
 
     uint256 public token1Balance;
     uint256 public token2Balance;
+
     uint256 public K;
 
     uint256 public totalShares;
@@ -17,7 +35,7 @@ contract AMM {
     uint256 constant PRECISION = 10 ** 18;
 
     event Swap(
-        address user,
+        address swapCaller,
         address tokenGive,
         uint256 tokenGiveAmount,
         address tokenGet,
@@ -27,11 +45,12 @@ contract AMM {
         uint256 timestamp
     );
 
-    constructor(Token _token1, Token _token2) {
+    constructor(IERC20 _token1, IERC20 _token2) {
         token1 = _token1;
         token2 = _token2;
     }
 
+    //What does the original liquididty base it's price on?
     function addLiquidity(
         uint256 _token1Amount,
         uint256 _token2Amount
@@ -70,82 +89,93 @@ contract AMM {
         shares[msg.sender] += share;
     }
 
-    function calculateToken2Deposit(
-        uint256 _token1Amount
+    function calculateTokenDeposit(
+        address _token1Address,
+        uint256 _token1Amount,
+        address _token2Address
     ) public view returns (uint256 token2Amount) {
-        token2Amount = (token2Balance * _token1Amount) / token1Balance;
+        IERC20 _token1Contract = IERC20(_token1Address);
+        IERC20 _token2Contract = IERC20(_token2Address);
+        uint256 _token1Balance = _token1Contract.balanceOf(address(this));
+        uint256 _token2Balance = _token2Contract.balanceOf(address(this));
+        token2Amount = (_token2Balance * _token1Amount) / _token1Balance;
     }
 
-    function calculateToken1Deposit(
-        uint256 _token2Amount
-    ) public view returns (uint256 token1Amount) {
-        token1Amount = (token1Balance * _token2Amount) / token2Balance;
+    function calculateFee(
+        uint256 _amount
+    ) public pure returns (uint256 fee) {
+        fee = (_amount * 3) / 10000; // 0.03% fee
     }
 
-    function calculateToken1Swap(
-        uint256 _token1Amount
-    ) public view returns (uint256 token2Amount) {
-        uint256 token1After = token1Balance + _token1Amount;
-        uint token2After = K / token1After;
-        token2Amount = token2Balance - token2After;
+    function calculateTokenSwap(
+        address _tokenGiveAddress,
+        address _tokenGetAddress,
+        uint256 _amount
+    ) public view returns (uint256 tokenGetAmount, uint256 fee) {
+        IERC20 _tokenGiveContract = IERC20(_tokenGiveAddress);
+        IERC20 _tokenGetContract = IERC20(_tokenGetAddress);
 
-        if (token2Amount == token2Balance) {
-            token2Amount--;
+        uint256 tokenGiveContractBalance = _tokenGiveContract.balanceOf(
+            address(this)
+        );
+        uint256 tokenGetContractBalance = _tokenGetContract.balanceOf(
+            address(this)
+        );
+
+        require(
+            tokenGiveContractBalance > 0 && tokenGetContractBalance > 0,
+            "Insufficient liquidity to trade this pair"
+        );
+
+        fee = calculateFee(_amount);
+        uint256 _amountAfterFee = _amount - fee;
+
+        uint256 tokenGiveContractBalanceAfter = tokenGiveContractBalance +
+            _amountAfterFee;
+        uint tokenGetContractBalanceAfter = K / tokenGiveContractBalanceAfter;
+        tokenGetAmount = tokenGetContractBalance - tokenGetContractBalanceAfter;
+
+        if (tokenGetAmount == tokenGetContractBalance) {
+            tokenGetAmount--;
         }
 
-        require(token2Amount < token2Balance, "cannot exceed pool balance");
-    }
-
-    function swapToken1(
-        uint256 _token1Amount
-    ) external returns (uint256 token2Amount) {
-        token2Amount = calculateToken1Swap(_token1Amount);
-        token1.transferFrom(msg.sender, address(this), _token1Amount);
-        token1Balance += _token1Amount;
-        token2Balance -= token2Amount;
-        token2.transfer(msg.sender, token2Amount);
-
-        emit Swap(
-            msg.sender,
-            address(token1),
-            _token1Amount,
-            address(token2),
-            token2Amount,
-            token1Balance,
-            token2Balance,
-            block.timestamp
+        require(
+            tokenGetAmount < tokenGetContractBalance,
+            "Cannot exceed pool balance"
         );
     }
 
-    function calculateToken2Swap(
-        uint256 _token2Amount
-    ) public view returns (uint256 token1Amount) {
-        uint256 token2After = token2Balance + _token2Amount;
-        uint token1After = K / token2After;
-        token1Amount = token1Balance - token1After;
+    function swapToken(
+        address _tokenGiveAddress,
+        address _tokenGetAddress,
+        uint256 _amount
+    ) external {
+        IERC20 _tokenGiveContract = IERC20(_tokenGiveAddress);
+        IERC20 _tokenGetContract = IERC20(_tokenGetAddress);
 
-        if (token1Amount == token1Balance) {
-            token1Amount--;
+        (uint256 _tokenGetAmount, ) = calculateTokenSwap(
+            _tokenGiveAddress,
+            _tokenGetAddress,
+            _amount
+        );
+        _tokenGiveContract.transferFrom(msg.sender, address(this), _amount);
+
+        if (address(token1) == _tokenGiveAddress) {
+            token1Balance += _amount;
+            token2Balance -= _tokenGetAmount;
+        } else {
+            token2Balance += _amount;
+            token1Balance -= _tokenGetAmount;
         }
 
-        require(token1Amount < token1Balance, "cannot exceed pool balance");
-    }
-
-    function swapToken2(
-        uint256 _token2Amount
-    ) external returns (uint256 token1Amount) {
-        token1Amount = calculateToken2Swap(_token2Amount);
-        token2.transferFrom(msg.sender, address(this), _token2Amount);
-        token2Balance += _token2Amount;
-        token1Balance -= token1Amount;
-        token1.transfer(msg.sender, token1Amount);
+        _tokenGetContract.transfer(msg.sender, _tokenGetAmount);
 
         emit Swap(
             msg.sender,
-            address(token2),
-            _token2Amount,
-            address(token1),
-            token1Amount,
+            _tokenGiveAddress,
+            _amount,
+            _tokenGetAddress,
+            _tokenGetAmount,
             token1Balance,
             token2Balance,
             block.timestamp
