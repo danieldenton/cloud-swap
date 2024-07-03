@@ -20,6 +20,7 @@ export const Swap = () => {
   const [inputAmount, setInputAmount] = useState(0);
   const [outputAmount, setOutputAmount] = useState(0);
   const [price, setPrice] = useState(0);
+  const [fee, setFee] = useState(0);
   const [showAlert, setShowAlert] = useState(false);
 
   const dispatch = useDispatch();
@@ -47,24 +48,36 @@ export const Swap = () => {
       return;
     }
 
-    if (inputToken === "DAPP") {
+    if (inputToken === "RUMP") {
       setInputAmount(e.target.value);
       const _token1Amount = ethers.utils.parseUnits(e.target.value, "ether");
-      const result = await amm.calculateToken1Swap(_token1Amount);
+      const result = await amm.calculateTokenSwap(
+        tokens[0].address,
+        tokens[1].address,
+        _token1Amount
+      );
       const _token2Amount = ethers.utils.formatUnits(
-        result.toString(),
+        result[0].toString(),
         "ether"
       );
+      const _fee = ethers.utils.formatUnits(result[1].toString(), "ether");
       setOutputAmount(_token2Amount);
+      setFee(_fee);
     } else {
       setInputAmount(e.target.value);
       const _token2Amount = ethers.utils.parseUnits(e.target.value, "ether");
-      const result = await amm.calculateToken2Swap(_token2Amount);
+      const result = await amm.calculateTokenSwap(
+        tokens[1].address,
+        tokens[0].address,
+        _token2Amount
+      );
       const _token1Amount = ethers.utils.formatUnits(
-        result.toString(),
+        result[0].toString(),
         "ether"
       );
+      const _fee = ethers.utils.formatUnits(result[1].toString(), "ether");
       setOutputAmount(_token1Amount);
+      setFee(_fee);
     }
   };
 
@@ -78,10 +91,24 @@ export const Swap = () => {
 
     const _inputAmount = ethers.utils.parseUnits(inputAmount, "ether");
 
-    if (inputToken === "DAPP") {
-      await swap(provider, amm, tokens[0], inputToken, _inputAmount, dispatch);
+    if (inputToken === "RUMP") {
+      await swap(
+        provider,
+        amm,
+        tokens[0],
+        tokens[1],
+        _inputAmount,
+        dispatch
+      );
     } else {
-      await swap(provider, amm, tokens[1], inputToken, _inputAmount, dispatch);
+      await swap(
+        provider,
+        amm,
+        tokens[1],
+        tokens[0],
+        _inputAmount,
+        dispatch
+      );
     }
 
     await loadBalances(amm, tokens, account, dispatch);
@@ -94,7 +121,7 @@ export const Swap = () => {
       setPrice(0);
       return;
     }
-    if (inputToken === "DAPP") {
+    if (inputToken === "RUMP") {
       setPrice((await amm.token2Balance()) / (await amm.token1Balance()));
     } else {
       setPrice((await amm.token1Balance()) / (await amm.token2Balance()));
@@ -145,7 +172,7 @@ export const Swap = () => {
                   <Dropdown.Item
                     onClick={(e) => setInputToken(e.target.innerHTML)}
                   >
-                    DAPP
+                    RUMP
                   </Dropdown.Item>
                   <Dropdown.Item
                     onClick={(e) => setInputToken(e.target.innerHTML)}
@@ -183,7 +210,7 @@ export const Swap = () => {
                   <Dropdown.Item
                     onClick={(e) => setOutputToken(e.target.innerHTML)}
                   >
-                    DAPP
+                    RUMP
                   </Dropdown.Item>
                   <Dropdown.Item
                     onClick={(e) => setOutputToken(e.target.innerHTML)}
@@ -203,6 +230,7 @@ export const Swap = () => {
                 <>
                   <Button type="submit">Swap</Button>
                   <Form.Text muted>Exchange Rate: {price}</Form.Text>
+                  <Form.Text muted>.03% Fee: {fee}</Form.Text>
                 </>
               )}
             </Row>

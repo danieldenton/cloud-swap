@@ -85,7 +85,7 @@ export const Withdraw = () => {
             <hr />
             <Row>
               <p>
-                <strong>DAPP Balance: </strong>
+                <strong>RUMP Balance: </strong>
                 {balances[0]}
               </p>
               <p>

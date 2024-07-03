@@ -40,8 +40,8 @@ export const loadAccount = async (dispatch) => {
 };
 
 export const loadTokens = async (provider, chainId, dispatch) => {
-  const dapp = new ethers.Contract(
-    config[chainId].dapp.address,
+  const rump = new ethers.Contract(
+    config[chainId].rump.address,
     TOKEN_ABI,
     provider
   );
@@ -50,8 +50,8 @@ export const loadTokens = async (provider, chainId, dispatch) => {
     TOKEN_ABI,
     provider
   );
-  dispatch(setContracts([dapp, usd]));
-  dispatch(setSymbols([await dapp.symbol(), await usd.symbol()]));
+  dispatch(setContracts([rump, usd]));
+  dispatch(setSymbols([await rump.symbol(), await usd.symbol()]));
 };
 
 export const loadAMM = async (provider, chainId, dispatch) => {
@@ -123,20 +123,26 @@ export const removeLiquidity = async (provider, amm, shares, dispatch) => {
   }
 };
 
-export const swap = async (provider, amm, token, symbol, amount, dispatch) => {
+export const swap = async (
+  provider,
+  amm,
+  tokenGive,
+  tokenGet,
+  amount,
+  dispatch
+) => {
   try {
     dispatch(swapRequest());
     let transaction;
     const signer = await provider.getSigner();
 
-    transaction = await token.connect(signer).approve(amm.address, amount);
+    transaction = await tokenGive.connect(signer).approve(amm.address, amount);
     await transaction.wait();
 
-    if (symbol === "DAPP") {
-      transaction = await amm.connect(signer).swapToken1(amount);
-    } else {
-      transaction = await amm.connect(signer).swapToken2(amount);
-    }
+    transaction = await amm
+      .connect(signer)
+      .swapToken(tokenGive.address, tokenGet.address, amount);
+
     await transaction.wait();
 
     dispatch(swapSuccess(transaction.hash));
@@ -152,5 +158,5 @@ export const loadAllSwaps = async (provider, amm, dispatch) => {
   const swaps = swapStream.map((event) => {
     return { hash: event.transactionHash, args: event.args };
   });
-  dispatch(swapsLoaded(swaps))
+  dispatch(swapsLoaded(swaps));
 };
