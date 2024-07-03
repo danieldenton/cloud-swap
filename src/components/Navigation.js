@@ -4,7 +4,7 @@ import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import Blockies from "react-blockies";
 
-import logo from "../logo.webp";
+import logo from "../logo.jpg";
 
 import { loadAccount, loadBalances } from "../store/interactions";
 import config from "../config.json";
@@ -42,8 +42,9 @@ background-color: blac;
         <img
           alt="logo"
           src={logo}
-          width="40"
-          height="40"
+          width="50"
+          height="50"
+          style={{ borderRadius: '100%'}}
           className="d-inline-block align-top mx-3"
         />
         <Navbar.Brand className="text-danger" href="#">
