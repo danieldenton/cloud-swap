@@ -10,3 +10,15 @@ p {
     color: white;
     font-size: 15px;
 }
+
+thead {
+    color: red;
+}
+
+tr {
+    color: red;
+}
+
+th {
+    color: red
+}

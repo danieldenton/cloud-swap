@@ -27,7 +27,7 @@ export const Charts = () => {
     if (provider && amm) {
       loadAllSwaps(provider, amm, dispatch);
     }
-    console.log(chart);
+    
   }, [provider, amm, dispatch]);
 
   const tabledSwaps =
@@ -40,7 +40,7 @@ export const Charts = () => {
           <td>{formatEther(swap.args.tokenGiveAmount)}</td>
           <td>{getSymbol(swap.args.tokenGet, tokens, symbols)}</td>
           <td>{formatEther(swap.args.tokenGetAmount)}</td>
-          <td>{formatAddress(swap.args.user)}</td>
+          <td>{formatAddress(swap.args.swapCaller)}</td>
           <td>{formatDate(swap.args.timestamp)}</td>
         </tr>
       );
