@@ -92,23 +92,9 @@ export const Swap = () => {
     const _inputAmount = ethers.utils.parseUnits(inputAmount, "ether");
 
     if (inputToken === "RUMP") {
-      await swap(
-        provider,
-        amm,
-        tokens[0],
-        tokens[1],
-        _inputAmount,
-        dispatch
-      );
+      await swap(provider, amm, tokens[0], tokens[1], _inputAmount, dispatch);
     } else {
-      await swap(
-        provider,
-        amm,
-        tokens[1],
-        tokens[0],
-        _inputAmount,
-        dispatch
-      );
+      await swap(provider, amm, tokens[1], tokens[0], _inputAmount, dispatch);
     }
 
     await loadBalances(amm, tokens, account, dispatch);
@@ -136,7 +122,7 @@ export const Swap = () => {
 
   return (
     <div>
-      <Card style={{ maxWidth: "450px" }} className="mx-auto px-4">
+      <Card style={{ maxWidth: "450px" }} className="mx-auto px-4 bg-dark">
         {account ? (
           <Form
             onSubmit={handleSwap}
