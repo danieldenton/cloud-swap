@@ -44,14 +44,14 @@ export const Withdraw = () => {
 
   return (
     <div>
-      <Card style={{ maxWidth: "450px" }} className="mx-auto px-4">
+      <Card style={{ maxWidth: "450px", height: "394px" }} className="mx-auto px-4 bg-dark border-danger">
         {account ? (
           <Form
             onSubmit={handleWithdraw}
             style={{ maxWidth: "450px", margin: "50px auto" }}
           >
             <Row className="my-3">
-              <Form.Text className="text-end my-2" muted>
+              <Form.Text className="text-end my-2 text-light">
                 Shares: {shares}
               </Form.Text>
               <InputGroup>
@@ -63,10 +63,11 @@ export const Withdraw = () => {
                   id="shares"
                   value={amount === 0 ? "" : amount}
                   onChange={(e) => setAmount(e.target.value)}
+                  className="border-danger"
                 />
                 <InputGroup.Text
                   style={{ width: "100px" }}
-                  className="justify-content-center"
+                  className="justify-content-center border-danger text-light bg-dark"
                 >
                   Shares
                 </InputGroup.Text>
@@ -76,10 +77,11 @@ export const Withdraw = () => {
               {isWithdrawing ? (
                 <Spinner
                   animation="border"
-                  style={{ display: "block", margin: "0 auto" }}
+                  style={{ display: "block", margin: "0 auto", color: "red" }}
+                  
                 />
               ) : (
-                <Button type="submit">Withdraw</Button>
+                <Button type="submit" className="bg-danger border-danger" style={{ marginTop: "8px"}}>Withdraw</Button>
               )}
             </Row>
             <hr />

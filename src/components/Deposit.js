@@ -74,7 +74,7 @@ export const Deposit = () => {
 
   return (
     <div>
-      <Card style={{ maxWidth: "450px" }} className="mx-auto px-4 bg-dark border-danger">
+      <Card style={{ maxWidth: "450px", height: "394px" }} className="mx-auto px-4 bg-dark border-danger">
         {account ? (
           <Form
             onSubmit={handleDeposit}
