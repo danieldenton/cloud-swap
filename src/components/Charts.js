@@ -58,7 +58,7 @@ export const Charts = () => {
             height="100%"
           />
           <hr />
-          <Table striped bordered hover>
+          <Table bordered>
             <thead>
               <tr>
                 <th>Transaction string</th>
