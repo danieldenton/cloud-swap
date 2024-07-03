@@ -1,8 +1,8 @@
 import { useEffect } from "react";
 import { Container } from "react-bootstrap";
-import { ethers } from "ethers";
 import { useDispatch } from "react-redux";
 import { HashRouter, Routes, Route } from "react-router-dom";
+import "../App.css"
 
 // Components
 import Navigation from "./Navigation";
@@ -45,7 +45,7 @@ function App() {
   }, []);
 
   return (
-    <Container>
+    <Container className="bg-dark" style={{ height: '100%'}}>
       <HashRouter>
         <Navigation />
         <hr />
