@@ -61,6 +61,7 @@ export const Swap = () => {
         "ether"
       );
       const _fee = ethers.utils.formatUnits(result[1].toString(), "ether");
+
       setOutputAmount(_token2Amount);
       setFee(_fee);
     } else {
@@ -76,6 +77,7 @@ export const Swap = () => {
         "ether"
       );
       const _fee = ethers.utils.formatUnits(result[1].toString(), "ether");
+      
       setOutputAmount(_token1Amount);
       setFee(_fee);
     }
@@ -133,7 +135,7 @@ export const Swap = () => {
                 <Form.Label>
                   <strong>Input:</strong>
                 </Form.Label>
-                <Form.Text muted>
+                <Form.Text className="text-light">
                   Balance:{" "}
                   {inputToken === symbols[0]
                     ? balances[0]
@@ -150,9 +152,10 @@ export const Swap = () => {
                   step="any"
                   onChange={(e) => handleInput(e)}
                   disabled={!inputToken}
+                  className="bg-light border-danger text-light"
                 />
                 <DropdownButton
-                  variant="outline-secondary"
+                  variant="outline-danger text-light bg-dark"
                   title={inputToken ? inputToken : "Select Token"}
                 >
                   <Dropdown.Item
@@ -173,7 +176,7 @@ export const Swap = () => {
                 <Form.Label>
                   <strong>Output:</strong>
                 </Form.Label>
-                <Form.Text muted>
+                <Form.Text className="text-light">
                   Balance:{" "}
                   {outputToken === symbols[0]
                     ? balances[0]
@@ -188,9 +191,10 @@ export const Swap = () => {
                   placeholder="0.0"
                   value={outputAmount === 0 ? "" : outputAmount}
                   disabled
+                   className="bg-light border-danger text-light"
                 />
                 <DropdownButton
-                  variant="outline-secondary"
+                 variant="outline-danger text-light bg-dark"
                   title={outputToken ? outputToken : "Select Token"}
                 >
                   <Dropdown.Item
@@ -214,9 +218,9 @@ export const Swap = () => {
                 />
               ) : (
                 <>
-                  <Button type="submit">Swap</Button>
-                  <Form.Text muted>Exchange Rate: {price}</Form.Text>
-                  <Form.Text muted>.03% Fee: {fee}</Form.Text>
+                  <Button type="submit" className="bg-danger text-light border-danger">Swap</Button>
+                  <Form.Text className="text-light">Exchange Rate: {price}</Form.Text>
+                  <Form.Text className="text-light">.03% Fee: {fee}</Form.Text>
                 </>
               )}
             </Row>

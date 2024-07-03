@@ -47,13 +47,13 @@ background-color: blac;
           className="d-inline-block align-top mx-3"
         />
         <Navbar.Brand className="text-danger" href="#">
-          Blood Moon AMM
+          Blood Moon Swap
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="nav" />
         <Navbar.Collapse id="nav" className="justify-content-end">
           <div className="d-flex justify-content-end mt-3 bg-dark border-danger">
             <Form.Select
-            className="bg-danger border-danger text-dark"
+            className="bg-danger border-danger text-light"
               aria-label="Network Selector"
               value={config[chainId] ? `0x${chainId.toString(16)}` : `0`}
               onChange={handleNetwork}
