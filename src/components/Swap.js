@@ -124,7 +124,7 @@ export const Swap = () => {
 
   return (
     <div>
-      <Card style={{ maxWidth: "450px" }} className="mx-auto px-4 bg-dark">
+      <Card style={{ maxWidth: "450px" }} className="mx-auto px-4 bg-dark border-danger">
         {account ? (
           <Form
             onSubmit={handleSwap}
@@ -214,7 +214,7 @@ export const Swap = () => {
               {isSwapping ? (
                 <Spinner
                   animation="border"
-                  style={{ display: "block", margin: "0 auto" }}
+                  style={{ display: "block", margin: "0 auto", color: "red" }}
                 />
               ) : (
                 <>

@@ -37,7 +37,7 @@ export const Deposit = () => {
     if (e.target.id === "token1") {
       setToken1Amount(e.target.value);
       const _token1Amount = ethers.utils.parseUnits(e.target.value, "ether");
-      const result = await amm.calculateToken2Deposit(_token1Amount);
+      const result = await amm.calculateTokenDeposit(tokens[0].address, _token1Amount, tokens[1].address);
       const _token2Amount = ethers.utils.formatUnits(
         result.toString(),
         "ether"
@@ -46,7 +46,7 @@ export const Deposit = () => {
     } else {
       setToken2Amount(e.target.value);
       const _token2Amount = ethers.utils.parseUnits(e.target.value, "ether");
-      const result = await amm.calculateToken1Deposit(_token2Amount);
+      const result = await amm.calculateTokenDeposit(tokens[1].address, _token2Amount, tokens[0].address);
       const _token1Amount = ethers.utils.formatUnits(
         result.toString(),
         "ether"
@@ -74,14 +74,14 @@ export const Deposit = () => {
 
   return (
     <div>
-      <Card style={{ maxWidth: "450px" }} className="mx-auto px-4">
+      <Card style={{ maxWidth: "450px" }} className="mx-auto px-4 bg-dark border-danger">
         {account ? (
           <Form
             onSubmit={handleDeposit}
             style={{ maxWidth: "450px", margin: "50px auto" }}
           >
             <Row className="my-3">
-              <Form.Text className="text-end my-2" muted>
+              <Form.Text className="text-end my-2 text-light">
                 Balance: {balances[0]}
               </Form.Text>
               <InputGroup>
@@ -93,17 +93,18 @@ export const Deposit = () => {
                   id="token1"
                   onChange={handleAmount}
                   value={token1Amount === 0 ? "" : token1Amount}
+                  className="border-danger"
                 />
                 <InputGroup.Text
                   style={{ width: "100px" }}
-                  className="justify-content-center"
+                  className="justify-content-center border-danger text-light bg-dark"
                 >
                   {symbols && symbols[0]}
                 </InputGroup.Text>
               </InputGroup>
             </Row>
             <Row className="my-3">
-              <Form.Text className="text-end my-2" muted>
+              <Form.Text className="text-end my-2 text-light">
                 Balance: {balances[1]}
               </Form.Text>
               <InputGroup>
@@ -114,10 +115,11 @@ export const Deposit = () => {
                   id="token2"
                   onChange={handleAmount}
                   value={token2Amount === 0 ? "" : token2Amount}
+                  className="border-danger"
                 />
                 <InputGroup.Text
                   style={{ width: "100px" }}
-                  className="justify-content-center"
+                  className="justify-content-center border-danger text-light bg-dark"
                 >
                   {symbols && symbols[1]}
                 </InputGroup.Text>
@@ -127,10 +129,10 @@ export const Deposit = () => {
               {isDepositing ? (
                 <Spinner
                   animation="border"
-                  style={{ display: "block", margin: "0 auto" }}
+                  style={{ display: "block", margin: "0 auto", color: "red" }}
                 />
               ) : (
-                <Button type="submit">Deposit</Button>
+                <Button type="submit" className="bg-danger border-danger" style={{ marginTop: "8px"}}>Deposit</Button>
               )}
             </Row>
           </Form>
