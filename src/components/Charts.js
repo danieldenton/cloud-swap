@@ -45,7 +45,7 @@ export const Charts = () => {
         </tr>
       );
     });
-
+    
   return (
     <>
       {provider && amm ? (

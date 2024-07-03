@@ -47,7 +47,7 @@ background-color: blac;
           style={{ borderRadius: '100%'}}
           className="d-inline-block align-top mx-3"
         />
-        <Navbar.Brand className="text-danger" href="#">
+        <Navbar.Brand className="text-danger fw-bold" href="#">
           Blood Moon Swap
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="nav" />

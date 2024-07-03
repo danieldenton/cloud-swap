@@ -132,7 +132,7 @@ export const Swap = () => {
           >
             <Row className="my-3">
               <div className="d-flex justify-content-between">
-                <Form.Label>
+                <Form.Label className="text-danger">
                   <strong>Input:</strong>
                 </Form.Label>
                 <Form.Text className="text-light">
@@ -152,7 +152,7 @@ export const Swap = () => {
                   step="any"
                   onChange={(e) => handleInput(e)}
                   disabled={!inputToken}
-                  className="bg-light border-danger text-light"
+                  className="bg-light border-danger"
                 />
                 <DropdownButton
                   variant="outline-danger text-light bg-dark"
@@ -173,7 +173,7 @@ export const Swap = () => {
             </Row>
             <Row className="my-4">
               <div className="d-flex justify-content-between">
-                <Form.Label>
+                <Form.Label className="text-danger">
                   <strong>Output:</strong>
                 </Form.Label>
                 <Form.Text className="text-light">
@@ -191,7 +191,7 @@ export const Swap = () => {
                   placeholder="0.0"
                   value={outputAmount === 0 ? "" : outputAmount}
                   disabled
-                   className="bg-light border-danger text-light"
+                   className="bg-light border-danger"
                 />
                 <DropdownButton
                  variant="outline-danger text-light bg-dark"
