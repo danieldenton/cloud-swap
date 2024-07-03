@@ -5,8 +5,3 @@
   right: 100px;
   padding: 50px;
 }
-
-.nav-link.active {
-  color: rbg(220, 53, 68) !important;
-  background-color: rbg(33, 37, 41)!important; /* Optional: To ensure background stays transparent */
-}
