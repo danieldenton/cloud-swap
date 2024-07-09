@@ -37,15 +37,15 @@ export const Withdraw = () => {
 
   const handleInput = (e: React.ChangeEvent<any>) => {
     const inputValue: number = parseInt(e.target.value);
-    if (e.target.value === "") {
-      setAmount(0);
-      return;
-    }
     setAmount(inputValue);
   }
 
   const handleWithdraw = async (e: React.ChangeEvent<any>) => {
     e.preventDefault();
+    if (amount === 0) {
+      window.alert("You need to enter an amount to withdraw")
+      return
+    }
     setShowAlert(false);
     const _shares = ethers.utils.parseUnits(amount.toString(), "ether");
     await removeLiquidity(provider, amm, _shares, dispatch);
