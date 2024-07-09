@@ -1,3 +1,4 @@
+import React from "react";
 import Form from "react-bootstrap/Form";
 import InputGroup from "react-bootstrap/InputGroup";
 import Dropdown from "react-bootstrap/Dropdown";
@@ -7,7 +8,7 @@ import Row from "react-bootstrap/Row";
 export const InputWithSelection = ({
   title,
   disabled,
-  setToken,
+  handleInputToken,
   token,
   symbols,
   balances,
@@ -43,10 +44,10 @@ export const InputWithSelection = ({
           variant="outline-secondary"
           title={token ? token : "Select Token"}
         >
-          <Dropdown.Item onClick={(e) => setToken(e.target.innerHTML)}>
+          <Dropdown.Item onClick={(e) => handleInputToken(e)}>
             RUMP
           </Dropdown.Item>
-          <Dropdown.Item onClick={(e) => setToken(e.target.innerHTML)}>
+          <Dropdown.Item onClick={(e) => handleInputToken(e)}>
             USD
           </Dropdown.Item>
         </DropdownButton>
