@@ -11,40 +11,43 @@ export const options = {
   },
   stroke: {
     curve: "straight",
+    style: {
+      color: "purple",
+    },
   },
   title: {
     text: "Reserve History",
     align: "left",
     style: {
-      color: "#DC3445",
+      color: "purple",
     },
   },
   markers: {
-    color: "#DC3445",
+    color: "purple",
   },
-  colors: ["#DC3445"],
+  colors: ["purple"],
   xaxis: {
     labels: {
       style: {
         colors: [
-          "#DC3445",
-          "#DC3445",
-          "#DC3445",
-          "#DC3445",
-          "#DC3445",
-          "#DC3445",
-          "#DC3445",
-          "#DC3445",
-          "#DC3445",
-          "#DC3445",
-          "#DC3445",
-          "#DC3445",
-          "#DC3445",
-          "#DC3445",
-          "#DC3445",
-          "#DC3445",
-          "#DC3445",
-          "#DC3445",
+          "purple",
+          "purple",
+          "purple",
+          "purple",
+          "purple",
+          "purple",
+          "purple",
+          "purple",
+          "purple",
+          "purple",
+          "purple",
+          "purple",
+          "purple",
+          "purple",
+          "purple",
+          "purple",
+          "purple",
+          "purple",
         ],
       },
     },
@@ -52,7 +55,7 @@ export const options = {
   yaxis: {
     labels: {
       style: {
-        colors: ["#DC3445"],
+        colors: ["purple"],
       },
     },
   },
