@@ -9,7 +9,7 @@ import logo from "../logo.jpg";
 
 import { loadAccount, loadBalances } from "../store/interactions";
 import config from "../config.json";
-import { RootState, Config } from "../types/state";
+import { RootState } from "../types/state";
 
 const Navigation = () => {
   const chainId = useSelector((state: RootState) => state.provider.chainId);
