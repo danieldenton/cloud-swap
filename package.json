@@ -49,6 +49,9 @@
   },
   "devDependencies": {
     "@nomicfoundation/hardhat-toolbox": "^1.0.2",
-    "hardhat": "^2.10.1"
+    "@types/react-blockies": "^1.4.4",
+    "@types/react-router-bootstrap": "^0.26.6",
+    "hardhat": "^2.10.1",
+    "typescript": "^5.5.3"
   }
 }
