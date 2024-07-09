@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { ethers } from "ethers";
 import Card from "react-bootstrap/Card";
@@ -13,32 +13,33 @@ import Spinner from "react-bootstrap/Spinner";
 import { swap, loadBalances } from "../store/interactions";
 
 import Alert from "./Alert";
+import { RootState } from "../types/state";
 
 export const Swap = () => {
   const [inputToken, setInputToken] = useState(null);
   const [outputToken, setOutputToken] = useState(null);
-  const [inputAmount, setInputAmount] = useState(0);
-  const [outputAmount, setOutputAmount] = useState(0);
+  const [inputAmount, setInputAmount] = useState("");
+  const [outputAmount, setOutputAmount] = useState("");
   const [price, setPrice] = useState(0);
-  const [fee, setFee] = useState(0);
+  const [fee, setFee] = useState("");
   const [showAlert, setShowAlert] = useState(false);
 
   const dispatch = useDispatch();
 
-  const provider = useSelector((state) => state.provider.connection);
-  const account = useSelector((state) => state.provider.account);
-  const tokens = useSelector((state) => state.tokens.contracts);
-  const symbols = useSelector((state) => state.tokens.symbols);
-  const balances = useSelector((state) => state.tokens.balances);
-  const amm = useSelector((state) => state.amm.contract);
-  const isSwapping = useSelector((state) => state.amm.swapping.isSwapping);
-  const isSuccess = useSelector((state) => state.amm.swapping.isSuccess);
+  const provider = useSelector((state: RootState) => state.provider.connection);
+  const account = useSelector((state: RootState) => state.provider.account);
+  const tokens = useSelector((state: RootState) => state.tokens.contracts);
+  const symbols = useSelector((state: RootState) => state.tokens.symbols);
+  const balances = useSelector((state: RootState) => state.tokens.balances);
+  const amm = useSelector((state: RootState) => state.amm.contract);
+  const isSwapping = useSelector((state: RootState) => state.amm.swapping.isSwapping);
+  const isSuccess = useSelector((state: RootState) => state.amm.swapping.isSuccess);
   const transactionHash = useSelector(
-    (state) => state.amm.swapping.transactionHash
+    (state: RootState) => state.amm.swapping.transactionHash
   );
 
   const handleInput = async (e) => {
-    if (!inputToken || !outputToken) {
+    if (!outputToken) {
       window.alert("Please select a token");
       return;
     }
@@ -242,14 +243,16 @@ export const Swap = () => {
                   <Form.Text className="purple fw-bold">
                     Exchange Rate: {price}
                   </Form.Text>
-                  <Form.Text className="purple fw-bold">.03% Fee: {fee}</Form.Text>
+                  <Form.Text className="purple fw-bold">
+                    .03% Fee: {fee}
+                  </Form.Text>
                 </>
               )}
             </Row>
           </Form>
         ) : (
           <p
-            className="d-flex justify-content-center align-items-center purple fw-bold"
+            className="d-flex justify-content-center align-items-center"
             style={{ height: "300px" }}
           >
             Please connect wallet
