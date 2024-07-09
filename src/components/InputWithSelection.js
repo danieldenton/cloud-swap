@@ -19,7 +19,7 @@ export const InputWithSelection = ({
         <Form.Label>
           <strong>{title}</strong>
         </Form.Label>
-        <Form.Text className="text-light">
+        <Form.Text className="purple">
           Balance:{" "}
           {token === symbols[0]
             ? balances[0]
@@ -36,7 +36,7 @@ export const InputWithSelection = ({
           step="any"
           onChange={(e) => handleInput(e)}
           disabled={!token}
-          className="bg-light border-danger text-light"
+          className="bg-light border-danger purple"
         />
         <DropdownButton
           variant="outline-secondary"

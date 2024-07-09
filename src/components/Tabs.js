@@ -27,10 +27,13 @@ export const Tabs = () => {
   const linkPills = links.map((link, idx) => {
     return (
       <LinkContainer
-      key={idx}
+        key={idx}
         to={link.to}
-        className={
-          location.pathname === link.to ? "bg-danger text-light" : "text-light"
+       className="purple fw-bold"
+        style={
+          location.pathname === link.to
+            ? { backgroundColor: "#D8BFD8", color: 'purple', border: "solid 5px purple", borderRadius: '10px'}
+            : { backgroundColor: "transparent" }
         }
       >
         <Nav.Link>{link.text}</Nav.Link>

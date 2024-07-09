@@ -1,9 +1,10 @@
 body {
-    background-color: rgb(33, 37, 41);
+    background-color: #87CEEB;
 }
 
 hr {
-    color: white;
+    color: white
+
 }
 
 p {
@@ -12,17 +13,25 @@ p {
 }
 
 thead {
-    color: red;
+    color: #D8BFD8;
 }
 
 tr {
-    color: red;
+    color: #D8BFD8;
 }
 
 td {
-    color: red;
+    color: #D8BFD8;
 }
 
 th {
-    color: red 
+    color: #D8BFD8 
+}
+
+.bg-lt-g {
+    background-color: #87CEEB;
+}
+
+.purple {
+    color: purple
 }

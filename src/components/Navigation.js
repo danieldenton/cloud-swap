@@ -38,7 +38,7 @@ background-color: blac;
 }
 `}
       </style>
-      <Navbar className="my-3 bg-secondary" expand="lg">
+      <Navbar className="my-3 bg-lt-g" expand="lg">
         <img
           alt="logo"
           src={logo}
@@ -47,14 +47,14 @@ background-color: blac;
           style={{ borderRadius: '100%'}}
           className="d-inline-block align-top mx-3"
         />
-        <Navbar.Brand className="text-light fw-bold" href="#">
+        <Navbar.Brand className="purple fw-bold" href="#">
           Cloud Swap
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="nav" />
         <Navbar.Collapse id="nav" className="justify-content-end">
-          <div className="d-flex justify-content-end mt-3 bg-secondary border-danger">
+          <div className="d-flex justify-content-end mt-3 bg-lt-g border-danger">
             <Form.Select
-            className="bg-danger border-danger text-light"
+            className="bg-danger border-danger purple"
               aria-label="Network Selector"
               value={config[chainId] ? `0x${chainId.toString(16)}` : `0`}
               onChange={handleNetwork}
@@ -68,7 +68,7 @@ background-color: blac;
             </Form.Select>
 
             {account ? (
-              <Navbar.Text className="d-flex align-items-center text-light">
+              <Navbar.Text className="d-flex align-items-center purple">
                 {account.slice(0, 5) + "..." + account.slice(38, 42)}
                 <Blockies
                   seed={account}

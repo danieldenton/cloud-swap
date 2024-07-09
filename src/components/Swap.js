@@ -77,7 +77,7 @@ export const Swap = () => {
         "ether"
       );
       const _fee = ethers.utils.formatUnits(result[1].toString(), "ether");
-      
+
       setOutputAmount(_token1Amount);
       setFee(_fee);
     }
@@ -124,7 +124,15 @@ export const Swap = () => {
 
   return (
     <div>
-      <Card style={{ maxWidth: "450px" }} className="mx-auto px-4 bg-secondary border-danger">
+      <Card
+        style={{
+          maxWidth: "500px",
+          backgroundColor: "#87CEEB",
+          border: "solid 5px purple",
+          borderRadius: "10px",
+        }}
+        className="mx-auto px-4"
+      >
         {account ? (
           <Form
             onSubmit={handleSwap}
@@ -132,10 +140,10 @@ export const Swap = () => {
           >
             <Row className="my-3">
               <div className="d-flex justify-content-between">
-                <Form.Label className="text-light">
+                <Form.Label className="purple">
                   <strong>Input:</strong>
                 </Form.Label>
-                <Form.Text className="text-light">
+                <Form.Text className="purple fw-bold">
                   Balance:{" "}
                   {inputToken === symbols[0]
                     ? balances[0]
@@ -152,10 +160,10 @@ export const Swap = () => {
                   step="any"
                   onChange={(e) => handleInput(e)}
                   disabled={!inputToken}
-                  className="bg-light border-danger"
+                  className="bg-light border-primary"
                 />
                 <DropdownButton
-                  variant="outline-danger text-light bg-secondary"
+                  variant="outline-primary purple bg-light fw-bold"
                   title={inputToken ? inputToken : "Select Token"}
                 >
                   <Dropdown.Item
@@ -173,10 +181,10 @@ export const Swap = () => {
             </Row>
             <Row className="my-4">
               <div className="d-flex justify-content-between">
-                <Form.Label className="text-light">
+                <Form.Label className="purple">
                   <strong>Output:</strong>
                 </Form.Label>
-                <Form.Text className="text-light">
+                <Form.Text className="purple fw-bold">
                   Balance:{" "}
                   {outputToken === symbols[0]
                     ? balances[0]
@@ -191,10 +199,10 @@ export const Swap = () => {
                   placeholder="0.0"
                   value={outputAmount === 0 ? "" : outputAmount}
                   disabled
-                   className="bg-light border-danger"
+                  className="bg-light border-primary"
                 />
                 <DropdownButton
-                 variant="outline-danger text-light bg-secondary"
+                  variant="outline-primary purple bg-light fw-bold"
                   title={outputToken ? outputToken : "Select Token"}
                 >
                   <Dropdown.Item
@@ -218,9 +226,22 @@ export const Swap = () => {
                 />
               ) : (
                 <>
-                  <Button type="submit" className="bg-danger text-light border-danger">Swap</Button>
-                  <Form.Text className="text-light">Exchange Rate: {price}</Form.Text>
-                  <Form.Text className="text-light">.03% Fee: {fee}</Form.Text>
+                  <Button
+                    type="submit"
+                    className="fw-bold"
+                    style={{
+                      backgroundColor: "#D8BFD8",
+                      color: "purple",
+                      border: "solid purple 5px",
+                      borderRadius: "5px",
+                    }}
+                  >
+                    Swap
+                  </Button>
+                  <Form.Text className="purple fw-bold">
+                    Exchange Rate: {price}
+                  </Form.Text>
+                  <Form.Text className="purple fw-bold">.03% Fee: {fee}</Form.Text>
                 </>
               )}
             </Row>

@@ -74,14 +74,14 @@ export const Deposit = () => {
 
   return (
     <div>
-      <Card style={{ maxWidth: "450px", height: "394px" }} className="mx-auto px-4 bg-secondary border-danger">
+      <Card style={{ maxWidth: "450px", height: "394px" }} className="mx-auto px-4 bg-lt-g border-danger">
         {account ? (
           <Form
             onSubmit={handleDeposit}
             style={{ maxWidth: "450px", margin: "50px auto" }}
           >
             <Row className="my-3">
-              <Form.Text className="text-end my-2 text-light">
+              <Form.Text className="text-end my-2 purple">
                 Balance: {balances[0]}
               </Form.Text>
               <InputGroup>
@@ -97,14 +97,14 @@ export const Deposit = () => {
                 />
                 <InputGroup.Text
                   style={{ width: "100px" }}
-                  className="justify-content-center border-danger text-light bg-secondary"
+                  className="justify-content-center purple bg-lt-g"
                 >
                   {symbols && symbols[0]}
                 </InputGroup.Text>
               </InputGroup>
             </Row>
             <Row className="my-3">
-              <Form.Text className="text-end my-2 text-light">
+              <Form.Text className="text-end my-2 purple">
                 Balance: {balances[1]}
               </Form.Text>
               <InputGroup>
@@ -119,7 +119,7 @@ export const Deposit = () => {
                 />
                 <InputGroup.Text
                   style={{ width: "100px" }}
-                  className="justify-content-center border-danger text-light bg-seconday"
+                  className="justify-content-center border-danger purple bg-lt-g"
                 >
                   {symbols && symbols[1]}
                 </InputGroup.Text>
@@ -132,7 +132,7 @@ export const Deposit = () => {
                   style={{ display: "block", margin: "0 auto", color: "red" }}
                 />
               ) : (
-                <Button type="submit" className="bg-danger border-danger" style={{ marginTop: "8px"}}>Deposit</Button>
+                <Button type="submit" className="bg-lt-purple border-lavender" style={{ marginTop: "8px"}}>Deposit</Button>
               )}
             </Row>
           </Form>

@@ -44,14 +44,14 @@ export const Withdraw = () => {
 
   return (
     <div>
-      <Card style={{ maxWidth: "450px", height: "394px" }} className="mx-auto px-4 bg-secondary border-danger">
+      <Card style={{ maxWidth: "450px", height: "394px", border: 'solid 2px purple' }} className="mx-auto px-4 bg-lt-g">
         {account ? (
           <Form
             onSubmit={handleWithdraw}
             style={{ maxWidth: "450px", margin: "50px auto" }}
           >
             <Row className="my-3">
-              <Form.Text className="text-end my-2 text-light">
+              <Form.Text className="text-end my-2 purple">
                 Shares: {shares}
               </Form.Text>
               <InputGroup>
@@ -67,7 +67,7 @@ export const Withdraw = () => {
                 />
                 <InputGroup.Text
                   style={{ width: "100px" }}
-                  className="justify-content-center border-danger text-light bg-secondary"
+                  className="justify-content-center border-danger purple bg-lt-g"
                 >
                   Shares
                 </InputGroup.Text>

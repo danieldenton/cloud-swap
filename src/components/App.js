@@ -44,7 +44,7 @@ function App() {
   }, []);
 
   return (
-    <Container className="bg-secondary" style={{ height: '100%'}}>
+    <Container className="bg-lt-g" style={{ height: '100%'}}>
       <HashRouter>
         <Navigation />
         <hr />
