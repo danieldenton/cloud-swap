@@ -10,12 +10,11 @@ import Spinner from "react-bootstrap/Spinner";
 
 import {
   removeLiquidity,
-  loadShares,
   loadBalances,
-} from "../../store/interactions";
+} from "../store/interactions";
 
-import Alert from "../Alert";
-import { RootState } from "../../types/state";
+import Alert from "./Alert";
+import { RootState } from "../types/state";
 
 export const Withdraw = () => {
   const [amount, setAmount] = useState(0);

@@ -44,7 +44,7 @@ background-color: blac;
           src={logo}
           width="50"
           height="50"
-          style={{ borderRadius: '100%', border: 'solid purple 2px'}}
+          style={{ borderRadius: "100%", border: "solid purple 2px" }}
           className="d-inline-block align-top mx-3"
         />
         <Navbar.Brand className="purple fw-bold" href="#">
@@ -54,7 +54,7 @@ background-color: blac;
         <Navbar.Collapse id="nav" className="justify-content-end">
           <div className="d-flex justify-content-end mt-3 bg-lt-g border-danger">
             <Form.Select
-            className="border-primary purple fw-bold"
+              className="border-primary purple fw-bold"
               aria-label="Network Selector"
               value={config[chainId] ? `0x${chainId.toString(16)}` : `0`}
               onChange={handleNetwork}
@@ -82,7 +82,12 @@ background-color: blac;
               </Navbar.Text>
             ) : (
               <Button
-                className="bg-danger border-danger text-dark"
+                className="purple fw-bold"
+                style={{
+                  backgroundColor: "#D8BFD8",
+                  border: "solid 2px purple",
+                  borderRadius: "10px",
+                }}
                 onClick={handleConnect}
               >
                 Connect

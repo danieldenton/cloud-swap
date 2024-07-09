@@ -10,7 +10,6 @@ import Spinner from "react-bootstrap/Spinner";
 
 import {
   removeLiquidity,
-  loadShares,
   loadBalances,
 } from "../store/interactions";
 
