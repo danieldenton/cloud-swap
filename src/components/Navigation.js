@@ -44,7 +44,7 @@ background-color: blac;
           src={logo}
           width="50"
           height="50"
-          style={{ borderRadius: '100%'}}
+          style={{ borderRadius: '100%', border: 'solid purple 2px'}}
           className="d-inline-block align-top mx-3"
         />
         <Navbar.Brand className="purple fw-bold" href="#">
