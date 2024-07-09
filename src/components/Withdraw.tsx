@@ -8,10 +8,7 @@ import Button from "react-bootstrap/Button";
 import Row from "react-bootstrap/Row";
 import Spinner from "react-bootstrap/Spinner";
 
-import {
-  removeLiquidity,
-  loadBalances,
-} from "../store/interactions";
+import { removeLiquidity, loadBalances } from "../store/interactions";
 
 import Alert from "./Alert";
 import { RootState } from "../types/state";
@@ -31,12 +28,23 @@ export const Withdraw = () => {
   const isWithdrawing = useSelector(
     (state: RootState) => state.amm.withdrawing.isWithdrawing
   );
-  const isSuccess = useSelector((state: RootState) => state.amm.withdrawing.isSuccess);
+  const isSuccess = useSelector(
+    (state: RootState) => state.amm.withdrawing.isSuccess
+  );
   const transactionHash = useSelector(
     (state: RootState) => state.amm.withdrawing.transactionHash
   );
 
-  const handleWithdraw = async (e) => {
+  const handleInput = (e: React.ChangeEvent<any>) => {
+    const inputValue: number = parseInt(e.target.value);
+    if (e.target.value === "") {
+      setAmount(0);
+      return;
+    }
+    setAmount(inputValue);
+  }
+
+  const handleWithdraw = async (e: React.ChangeEvent<any>) => {
     e.preventDefault();
     setShowAlert(false);
     const _shares = ethers.utils.parseUnits(amount.toString(), "ether");
@@ -54,7 +62,7 @@ export const Withdraw = () => {
           backgroundColor: "#87CEEB",
           border: "solid 2px purple",
           borderRadius: "10px",
-          height: '398px'
+          height: "398px",
         }}
         className="mx-auto px-4"
       >
@@ -75,7 +83,7 @@ export const Withdraw = () => {
                   step="any"
                   id="shares"
                   value={amount === 0 ? "" : amount}
-                  onChange={(e) => setAmount(e.target.value)}
+                  onChange={(e) => handleInput(e)}
                   className="border-primary"
                 />
                 <InputGroup.Text
