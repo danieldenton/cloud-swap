@@ -167,7 +167,7 @@ export const Swap = () => {
               token={inputToken}
               symbols={symbols}
               balances={balances}
-              handleInput={handleInput}
+              handleInputOrValue={handleInput}
             />
             <InputWithSelection
               title={"Output"}
@@ -176,9 +176,8 @@ export const Swap = () => {
               token={outputToken}
               symbols={symbols}
               balances={balances}
-              handleInput={handleInput}
+              handleInputOrValue={outputAmount}
             />
-
             <Row>
               {isSwapping ? (
                 <Spinner

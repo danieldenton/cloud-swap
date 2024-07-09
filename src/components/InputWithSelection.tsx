@@ -12,7 +12,7 @@ export const InputWithSelection = ({
   token,
   symbols,
   balances,
-  handleInput,
+  handleInputOrValue,
 }) => {
   return (
     <Row className="my-3">
@@ -30,15 +30,27 @@ export const InputWithSelection = ({
         </Form.Text>
       </div>
       <InputGroup>
-        <Form.Control
-          type="number"
-          placeholder="0.0"
-          min="0.0"
-          step="any"
-          onChange={title === "Input" ? (e) => handleInput(e) : undefined}
-          disabled={disabled}
-          className="bg-light border-primary purple"
-        />
+        {title === "Input" ? (
+          <Form.Control
+            type="number"
+            placeholder="0.0"
+            min="0.0"
+            step="any"
+            onChange={(e) => handleInputOrValue(e)}
+            disabled={disabled}
+            className="bg-light border-primary purple"
+          />
+        ) : (
+          <Form.Control
+            type="number"
+            placeholder="0.0"
+            min="0.0"
+            step="any"
+            value={handleInputOrValue}
+            disabled={disabled}
+            className="bg-light border-primary purple"
+          />
+        )}
         <DropdownButton
           variant="outline-primary"
           title={token ? token : "Select Token"}
