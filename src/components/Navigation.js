@@ -54,7 +54,7 @@ background-color: blac;
         <Navbar.Collapse id="nav" className="justify-content-end">
           <div className="d-flex justify-content-end mt-3 bg-lt-g border-danger">
             <Form.Select
-            className="bg-danger border-danger purple"
+            className="border-primary purple fw-bold"
               aria-label="Network Selector"
               value={config[chainId] ? `0x${chainId.toString(16)}` : `0`}
               onChange={handleNetwork}
@@ -68,15 +68,15 @@ background-color: blac;
             </Form.Select>
 
             {account ? (
-              <Navbar.Text className="d-flex align-items-center purple">
+              <Navbar.Text className="d-flex align-items-center purple fw-bold">
                 {account.slice(0, 5) + "..." + account.slice(38, 42)}
                 <Blockies
                   seed={account}
                   size={10}
                   scale={3}
-                  color="black"
-                  bgColor="red"
-                  spotColor="orange"
+                  color="purple"
+                  bgColor="white"
+                  spotColor="blue"
                   className="identicon mx-2"
                 />
               </Navbar.Text>
