@@ -16,8 +16,8 @@ import Alert from "./Alert";
 import { RootState } from "../types/state";
 
 export const Swap = () => {
-  const [inputToken, setInputToken] = useState(null);
-  const [outputToken, setOutputToken] = useState(null);
+  const [inputToken, setInputToken] = useState("");
+  const [outputToken, setOutputToken] = useState("");
   const [inputAmount, setInputAmount] = useState("");
   const [outputAmount, setOutputAmount] = useState("");
   const [price, setPrice] = useState(0);
@@ -38,7 +38,17 @@ export const Swap = () => {
     (state: RootState) => state.amm.swapping.transactionHash
   );
 
-  const handleInput = async (e) => {
+  const handleInputToken = (e: React.MouseEvent<HTMLElement, MouseEvent>) => {
+    const target = e.target as HTMLButtonElement;
+    setInputToken(target.innerHTML);
+  };
+
+  const handleOutputToken = (e: React.MouseEvent<HTMLElement, MouseEvent>) => {
+    const target = e.target as HTMLButtonElement;
+    setOutputToken(target.innerHTML);
+  };
+
+  const handleInput = async (e: React.ChangeEvent<any>) => {
     if (!outputToken) {
       window.alert("Please select a token");
       return;
@@ -84,7 +94,7 @@ export const Swap = () => {
     }
   };
 
-  const handleSwap = async (e) => {
+  const handleSwap = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setShowAlert(false);
     if (inputToken === outputToken) {
@@ -169,12 +179,12 @@ export const Swap = () => {
                   title={inputToken ? inputToken : "Select Token"}
                 >
                   <Dropdown.Item
-                    onClick={(e) => setInputToken(e.target.innerHTML)}
+                    onClick={(e) => handleInputToken(e)}
                   >
                     RUMP
                   </Dropdown.Item>
                   <Dropdown.Item
-                    onClick={(e) => setInputToken(e.target.innerHTML)}
+                    onClick={(e) => handleInputToken(e)}
                   >
                     USD
                   </Dropdown.Item>
@@ -199,7 +209,7 @@ export const Swap = () => {
                 <Form.Control
                   type="number"
                   placeholder="0.0"
-                  value={outputAmount === 0 ? "" : outputAmount}
+                  value={outputAmount}
                   disabled
                   className="bg-light border-primary"
                 />
@@ -208,12 +218,12 @@ export const Swap = () => {
                   title={outputToken ? outputToken : "Select Token"}
                 >
                   <Dropdown.Item
-                    onClick={(e) => setOutputToken(e.target.innerHTML)}
+                    onClick={(e) => handleOutputToken(e)}
                   >
                     RUMP
                   </Dropdown.Item>
                   <Dropdown.Item
-                    onClick={(e) => setOutputToken(e.target.innerHTML)}
+                    onClick={(e) => handleOutputToken(e)}
                   >
                     USD
                   </Dropdown.Item>

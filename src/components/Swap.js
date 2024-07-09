@@ -65,7 +65,7 @@ export const Swap = () => {
       setOutputAmount(_token2Amount);
       setFee(_fee);
     } else {
-      setInputAmount(e.target.value);
+      setInputAmount(e.target.innerHTML);
       const _token2Amount = ethers.utils.parseUnits(e.target.value, "ether");
       const result = await amm.calculateTokenSwap(
         tokens[1].address,
