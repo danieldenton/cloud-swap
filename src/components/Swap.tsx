@@ -12,6 +12,7 @@ import Spinner from "react-bootstrap/Spinner";
 
 import { swap, loadBalances } from "../store/interactions";
 
+import InputWithSelection from "./inputWithSelection";
 import Alert from "./Alert";
 import { RootState } from "../types/state";
 
@@ -32,8 +33,12 @@ export const Swap = () => {
   const symbols = useSelector((state: RootState) => state.tokens.symbols);
   const balances = useSelector((state: RootState) => state.tokens.balances);
   const amm = useSelector((state: RootState) => state.amm.contract);
-  const isSwapping = useSelector((state: RootState) => state.amm.swapping.isSwapping);
-  const isSuccess = useSelector((state: RootState) => state.amm.swapping.isSuccess);
+  const isSwapping = useSelector(
+    (state: RootState) => state.amm.swapping.isSwapping
+  );
+  const isSuccess = useSelector(
+    (state: RootState) => state.amm.swapping.isSuccess
+  );
   const transactionHash = useSelector(
     (state: RootState) => state.amm.swapping.transactionHash
   );
@@ -56,6 +61,11 @@ export const Swap = () => {
 
     if (inputToken === outputToken) {
       window.alert("Invalid token pair");
+      return;
+    }
+
+    if (inputAmount === "0" || inputAmount === "") {
+      setOutputAmount("");
       return;
     }
 
@@ -141,7 +151,7 @@ export const Swap = () => {
           backgroundColor: "#87CEEB",
           border: "solid 2px purple",
           borderRadius: "10px",
-          height: '398px'
+          height: "398px",
         }}
         className="mx-auto px-4"
       >
@@ -150,86 +160,25 @@ export const Swap = () => {
             onSubmit={handleSwap}
             style={{ maxWidth: "450px", margin: "50px auto" }}
           >
-            <Row className="my-3">
-              <div className="d-flex justify-content-between">
-                <Form.Label className="purple">
-                  <strong>Input:</strong>
-                </Form.Label>
-                <Form.Text className="purple fw-bold">
-                  Balance:{" "}
-                  {inputToken === symbols[0]
-                    ? balances[0]
-                    : inputToken === symbols[1]
-                    ? balances[1]
-                    : 0}
-                </Form.Text>
-              </div>
-              <InputGroup>
-                <Form.Control
-                  type="number"
-                  placeholder="0.0"
-                  min="0.0"
-                  step="any"
-                  onChange={(e) => handleInput(e)}
-                  disabled={!inputToken}
-                  className="bg-light border-primary"
-                />
-                <DropdownButton
-                  variant="outline-primary purple bg-light fw-bold"
-                  title={inputToken ? inputToken : "Select Token"}
-                >
-                  <Dropdown.Item
-                    onClick={(e) => handleInputToken(e)}
-                  >
-                    RUMP
-                  </Dropdown.Item>
-                  <Dropdown.Item
-                    onClick={(e) => handleInputToken(e)}
-                  >
-                    USD
-                  </Dropdown.Item>
-                </DropdownButton>
-              </InputGroup>
-            </Row>
-            <Row className="my-4">
-              <div className="d-flex justify-content-between">
-                <Form.Label className="purple">
-                  <strong>Output:</strong>
-                </Form.Label>
-                <Form.Text className="purple fw-bold">
-                  Balance:{" "}
-                  {outputToken === symbols[0]
-                    ? balances[0]
-                    : outputToken === symbols[1]
-                    ? balances[1]
-                    : 0}
-                </Form.Text>
-              </div>
-              <InputGroup>
-                <Form.Control
-                  type="number"
-                  placeholder="0.0"
-                  value={outputAmount}
-                  disabled
-                  className="bg-light border-primary"
-                />
-                <DropdownButton
-                  variant="outline-primary purple bg-light fw-bold"
-                  title={outputToken ? outputToken : "Select Token"}
-                >
-                  <Dropdown.Item
-                    onClick={(e) => handleOutputToken(e)}
-                  >
-                    RUMP
-                  </Dropdown.Item>
-                  <Dropdown.Item
-                    onClick={(e) => handleOutputToken(e)}
-                  >
-                    USD
-                  </Dropdown.Item>
-                </DropdownButton>
-              </InputGroup>
-            </Row>
+            <InputWithSelection
+              title={"Input"}
+              disabled={!inputToken}
+              handleInputToken={handleInputToken}
+              token={inputToken}
+              symbols={symbols}
+              balances={balances}
+              handleInput={handleInput}
+            />
+            <InputWithSelection
+              title={"Output"}
+              disabled={true}
+              handleInputToken={handleOutputToken}
+              token={outputToken}
+              symbols={symbols}
+              balances={balances}
+              handleInput={handleInput}
+            />
+
             <Row>
               {isSwapping ? (
                 <Spinner

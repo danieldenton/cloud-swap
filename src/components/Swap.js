@@ -49,6 +49,11 @@ export const Swap = () => {
       return;
     }
 
+    if (inputAmount === "0" || inputAmount === "") {
+      setOutputAmount("");
+      return
+    }
+
     if (inputToken === "RUMP") {
       setInputAmount(e.target.value);
       const _token1Amount = ethers.utils.parseUnits(e.target.value, "ether");
@@ -147,7 +152,7 @@ export const Swap = () => {
               token={inputToken}
               symbols={symbols}
               balances={balances}
-              handleInput={handleInput}
+              handleInputOrValue={handleInput}
             />
             <InputWithSelection
               title={"Output"}
@@ -156,7 +161,7 @@ export const Swap = () => {
               token={outputToken}
               symbols={symbols}
               balances={balances}
-              handleInput={handleInput}
+              handleInputOrValue={outputAmount}
             />
             <Row>
               {isSwapping ? (

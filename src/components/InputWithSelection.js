@@ -11,9 +11,8 @@ export const InputWithSelection = ({
   token,
   symbols,
   balances,
-  handleInput,
+  handleInputOrValue,
 }) => {
-  
   return (
     <Row className="my-3">
       <div className="d-flex justify-content-between">
@@ -30,15 +29,27 @@ export const InputWithSelection = ({
         </Form.Text>
       </div>
       <InputGroup>
-        <Form.Control
-          type="number"
-          placeholder="0.0"
-          min="0.0"
-          step="any"
-          onChange={(e) => handleInput(e)}
-          disabled={disabled}
-          className="bg-light border-danger purple"
-        />
+        {title === "Input" ? (
+          <Form.Control
+            type="number"
+            placeholder="0.0"
+            min="0.0"
+            step="any"
+            onChange={(e) => handleInputOrValue(e)}
+            disabled={disabled}
+            className="bg-light border-danger purple"
+          />
+        ) : (
+          <Form.Control
+            type="number"
+            placeholder="0.0"
+            min="0.0"
+            step="any"
+            value={handleInputOrValue}
+            disabled={disabled}
+            className="bg-light border-danger purple"
+          />
+        )}
         <DropdownButton
           variant="outline-secondary"
           title={token ? token : "Select Token"}
