@@ -17,10 +17,10 @@ import Alert from "./Alert";
 export const Swap = () => {
   const [inputToken, setInputToken] = useState(null);
   const [outputToken, setOutputToken] = useState(null);
-  const [inputAmount, setInputAmount] = useState(0);
-  const [outputAmount, setOutputAmount] = useState(0);
+  const [inputAmount, setInputAmount] = useState("");
+  const [outputAmount, setOutputAmount] = useState("");
   const [price, setPrice] = useState(0);
-  const [fee, setFee] = useState(0);
+  const [fee, setFee] = useState("");
   const [showAlert, setShowAlert] = useState(false);
 
   const dispatch = useDispatch();
