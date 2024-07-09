@@ -37,7 +37,11 @@ export const Deposit = () => {
     if (e.target.id === "token1") {
       setToken1Amount(e.target.value);
       const _token1Amount = ethers.utils.parseUnits(e.target.value, "ether");
-      const result = await amm.calculateTokenDeposit(tokens[0].address, _token1Amount, tokens[1].address);
+      const result = await amm.calculateTokenDeposit(
+        tokens[0].address,
+        _token1Amount,
+        tokens[1].address
+      );
       const _token2Amount = ethers.utils.formatUnits(
         result.toString(),
         "ether"
@@ -46,7 +50,11 @@ export const Deposit = () => {
     } else {
       setToken2Amount(e.target.value);
       const _token2Amount = ethers.utils.parseUnits(e.target.value, "ether");
-      const result = await amm.calculateTokenDeposit(tokens[1].address, _token2Amount, tokens[0].address);
+      const result = await amm.calculateTokenDeposit(
+        tokens[1].address,
+        _token2Amount,
+        tokens[0].address
+      );
       const _token1Amount = ethers.utils.formatUnits(
         result.toString(),
         "ether"
@@ -74,14 +82,23 @@ export const Deposit = () => {
 
   return (
     <div>
-      <Card style={{ maxWidth: "450px", height: "394px" }} className="mx-auto px-4 bg-lt-g border-danger">
+      <Card
+        style={{
+          maxWidth: "500px",
+          backgroundColor: "#87CEEB",
+          border: "solid 2px purple",
+          borderRadius: "10px",
+          height: '398px'
+        }}
+        className="mx-auto px-4"
+      >
         {account ? (
           <Form
             onSubmit={handleDeposit}
             style={{ maxWidth: "450px", margin: "50px auto" }}
           >
             <Row className="my-3">
-              <Form.Text className="text-end my-2 purple">
+              <Form.Text className="text-end my-2 purple fw-bold">
                 Balance: {balances[0]}
               </Form.Text>
               <InputGroup>
@@ -93,18 +110,18 @@ export const Deposit = () => {
                   id="token1"
                   onChange={handleAmount}
                   value={token1Amount === 0 ? "" : token1Amount}
-                  className="border-danger"
+                  className="bg-light border-primary"
                 />
                 <InputGroup.Text
                   style={{ width: "100px" }}
-                  className="justify-content-center purple bg-lt-g"
+                  className="justify-content-center purple fw-bold bg-light border-primary"
                 >
                   {symbols && symbols[0]}
                 </InputGroup.Text>
               </InputGroup>
             </Row>
             <Row className="my-3">
-              <Form.Text className="text-end my-2 purple">
+              <Form.Text className="text-end my-2 purple fw-bold">
                 Balance: {balances[1]}
               </Form.Text>
               <InputGroup>
@@ -115,11 +132,11 @@ export const Deposit = () => {
                   id="token2"
                   onChange={handleAmount}
                   value={token2Amount === 0 ? "" : token2Amount}
-                  className="border-danger"
+                  className="border-primary"
                 />
                 <InputGroup.Text
                   style={{ width: "100px" }}
-                  className="justify-content-center border-danger purple bg-lt-g"
+                  className="justify-content-center purple fw-bold bg-light border-primary"
                 >
                   {symbols && symbols[1]}
                 </InputGroup.Text>
@@ -132,7 +149,19 @@ export const Deposit = () => {
                   style={{ display: "block", margin: "0 auto", color: "red" }}
                 />
               ) : (
-                <Button type="submit" className="bg-lt-purple border-lavender" style={{ marginTop: "8px"}}>Deposit</Button>
+                <Button
+                  type="submit"
+                  className="fw-bold"
+                  style={{
+                    backgroundColor: "#D8BFD8",
+                    color: "purple",
+                    border: "solid purple 2px",
+                    borderRadius: "5px",
+                    marginTop: '10px'
+                  }}
+                >
+                  Deposit
+                </Button>
               )}
             </Row>
           </Form>

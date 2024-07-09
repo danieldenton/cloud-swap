@@ -128,7 +128,7 @@ export const Swap = () => {
         style={{
           maxWidth: "500px",
           backgroundColor: "#87CEEB",
-          border: "solid 5px purple",
+          border: "solid 2px purple",
           borderRadius: "10px",
         }}
         className="mx-auto px-4"
@@ -232,7 +232,7 @@ export const Swap = () => {
                     style={{
                       backgroundColor: "#D8BFD8",
                       color: "purple",
-                      border: "solid purple 5px",
+                      border: "solid purple 2px",
                       borderRadius: "5px",
                     }}
                   >

@@ -8,7 +8,11 @@ import Button from "react-bootstrap/Button";
 import Row from "react-bootstrap/Row";
 import Spinner from "react-bootstrap/Spinner";
 
-import { removeLiquidity, loadShares, loadBalances } from "../store/interactions";
+import {
+  removeLiquidity,
+  loadShares,
+  loadBalances,
+} from "../store/interactions";
 
 import Alert from "./Alert";
 
@@ -20,7 +24,7 @@ export const Withdraw = () => {
 
   const provider = useSelector((state) => state.provider.connection);
   const account = useSelector((state) => state.provider.account);
-  const tokens = useSelector((state) => state.tokens.contracts)
+  const tokens = useSelector((state) => state.tokens.contracts);
   const balances = useSelector((state) => state.tokens.balances);
   const amm = useSelector((state) => state.amm.contract);
   const shares = useSelector((state) => state.amm.shares);
@@ -37,21 +41,30 @@ export const Withdraw = () => {
     setShowAlert(false);
     const _shares = ethers.utils.parseUnits(amount.toString(), "ether");
     await removeLiquidity(provider, amm, _shares, dispatch);
-    await loadBalances(amm, tokens, account, dispatch)
+    await loadBalances(amm, tokens, account, dispatch);
     setShowAlert(true);
     setAmount(0);
   };
 
   return (
     <div>
-      <Card style={{ maxWidth: "450px", height: "394px", border: 'solid 2px purple' }} className="mx-auto px-4 bg-lt-g">
+      <Card
+        style={{
+          maxWidth: "500px",
+          backgroundColor: "#87CEEB",
+          border: "solid 2px purple",
+          borderRadius: "10px",
+          height: '398px'
+        }}
+        className="mx-auto px-4"
+      >
         {account ? (
           <Form
             onSubmit={handleWithdraw}
             style={{ maxWidth: "450px", margin: "50px auto" }}
           >
             <Row className="my-3">
-              <Form.Text className="text-end my-2 purple">
+              <Form.Text className="text-end my-2 purple fw-bold">
                 Shares: {shares}
               </Form.Text>
               <InputGroup>
@@ -63,11 +76,11 @@ export const Withdraw = () => {
                   id="shares"
                   value={amount === 0 ? "" : amount}
                   onChange={(e) => setAmount(e.target.value)}
-                  className="border-danger"
+                  className="border-primary"
                 />
                 <InputGroup.Text
                   style={{ width: "100px" }}
-                  className="justify-content-center border-danger purple bg-lt-g"
+                  className="justify-content-center purple fw-bold bg-light border-primary"
                 >
                   Shares
                 </InputGroup.Text>
@@ -78,19 +91,30 @@ export const Withdraw = () => {
                 <Spinner
                   animation="border"
                   style={{ display: "block", margin: "0 auto", color: "red" }}
-                  
                 />
               ) : (
-                <Button type="submit" className="bg-danger border-danger" style={{ marginTop: "8px"}}>Withdraw</Button>
+                <Button
+                  type="submit"
+                  className="fw-bold"
+                  style={{
+                    backgroundColor: "#D8BFD8",
+                    color: "purple",
+                    border: "solid purple 2px",
+                    borderRadius: "5px",
+                    marginTop: "10px",
+                  }}
+                >
+                  Withdraw
+                </Button>
               )}
             </Row>
             <hr />
             <Row>
-              <p>
+              <p className="purple">
                 <strong>RUMP Balance: </strong>
                 {balances[0]}
               </p>
-              <p>
+              <p className="purple">
                 <strong>USD Balance: </strong>
                 {balances[1]}
               </p>

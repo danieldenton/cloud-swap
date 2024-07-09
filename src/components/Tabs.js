@@ -32,7 +32,7 @@ export const Tabs = () => {
        className="purple fw-bold"
         style={
           location.pathname === link.to
-            ? { backgroundColor: "#D8BFD8", color: 'purple', border: "solid 5px purple", borderRadius: '10px'}
+            ? { backgroundColor: "#D8BFD8", color: 'purple', border: "solid 2px purple", borderRadius: '10px'}
             : { backgroundColor: "transparent" }
         }
       >
