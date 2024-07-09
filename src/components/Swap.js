@@ -124,7 +124,7 @@ export const Swap = () => {
 
   return (
     <div>
-      <Card style={{ maxWidth: "450px" }} className="mx-auto px-4 bg-dark border-danger">
+      <Card style={{ maxWidth: "450px" }} className="mx-auto px-4 bg-secondary border-danger">
         {account ? (
           <Form
             onSubmit={handleSwap}
@@ -132,7 +132,7 @@ export const Swap = () => {
           >
             <Row className="my-3">
               <div className="d-flex justify-content-between">
-                <Form.Label className="text-danger">
+                <Form.Label className="text-light">
                   <strong>Input:</strong>
                 </Form.Label>
                 <Form.Text className="text-light">
@@ -155,7 +155,7 @@ export const Swap = () => {
                   className="bg-light border-danger"
                 />
                 <DropdownButton
-                  variant="outline-danger text-light bg-dark"
+                  variant="outline-danger text-light bg-secondary"
                   title={inputToken ? inputToken : "Select Token"}
                 >
                   <Dropdown.Item
@@ -173,7 +173,7 @@ export const Swap = () => {
             </Row>
             <Row className="my-4">
               <div className="d-flex justify-content-between">
-                <Form.Label className="text-danger">
+                <Form.Label className="text-light">
                   <strong>Output:</strong>
                 </Form.Label>
                 <Form.Text className="text-light">
@@ -194,7 +194,7 @@ export const Swap = () => {
                    className="bg-light border-danger"
                 />
                 <DropdownButton
-                 variant="outline-danger text-light bg-dark"
+                 variant="outline-danger text-light bg-secondary"
                   title={outputToken ? outputToken : "Select Token"}
                 >
                   <Dropdown.Item

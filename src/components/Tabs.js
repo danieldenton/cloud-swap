@@ -30,7 +30,7 @@ export const Tabs = () => {
       key={idx}
         to={link.to}
         className={
-          location.pathname === link.to ? "bg-danger text-light" : "text-danger"
+          location.pathname === link.to ? "bg-danger text-light" : "text-light"
         }
       >
         <Nav.Link>{link.text}</Nav.Link>

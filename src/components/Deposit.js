@@ -74,7 +74,7 @@ export const Deposit = () => {
 
   return (
     <div>
-      <Card style={{ maxWidth: "450px", height: "394px" }} className="mx-auto px-4 bg-dark border-danger">
+      <Card style={{ maxWidth: "450px", height: "394px" }} className="mx-auto px-4 bg-secondary border-danger">
         {account ? (
           <Form
             onSubmit={handleDeposit}
@@ -97,7 +97,7 @@ export const Deposit = () => {
                 />
                 <InputGroup.Text
                   style={{ width: "100px" }}
-                  className="justify-content-center border-danger text-light bg-dark"
+                  className="justify-content-center border-danger text-light bg-secondary"
                 >
                   {symbols && symbols[0]}
                 </InputGroup.Text>
@@ -119,7 +119,7 @@ export const Deposit = () => {
                 />
                 <InputGroup.Text
                   style={{ width: "100px" }}
-                  className="justify-content-center border-danger text-light bg-dark"
+                  className="justify-content-center border-danger text-light bg-seconday"
                 >
                   {symbols && symbols[1]}
                 </InputGroup.Text>
