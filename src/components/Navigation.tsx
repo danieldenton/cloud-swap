@@ -1,3 +1,4 @@
+import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import Navbar from "react-bootstrap/Navbar";
 import Form from "react-bootstrap/Form";
@@ -8,12 +9,13 @@ import logo from "../logo.jpg";
 
 import { loadAccount, loadBalances } from "../store/interactions";
 import config from "../config.json";
+import { RootState, Config } from "../types/state";
 
 const Navigation = () => {
-  const chainId = useSelector((state) => state.provider.chainId);
-  const account = useSelector((state) => state.provider.account);
-  const tokens = useSelector((state) => state.tokens.contracts);
-  const amm = useSelector((state) => state.amm.contract);
+  const chainId = useSelector((state: RootState) => state.provider.chainId);
+  const account = useSelector((state: RootState) => state.provider.account);
+  const tokens = useSelector((state: RootState) => state.tokens.contracts);
+  const amm = useSelector((state: RootState) => state.amm.contract);
   const dispatch = useDispatch();
 
   const handleConnect = async () => {
