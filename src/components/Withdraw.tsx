@@ -38,7 +38,7 @@ export const Withdraw = () => {
     setAmount(inputValue);
   };
 
-  const handleWithdraw = async (e: React.ChangeEvent<any>) => {
+  const handleWithdraw = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (amount === 0) {
       window.alert("You need to enter an amount to withdraw");

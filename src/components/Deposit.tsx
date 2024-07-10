@@ -35,7 +35,7 @@ export const Deposit = () => {
     (state: RootState) => state.amm.depositing.transactionHash
   );
 
-  const handleAmount = async (e) => {
+  const handleAmount = async (e: React.ChangeEvent<any>) => {
     if (e.target.id === "token1") {
       setToken1Amount(e.target.value);
       const _token1Amount = ethers.utils.parseUnits(e.target.value, "ether");
