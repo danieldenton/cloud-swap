@@ -50,7 +50,7 @@ export const Swap = () => {
   };
 
   const handleInput = async (e: React.ChangeEvent<any>) => {
-    console.log("hey")
+    console.log(amm)
     if (!outputToken) {
       window.alert("Please select a token");
       return;
