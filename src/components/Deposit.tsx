@@ -111,7 +111,7 @@ export const Deposit = () => {
               shares={null}
               handleAmount={handleAmount}
               tokenAmount={token2Amount}
-              symbol={symbols[2]}/>
+              symbol={symbols[1]}/>
             <Row>
               <ButtonComponent spinner={isDepositing} title={"Deposit"} />
             </Row>
