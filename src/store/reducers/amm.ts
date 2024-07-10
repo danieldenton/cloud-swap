@@ -32,7 +32,7 @@ export const amm = createSlice({
     swapsLoaded: (state, action) => {
       state.swaps = action.payload;
     },
-    depositRequest: (state, action) => {
+    depositRequest: (state) => {
       state.depositing.isDepositing = true;
       state.depositing.isSuccess = false;
       state.depositing.transactionHash = null;
@@ -42,12 +42,12 @@ export const amm = createSlice({
       state.depositing.isSuccess = true;
       state.depositing.transactionHash = action.payload;
     },
-    depositFail: (state, action) => {
+    depositFail: (state) => {
       state.depositing.isDepositing = false;
       state.depositing.isSuccess = false;
       state.depositing.transactionHash = null;
     },
-    swapRequest: (state, action) => {
+    swapRequest: (state) => {
       state.swapping.isSwapping = true;
       state.swapping.isSuccess = false;
       state.swapping.transactionHash = null;
@@ -57,12 +57,12 @@ export const amm = createSlice({
       state.swapping.isSuccess = true;
       state.swapping.transactionHash = action.payload;
     },
-    swapFail: (state, action) => {
+    swapFail: (state) => {
       state.swapping.isSwapping = false;
       state.swapping.isSuccess = false;
       state.swapping.transactionHash = null;
     },
-    withdrawRequest: (state, action) => {
+    withdrawRequest: (state) => {
       state.withdrawing.isWithdrawing = true;
       state.withdrawing.isSuccess = false;
       state.withdrawing.transactionHash = null;
@@ -72,7 +72,7 @@ export const amm = createSlice({
       state.withdrawing.isSuccess = true;
       state.withdrawing.transactionHash = action.payload;
     },
-    withdrawFail: (state, action) => {
+    withdrawFail: (state) => {
       state.withdrawing.isWithdrawing = false;
       state.withdrawing.isSuccess = false;
       state.withdrawing.transactionHash = null;

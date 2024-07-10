@@ -7,7 +7,7 @@ import Blockies from "react-blockies";
 
 import logo from "../logo.jpg";
 
-import { loadAccount, loadBalances } from "../store/interactions";
+import { loadAccount, loadBalances } from "../store/interactions.ts";
 import config from "../config.json";
 import { RootState } from "../types/state";
 

@@ -8,10 +8,10 @@ import Button from "react-bootstrap/Button";
 import Row from "react-bootstrap/Row";
 import Spinner from "react-bootstrap/Spinner";
 
-import { loadBalances, addLiquidity } from "../store/interactions";
+import { loadBalances, addLiquidity } from "../store/interactions.ts";
 import { RootState } from "../types/state";
 
-import Alert from "./Alert";
+import Alert from "./Alert.tsx";
 
 export const Deposit = () => {
   const [token1Amount, setToken1Amount] = useState("");

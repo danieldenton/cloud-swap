@@ -3,15 +3,13 @@ import { useSelector, useDispatch } from "react-redux";
 import { ethers } from "ethers";
 import Card from "react-bootstrap/Card";
 import Form from "react-bootstrap/Form";
-import Button from "react-bootstrap/Button";
 import Row from "react-bootstrap/Row";
-import Spinner from "react-bootstrap/Spinner";
 
-import { swap, loadBalances } from "../store/interactions";
+import { swap, loadBalances } from "../store/interactions.ts";
 
-import InputWithSelection from "./inputWithSelection";
-import ButtonComponent from "./BottonComponent";
-import Alert from "./Alert";
+import InputWithSelection from "./InputWithSelection.tsx"
+import ButtonComponent from "./BottonComponent.tsx";
+import Alert from "./Alert.tsx";
 import { RootState } from "../types/state";
 
 export const Swap = () => {
@@ -52,6 +50,7 @@ export const Swap = () => {
   };
 
   const handleInput = async (e: React.ChangeEvent<any>) => {
+    console.log("hey")
     if (!outputToken) {
       window.alert("Please select a token");
       return;
@@ -79,6 +78,7 @@ export const Swap = () => {
         result[0].toString(),
         "ether"
       );
+      console.log(_token1Amount)
       const _fee = ethers.utils.formatUnits(result[1].toString(), "ether");
 
       setOutputAmount(_token2Amount);
@@ -141,6 +141,36 @@ export const Swap = () => {
     }
   }, [inputToken, outputToken]);
 
+  const alertProps = [
+    {
+      message: "Swap Pending...",
+      transactionHash: "",
+      variant: "info",
+    },
+    {
+      message: "Swap Successful",
+      transactionHash: transactionHash,
+      variant: "success",
+    },
+    {
+      message: "Swap Failed",
+      transactionHash: "",
+      variant: "danger",
+    },
+  ];
+
+  const alerts = alertProps.map((a, idx) => {
+    return (
+      <Alert
+        key={idx}
+        message={a.message}
+        transactionHash={a.transactionHash}
+        variant={a.variant}
+        setShowAlert={setShowAlert}
+      />
+    );
+  });
+
   return (
     <div>
       <Card
@@ -161,7 +191,7 @@ export const Swap = () => {
             <InputWithSelection
               title={"Input"}
               disabled={!inputToken}
-              handleInputToken={handleInputToken}
+              handleToken={handleInputToken}
               token={inputToken}
               symbols={symbols}
               balances={balances}
@@ -170,7 +200,7 @@ export const Swap = () => {
             <InputWithSelection
               title={"Output"}
               disabled={true}
-              handleInputToken={handleOutputToken}
+              handleToken={handleOutputToken}
               token={outputToken}
               symbols={symbols}
               balances={balances}
@@ -202,29 +232,12 @@ export const Swap = () => {
         )}
       </Card>
       {isSwapping ? (
-        <Alert
-          message={"Swap Pending..."}
-          transactionHash={null}
-          variant={"info"}
-          setShowAlert={setShowAlert}
-        />
+        <>{alerts[0]}</>
       ) : isSuccess && showAlert ? (
-        <Alert
-          message={"Swap Successful"}
-          transactionHash={transactionHash}
-          variant={"success"}
-          setShowAlert={setShowAlert}
-        />
+        <>{alerts[1]}</>
       ) : !isSuccess && showAlert ? (
-        <Alert
-          message={"Swap Failed"}
-          transactionHash={null}
-          variant={"danger"}
-          setShowAlert={setShowAlert}
-        />
-      ) : (
-        <></>
-      )}
+        <>{alerts[2]}</>
+      ) : null}
     </div>
   );
 };

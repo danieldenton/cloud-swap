@@ -8,9 +8,9 @@ import Button from "react-bootstrap/Button";
 import Row from "react-bootstrap/Row";
 import Spinner from "react-bootstrap/Spinner";
 
-import { removeLiquidity, loadBalances } from "../store/interactions";
+import { removeLiquidity, loadBalances } from "../store/interactions.ts";
 
-import Alert from "./Alert";
+import Alert from "./Alert.tsx";
 import { RootState } from "../types/state";
 
 export const Withdraw = () => {

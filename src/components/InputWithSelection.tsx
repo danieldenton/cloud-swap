@@ -8,7 +8,7 @@ import Row from "react-bootstrap/Row";
 export const InputWithSelection = ({
   title,
   disabled,
-  handleInputToken,
+  handleToken,
   token,
   symbols,
   balances,
@@ -52,13 +52,13 @@ export const InputWithSelection = ({
           />
         )}
         <DropdownButton
-          variant="outline-primary"
+          variant="outline-primary purple fw-bold"
           title={token ? token : "Select Token"}
         >
-          <Dropdown.Item onClick={(e) => handleInputToken(e)}>
+          <Dropdown.Item onClick={(e) => handleToken(e)}>
             RUMP
           </Dropdown.Item>
-          <Dropdown.Item onClick={(e) => handleInputToken(e)}>
+          <Dropdown.Item onClick={(e) => handleToken(e)}>
             USD
           </Dropdown.Item>
         </DropdownButton>
