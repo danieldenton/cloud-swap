@@ -7,14 +7,17 @@ import Row from "react-bootstrap/Row";
 
 import { swap, loadBalances } from "../store/interactions.ts";
 
-import InputWithSelection from "./InputWithSelection.tsx"
+import InputWithSelection from "./InputWithSelection.tsx";
 import ButtonComponent from "./BottonComponent.tsx";
 import Alert from "./Alert.tsx";
 import { RootState } from "../types/state";
+import { toBeChecked } from "@testing-library/jest-dom/dist/matchers.js";
 
 export const Swap = () => {
   const [inputToken, setInputToken] = useState("");
   const [outputToken, setOutputToken] = useState("");
+  const [inputTokenAddress, setInputTokenAddress] = useState("");
+  const [outputTokenAddress, setOutputTokenAddress] = useState("");
   const [inputAmount, setInputAmount] = useState("");
   const [outputAmount, setOutputAmount] = useState("");
   const [price, setPrice] = useState(0);
@@ -50,54 +53,37 @@ export const Swap = () => {
   };
 
   const handleInput = async (e: React.ChangeEvent<any>) => {
-    console.log(amm)
     if (!outputToken) {
       window.alert("Please select a token");
       return;
     }
-
     if (inputToken === outputToken) {
       window.alert("Invalid token pair");
       return;
     }
-
-    if (inputAmount === "0" || inputAmount === "") {
-      setOutputAmount("");
-      return;
-    }
-
     if (inputToken === "RUMP") {
+      setInputTokenAddress(tokens[0].address);
+      setOutputTokenAddress(tokens[1].address);
+    } else {
+      setInputTokenAddress(tokens[1].address);
+      setOutputTokenAddress(tokens[0].address);
+    }
+    if (e.target.value === "0" || e.target.value === "") {
+      setOutputAmount("");
+    } else {
       setInputAmount(e.target.value);
       const _token1Amount = ethers.utils.parseUnits(e.target.value, "ether");
       const result = await amm.calculateTokenSwap(
-        tokens[0].address,
-        tokens[1].address,
+        inputTokenAddress,
+        outputTokenAddress,
         _token1Amount
       );
       const _token2Amount = ethers.utils.formatUnits(
         result[0].toString(),
         "ether"
       );
-      console.log(_token1Amount)
       const _fee = ethers.utils.formatUnits(result[1].toString(), "ether");
-
       setOutputAmount(_token2Amount);
-      setFee(_fee);
-    } else {
-      setInputAmount(e.target.value);
-      const _token2Amount = ethers.utils.parseUnits(e.target.value, "ether");
-      const result = await amm.calculateTokenSwap(
-        tokens[1].address,
-        tokens[0].address,
-        _token2Amount
-      );
-      const _token1Amount = ethers.utils.formatUnits(
-        result[0].toString(),
-        "ether"
-      );
-      const _fee = ethers.utils.formatUnits(result[1].toString(), "ether");
-
-      setOutputAmount(_token1Amount);
       setFee(_fee);
     }
   };
@@ -109,15 +95,12 @@ export const Swap = () => {
       window.alert("Invalid token pair");
       return;
     }
-
     const _inputAmount = ethers.utils.parseUnits(inputAmount, "ether");
-
     if (inputToken === "RUMP") {
       await swap(provider, amm, tokens[0], tokens[1], _inputAmount, dispatch);
     } else {
       await swap(provider, amm, tokens[1], tokens[0], _inputAmount, dispatch);
     }
-
     await loadBalances(amm, tokens, account, dispatch);
     await getPrice();
     setShowAlert(true);
@@ -195,7 +178,8 @@ export const Swap = () => {
               token={inputToken}
               symbols={symbols}
               balances={balances}
-              handleInputOrValue={handleInput}
+              handleInput={handleInput}
+              value={null}
             />
             <InputWithSelection
               title={"Output"}
@@ -204,7 +188,8 @@ export const Swap = () => {
               token={outputToken}
               symbols={symbols}
               balances={balances}
-              handleInputOrValue={outputAmount}
+              handleInput={null}
+              value={outputAmount}
             />
             <Row>
               <ButtonComponent spinner={isSwapping} title="Swap" />

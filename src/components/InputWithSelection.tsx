@@ -12,8 +12,10 @@ export const InputWithSelection = ({
   token,
   symbols,
   balances,
-  handleInputOrValue,
+  handleInput,
+  value,
 }) => {
+  
   return (
     <Row className="my-3">
       <div className="d-flex justify-content-between">
@@ -36,7 +38,7 @@ export const InputWithSelection = ({
             placeholder="0.0"
             min="0.0"
             step="any"
-            onChange={(e) => handleInputOrValue(e)}
+            onChange={(e) => handleInput(e)}
             disabled={disabled}
             className="bg-light border-primary purple"
           />
@@ -46,7 +48,7 @@ export const InputWithSelection = ({
             placeholder="0.0"
             min="0.0"
             step="any"
-            value={handleInputOrValue}
+            value={value}
             disabled={disabled}
             className="bg-light border-primary purple"
           />

@@ -74,7 +74,6 @@ export const loadAMM = async (
     provider
   );
   dispatch(setContract(amm));
-  console.log("hey", amm)
   return amm;
 };
 
