@@ -9,6 +9,7 @@ import Row from "react-bootstrap/Row";
 import { loadBalances, addLiquidity } from "../store/interactions.ts";
 import { RootState } from "../types/state";
 
+import InputWithoutSelection from "./InputWithoutSelection.tsx";
 import ButtonComponent from "./BottonComponent.tsx";
 import Alert from "./Alert.tsx";
 
@@ -99,51 +100,18 @@ export const Deposit = () => {
             onSubmit={handleDeposit}
             style={{ maxWidth: "450px", margin: "50px auto" }}
           >
-            <Row className="my-3">
-              <Form.Text className="text-end my-2 purple fw-bold">
-                Balance: {balances[0]}
-              </Form.Text>
-              <InputGroup>
-                <Form.Control
-                  type="number"
-                  placeholder="0.0"
-                  min="0.0"
-                  step="any"
-                  id="token1"
-                  onChange={handleAmount}
-                  value={token1Amount === "" ? "" : token1Amount}
-                  className="bg-light border-primary"
-                />
-                <InputGroup.Text
-                  style={{ width: "100px" }}
-                  className="justify-content-center purple fw-bold bg-light border-primary"
-                >
-                  {symbols && symbols[0]}
-                </InputGroup.Text>
-              </InputGroup>
-            </Row>
-            <Row className="my-3">
-              <Form.Text className="text-end my-2 purple fw-bold">
-                Balance: {balances[1]}
-              </Form.Text>
-              <InputGroup>
-                <Form.Control
-                  type="number"
-                  placeholder="0.0"
-                  step="any"
-                  id="token2"
-                  onChange={handleAmount}
-                  value={token2Amount === "" ? "" : token2Amount}
-                  className="border-primary"
-                />
-                <InputGroup.Text
-                  style={{ width: "100px" }}
-                  className="justify-content-center purple fw-bold bg-light border-primary"
-                >
-                  {symbols && symbols[1]}
-                </InputGroup.Text>
-              </InputGroup>
-            </Row>
+            <InputWithoutSelection
+              balance={balances[0]}
+              shares={null}
+              handleAmount={handleAmount}
+              tokenAmount={token1Amount}
+              symbol={symbols[0]}
+            />
+            <InputWithoutSelection balance={balances[1]}
+              shares={null}
+              handleAmount={handleAmount}
+              tokenAmount={token2Amount}
+              symbol={symbols[2]}/>
             <Row>
               <ButtonComponent spinner={isDepositing} title={"Deposit"} />
             </Row>
