@@ -3,10 +3,10 @@ import { useSelector, useDispatch } from "react-redux";
 import { ethers } from "ethers";
 import Card from "react-bootstrap/Card";
 import Form from "react-bootstrap/Form";
-import InputGroup from "react-bootstrap/InputGroup";
 import Row from "react-bootstrap/Row";
 import { removeLiquidity, loadBalances } from "../store/interactions.ts";
 
+import InputWithoutSelection from "./InputWithoutSelection.tsx";
 import ButtonComponent from "./BottonComponent.tsx";
 import Alert from "./Alert.tsx";
 import { RootState } from "../types/state";
@@ -69,29 +69,13 @@ export const Withdraw = () => {
             onSubmit={handleWithdraw}
             style={{ maxWidth: "450px", margin: "50px auto" }}
           >
-            <Row className="my-3">
-              <Form.Text className="text-end my-2 purple fw-bold">
-                Shares: {shares}
-              </Form.Text>
-              <InputGroup>
-                <Form.Control
-                  type="number"
-                  placeholder="0"
-                  min="0.0"
-                  step="any"
-                  id="shares"
-                  value={amount === 0 ? "" : amount}
-                  onChange={(e) => handleInput(e)}
-                  className="border-primary"
-                />
-                <InputGroup.Text
-                  style={{ width: "100px" }}
-                  className="justify-content-center purple fw-bold bg-light border-primary"
-                >
-                  Shares
-                </InputGroup.Text>
-              </InputGroup>
-            </Row>
+            <InputWithoutSelection
+              balance={null}
+              shares={shares}
+              handleAmount={handleInput}
+              tokenAmount={amount}
+              symbol={"Shares"}
+            />
             <Row>
               <ButtonComponent spinner={isWithdrawing} title={"Withdraw"} />
             </Row>

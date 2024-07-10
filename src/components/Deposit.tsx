@@ -3,7 +3,6 @@ import { useSelector, useDispatch } from "react-redux";
 import { ethers } from "ethers";
 import Card from "react-bootstrap/Card";
 import Form from "react-bootstrap/Form";
-import InputGroup from "react-bootstrap/InputGroup";
 import Row from "react-bootstrap/Row";
 
 import { loadBalances, addLiquidity } from "../store/interactions.ts";
