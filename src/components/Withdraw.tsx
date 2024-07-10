@@ -38,13 +38,13 @@ export const Withdraw = () => {
   const handleInput = (e: React.ChangeEvent<any>) => {
     const inputValue: number = parseInt(e.target.value);
     setAmount(inputValue);
-  }
+  };
 
   const handleWithdraw = async (e: React.ChangeEvent<any>) => {
     e.preventDefault();
     if (amount === 0) {
-      window.alert("You need to enter an amount to withdraw")
-      return
+      window.alert("You need to enter an amount to withdraw");
+      return;
     }
     setShowAlert(false);
     const _shares = ethers.utils.parseUnits(amount.toString(), "ether");
@@ -137,30 +137,14 @@ export const Withdraw = () => {
           </p>
         )}
       </Card>
-      {isWithdrawing ? (
-        <Alert
-          message={"Withdraw Pending..."}
-          transactionHash={null}
-          variant={"info"}
-          setShowAlert={setShowAlert}
-        />
-      ) : isSuccess && showAlert ? (
-        <Alert
-          message={"Withdraw Successful"}
-          transactionHash={transactionHash}
-          variant={"success"}
-          setShowAlert={setShowAlert}
-        />
-      ) : !isSuccess && showAlert ? (
-        <Alert
-          message={"Withdraw Failed"}
-          transactionHash={null}
-          variant={"danger"}
-          setShowAlert={setShowAlert}
-        />
-      ) : (
-        <></>
-      )}
+      <Alert
+        title={"Withdraw"}
+        transactionHash={transactionHash}
+        setShowAlert={setShowAlert}
+        isAction={isWithdrawing}
+        isSuccess={isSuccess}
+        showAlert={showAlert}
+      />
     </div>
   );
 };

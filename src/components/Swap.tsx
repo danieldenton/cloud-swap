@@ -11,7 +11,6 @@ import InputWithSelection from "./InputWithSelection.tsx";
 import ButtonComponent from "./BottonComponent.tsx";
 import Alert from "./Alert.tsx";
 import { RootState } from "../types/state";
-import { toBeChecked } from "@testing-library/jest-dom/dist/matchers.js";
 
 export const Swap = () => {
   const [inputToken, setInputToken] = useState("");
@@ -124,36 +123,6 @@ export const Swap = () => {
     }
   }, [inputToken, outputToken]);
 
-  const alertProps = [
-    {
-      message: "Swap Pending...",
-      transactionHash: "",
-      variant: "info",
-    },
-    {
-      message: "Swap Successful",
-      transactionHash: transactionHash,
-      variant: "success",
-    },
-    {
-      message: "Swap Failed",
-      transactionHash: "",
-      variant: "danger",
-    },
-  ];
-
-  const alerts = alertProps.map((a, idx) => {
-    return (
-      <Alert
-        key={idx}
-        message={a.message}
-        transactionHash={a.transactionHash}
-        variant={a.variant}
-        setShowAlert={setShowAlert}
-      />
-    );
-  });
-
   return (
     <div>
       <Card
@@ -216,13 +185,14 @@ export const Swap = () => {
           </p>
         )}
       </Card>
-      {isSwapping ? (
-        <>{alerts[0]}</>
-      ) : isSuccess && showAlert ? (
-        <>{alerts[1]}</>
-      ) : !isSuccess && showAlert ? (
-        <>{alerts[2]}</>
-      ) : null}
+      <Alert
+        title={"Swap"}
+        transactionHash={transactionHash}
+        setShowAlert={setShowAlert}
+        isAction={isSwapping}
+        isSuccess={isSuccess}
+        showAlert={showAlert}
+      />
     </div>
   );
 };

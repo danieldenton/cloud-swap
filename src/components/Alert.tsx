@@ -1,31 +1,55 @@
 import React from "react";
-import { Alert as BootstrapAlert } from "react-bootstrap";
 
-interface Props {
-  message: string;
-  transactionHash: string | null;
-  variant: string;
-  setShowAlert: (arg0: boolean) => void;
-}
+import AlertComponent from "./AlertComponent";
 
-const Alert = ({ message, transactionHash, variant, setShowAlert }: Props) => {
+const Alert = ({
+  title,
+  transactionHash,
+  setShowAlert,
+  isAction,
+  isSuccess,
+  showAlert,
+}) => {
+  const alertProps = [
+    {
+      message: `${title} Pending...`,
+      transactionHash: "",
+      variant: "info",
+    },
+    {
+      message: `${title} Successful`,
+      transactionHash: transactionHash,
+      variant: "success",
+    },
+    {
+      message: `${title} Failed`,
+      transactionHash: "",
+      variant: "danger",
+    },
+  ];
+  const alerts = alertProps.map((a, idx) => {
+    return (
+      <AlertComponent
+        key={idx}
+        message={a.message}
+        transactionHash={a.transactionHash}
+        variant={a.variant}
+        setShowAlert={setShowAlert}
+      />
+    );
+  });
+
   return (
-    <BootstrapAlert
-      variant={variant}
-      onClose={() => setShowAlert(false)}
-      dismissible
-      className="alert"
-      style={{ maxWidth: '270px', maxHeight: '150px'}}
-    >
-      <BootstrapAlert.Heading>{message}</BootstrapAlert.Heading>
-      <hr />
-      {transactionHash && (
-        <p>
-          {transactionHash.slice(0, 6) + "..." + transactionHash.slice(60, 66)}
-        </p>
-      )}
-    </BootstrapAlert>
+    <>
+      {isAction ? (
+        <>{alerts[0]}</>
+      ) : isSuccess && showAlert ? (
+        <>{alerts[1]}</>
+      ) : !isSuccess && showAlert ? (
+        <>{alerts[2]}</>
+      ) : null}
+    </>
   );
 };
 
-export default Alert;
+export default Alert
