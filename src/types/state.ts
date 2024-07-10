@@ -9,6 +9,12 @@ export interface ProviderState {
     symbols: string[];
     balances: number[];
   }
+
+  interface Depositing {
+    isDepositing: boolean,
+    isSuccess: boolean,
+    transactionHash: string
+  }
   
   interface Swapping {
     isSwapping: boolean;
@@ -27,6 +33,7 @@ export interface ProviderState {
     shares: number;
     swapping: Swapping;
     withdrawing: Withdrawing;
+    depositing: Depositing
   }
   
   interface Addresses {

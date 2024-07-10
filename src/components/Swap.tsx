@@ -3,9 +3,6 @@ import { useSelector, useDispatch } from "react-redux";
 import { ethers } from "ethers";
 import Card from "react-bootstrap/Card";
 import Form from "react-bootstrap/Form";
-import InputGroup from "react-bootstrap/InputGroup";
-import Dropdown from "react-bootstrap/Dropdown";
-import DropdownButton from "react-bootstrap/DropdownButton";
 import Button from "react-bootstrap/Button";
 import Row from "react-bootstrap/Row";
 import Spinner from "react-bootstrap/Spinner";
@@ -13,6 +10,7 @@ import Spinner from "react-bootstrap/Spinner";
 import { swap, loadBalances } from "../store/interactions";
 
 import InputWithSelection from "./inputWithSelection";
+import ButtonComponent from "./BottonComponent";
 import Alert from "./Alert";
 import { RootState } from "../types/state";
 
@@ -179,25 +177,11 @@ export const Swap = () => {
               handleInputOrValue={outputAmount}
             />
             <Row>
+              <ButtonComponent spinner={isSwapping} title="Swap" />
               {isSwapping ? (
-                <Spinner
-                  animation="border"
-                  style={{ display: "block", margin: "0 auto", color: "red" }}
-                />
+                <></>
               ) : (
                 <>
-                  <Button
-                    type="submit"
-                    className="fw-bold"
-                    style={{
-                      backgroundColor: "#D8BFD8",
-                      color: "purple",
-                      border: "solid purple 2px",
-                      borderRadius: "5px",
-                    }}
-                  >
-                    Swap
-                  </Button>
                   <Form.Text className="purple fw-bold">
                     Exchange Rate: {price}
                   </Form.Text>
