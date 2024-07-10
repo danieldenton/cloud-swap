@@ -1,6 +1,6 @@
 import React from "react";
 
-import AlertComponent from "./AlertComponent";
+import AlertComponent from "./AlertComponent.tsx";
 
 const Alert = ({
   title,
@@ -10,6 +10,7 @@ const Alert = ({
   isSuccess,
   showAlert,
 }) => {
+
   const alertProps = [
     {
       message: `${title} Pending...`,
@@ -27,6 +28,7 @@ const Alert = ({
       variant: "danger",
     },
   ];
+
   const alerts = alertProps.map((a, idx) => {
     return (
       <AlertComponent

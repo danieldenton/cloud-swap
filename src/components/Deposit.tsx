@@ -4,13 +4,12 @@ import { ethers } from "ethers";
 import Card from "react-bootstrap/Card";
 import Form from "react-bootstrap/Form";
 import InputGroup from "react-bootstrap/InputGroup";
-import Button from "react-bootstrap/Button";
 import Row from "react-bootstrap/Row";
-import Spinner from "react-bootstrap/Spinner";
 
 import { loadBalances, addLiquidity } from "../store/interactions.ts";
 import { RootState } from "../types/state";
 
+import ButtonComponent from "./BottonComponent.tsx";
 import Alert from "./Alert.tsx";
 
 export const Deposit = () => {
@@ -146,26 +145,7 @@ export const Deposit = () => {
               </InputGroup>
             </Row>
             <Row>
-              {isDepositing ? (
-                <Spinner
-                  animation="border"
-                  style={{ display: "block", margin: "0 auto", color: "red" }}
-                />
-              ) : (
-                <Button
-                  type="submit"
-                  className="fw-bold"
-                  style={{
-                    backgroundColor: "#D8BFD8",
-                    color: "purple",
-                    border: "solid purple 2px",
-                    borderRadius: "5px",
-                    marginTop: "10px",
-                  }}
-                >
-                  Deposit
-                </Button>
-              )}
+              <ButtonComponent spinner={isDepositing} title={"Deposit"} />
             </Row>
           </Form>
         ) : (

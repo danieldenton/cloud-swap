@@ -8,19 +8,24 @@ interface Props {
   setShowAlert: (arg0: boolean) => void;
 }
 
-const Alert = ({ message, transactionHash, variant, setShowAlert }: Props) => {
+const AlertComponent = ({
+  message,
+  transactionHash,
+  variant,
+  setShowAlert,
+}: Props) => {
   return (
     <BootstrapAlert
       variant={variant}
       onClose={() => setShowAlert(false)}
       dismissible
       className="alert"
-      style={{ maxWidth: '270px', maxHeight: '150px'}}
+      style={{ maxWidth: "270px", maxHeight: "150px" }}
     >
       <BootstrapAlert.Heading>{message}</BootstrapAlert.Heading>
       <hr />
       {transactionHash && (
-        <p>
+        <p style={{ color: "green" }}>
           {transactionHash.slice(0, 6) + "..." + transactionHash.slice(60, 66)}
         </p>
       )}
@@ -28,4 +33,4 @@ const Alert = ({ message, transactionHash, variant, setShowAlert }: Props) => {
   );
 };
 
-export default Alert;
+export default AlertComponent;

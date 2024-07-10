@@ -4,12 +4,10 @@ import { ethers } from "ethers";
 import Card from "react-bootstrap/Card";
 import Form from "react-bootstrap/Form";
 import InputGroup from "react-bootstrap/InputGroup";
-import Button from "react-bootstrap/Button";
 import Row from "react-bootstrap/Row";
-import Spinner from "react-bootstrap/Spinner";
-
 import { removeLiquidity, loadBalances } from "../store/interactions.ts";
 
+import ButtonComponent from "./BottonComponent.tsx";
 import Alert from "./Alert.tsx";
 import { RootState } from "../types/state";
 
@@ -95,26 +93,7 @@ export const Withdraw = () => {
               </InputGroup>
             </Row>
             <Row>
-              {isWithdrawing ? (
-                <Spinner
-                  animation="border"
-                  style={{ display: "block", margin: "0 auto", color: "red" }}
-                />
-              ) : (
-                <Button
-                  type="submit"
-                  className="fw-bold"
-                  style={{
-                    backgroundColor: "#D8BFD8",
-                    color: "purple",
-                    border: "solid purple 2px",
-                    borderRadius: "5px",
-                    marginTop: "10px",
-                  }}
-                >
-                  Withdraw
-                </Button>
-              )}
+              <ButtonComponent spinner={isWithdrawing} title={"Withdraw"} />
             </Row>
             <hr />
             <Row>
