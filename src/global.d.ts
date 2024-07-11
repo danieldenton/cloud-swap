@@ -8,6 +8,8 @@ interface Ethereum {
     ethereum: Ethereum;
   }
 
+  declare module 'ethers'
+
 //   declare module '../store/interactions' {
 //     export function loadAccount(): void; 
 //     export function loadBalances(): void;
