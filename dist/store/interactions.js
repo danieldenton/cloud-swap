@@ -46,9 +46,9 @@ var tokens_1 = require("./reducers/tokens");
 var amm_1 = require("./reducers/amm");
 var Token_json_1 = __importDefault(require("../abis/Token.json"));
 var AMM_json_1 = __importDefault(require("../abis/AMM.json"));
-// import config from "../config.json"
-var hardhatConfig_json_1 = __importDefault(require("../hardhatConfig.json"));
-var config = hardhatConfig_json_1.default;
+var config_json_1 = __importDefault(require("../config.json"));
+// import configData from "../hardhatConfig.json";
+var config = config_json_1.default;
 var loadProvider = function (dispatch) {
     var provider = new ethers_1.providers.Web3Provider(window.ethereum);
     dispatch((0, provider_1.setProvider)(provider));

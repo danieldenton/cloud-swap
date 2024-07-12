@@ -47,9 +47,9 @@ var Button_1 = __importDefault(require("react-bootstrap/Button"));
 var react_blockies_1 = __importDefault(require("react-blockies"));
 var interactions_1 = require("../store/interactions");
 var logo_jpg_1 = __importDefault(require("../logo.jpg"));
-// import config from "../config.json"
-var hardhatConfig_json_1 = __importDefault(require("../hardhatConfig.json"));
-var config = hardhatConfig_json_1.default;
+var config_json_1 = __importDefault(require("../config.json"));
+// import configData from "../hardhatConfig.json";
+var config = config_json_1.default;
 var Navigation = function () {
     var chainId = (0, react_redux_1.useSelector)(function (state) { return state.provider.chainId; });
     var account = (0, react_redux_1.useSelector)(function (state) { return state.provider.account; });
