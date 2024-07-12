@@ -19,6 +19,8 @@ import {
   loadAMM,
 } from "../store/interactions";
 
+declare var window: any
+
 function App() {
   const dispatch = useDispatch();
 
