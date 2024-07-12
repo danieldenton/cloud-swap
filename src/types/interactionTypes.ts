@@ -1,5 +1,3 @@
-import { BigNumber } from "ethers";
-
 export type Dispatch = (action: any) => void;
 
 export type Provider = {
@@ -8,8 +6,8 @@ export type Provider = {
 };
 
 interface AMMConnect {
-  swapToken(tokenGive: string, tokenGet: string, amount: BigNumber): Promise<any>
-  addLiquidity(amount1: BigNumber, amount2: BigNumber): Promise<any>
+  swapToken(tokenGive: string, tokenGet: string, amount: number): Promise<any>
+  addLiquidity(amount1: number, amount2: number): Promise<any>
 }
 
 export type AMM = {
