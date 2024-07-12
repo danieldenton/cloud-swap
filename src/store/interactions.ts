@@ -1,5 +1,5 @@
-import { ethers, providers } from "ethers";
-import { Web3Provider } from "@ethersproject/providers";
+import ethers from "ethers";
+import { JsonRpcProvider } from "@ethersproject/providers";
 import { setProvider, setNetwork, setAccount } from "./reducers/provider";
 import { setContracts, setSymbols, balancesLoaded } from "./reducers/tokens";
 import {
@@ -23,24 +23,14 @@ import { Dispatch, AMM, Provider, IERC20 } from "../types/interactionTypes";
 const config: any = "../config.json";
 declare var window: any;
 type ContractRunner = any;
-declare module 'ethers' {
-  // Augment 'ethers' namespace with the 'providers' namespace
-  namespace providers {
-    // Define the Web3Provider class or any other providers you use
-    export class Web3Provider {
-      constructor(provider: any);
-      // Add other methods or properties as needed
-    }
-  }
-}
 
 export const loadProvider = (dispatch: Dispatch) => {
-  const provider = new providers.Web3Provider(window.ethereum);
+  const provider = new ethers.JsonRpcProvider();
   dispatch(setProvider(provider));
   return provider;
 };
 export const loadNetwork = async (
-  provider: Web3Provider,
+  provider: JsonRpcProvider,
   dispatch: Dispatch
 ) => {
   const { chainId } = await provider.getNetwork();
@@ -135,7 +125,7 @@ export const addLiquidity = async (
 };
 
 export const removeLiquidity = async (
-  provider: Web3Provider,
+  provider: JsonRpcProvider,
   amm: AMM,
   shares: bigint,
   dispatch: Dispatch
@@ -182,7 +172,7 @@ export const swap = async (
 };
 
 export const loadAllSwaps = async (
-  provider: Web3Provider,
+  provider: JsonRpcProvider,
   amm: AMM,
   dispatch: Dispatch
 ) => {
