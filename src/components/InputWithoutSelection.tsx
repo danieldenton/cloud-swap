@@ -3,18 +3,25 @@ import Row from "react-bootstrap/Row";
 import Form from "react-bootstrap/Form";
 import InputGroup from "react-bootstrap/InputGroup";
 
+interface Props {
+  balance: number | null;
+  shares: number | null;
+  handleAmount: (e: React.ChangeEvent<any>) => void;
+  tokenAmount: number | string;
+  symbol: string;
+}
+
 const InputWithoutSelection = ({
   balance,
   shares,
   handleAmount,
   tokenAmount,
   symbol,
-}) => {
+}: Props) => {
   return (
     <Row className="my-3">
       <Form.Text className="text-end my-2 purple fw-bold">
         {balance ? `Balance: ${balance}` : `Shares: ${shares}`}
-        
       </Form.Text>
       <InputGroup>
         <Form.Control
