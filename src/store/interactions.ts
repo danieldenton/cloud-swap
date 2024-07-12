@@ -91,8 +91,8 @@ export const addLiquidity = async (
   provider: Provider,
   amm: AMM,
   tokens: IERC20[],
-  amount1: bigint,
-  amount2: bigint,
+  amount1: BigNumber,
+  amount2: BigNumber,
   dispatch: Dispatch
 ) => {
   try {
