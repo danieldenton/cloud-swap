@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { ethers } from "ethers";
+import { utils } from "ethers";
 import Card from "react-bootstrap/Card";
 import Form from "react-bootstrap/Form";
 import Row from "react-bootstrap/Row";
@@ -38,23 +38,23 @@ export const Deposit = () => {
   const handleAmount = async (e: React.ChangeEvent<any>) => {
     if (e.target.id === "token1") {
       setToken1Amount(e.target.value);
-      const _token1Amount = ethers.utils.parseUnits(e.target.value, "ether");
+      const _token1Amount = utils.parseUnits(e.target.value, "ether");
       const result = await amm.calculateTokenDeposit(
         tokens[0].address,
         _token1Amount,
         tokens[1].address
       );
-      const _token2Amount = ethers.utils.formatUnits(result.toString(), "ether");
+      const _token2Amount = utils.formatUnits(result.toString(), "ether");
       setToken2Amount(_token2Amount);
     } else {
       setToken2Amount(e.target.value);
-      const _token2Amount = ethers.utils.parseUnits(e.target.value, "ether");
+      const _token2Amount = utils.parseUnits(e.target.value, "ether");
       const result = await amm.calculateTokenDeposit(
         tokens[1].address,
         _token2Amount,
         tokens[0].address
       );
-      const _token1Amount = ethers.utils.formatUnits(result.toString(), "ether");
+      const _token1Amount = utils.formatUnits(result.toString(), "ether");
       setToken1Amount(_token1Amount);
     }
   };
@@ -63,8 +63,8 @@ export const Deposit = () => {
     e.preventDefault();
     setShowAlert(false);
 
-    const _token1Amount = ethers.utils.parseUnits(token1Amount, "ether")
-    const _token2Amount = ethers.utils.parseUnits(token2Amount, "ether")
+    const _token1Amount = utils.parseUnits(token1Amount, "ether")
+    const _token2Amount = utils.parseUnits(token2Amount, "ether")
     await addLiquidity(
       provider,
       amm,

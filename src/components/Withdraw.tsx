@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { ethers } from "ethers";
+import { utils } from "ethers";
 import Card from "react-bootstrap/Card";
 import Form from "react-bootstrap/Form";
 import Row from "react-bootstrap/Row";
@@ -45,7 +45,7 @@ export const Withdraw = () => {
       return;
     }
     setShowAlert(false);
-    const _shares = ethers.parseUnits(amount.toString(), "ether");
+    const _shares = utils.parseUnits(amount.toString(), "ether");
     await removeLiquidity(provider, amm, _shares, dispatch);
     await loadBalances(amm, tokens, account, dispatch);
     setShowAlert(true);

@@ -8,7 +8,7 @@ export type Provider = {
 
 interface AMMConnect {
   swapToken(tokenGive: string, tokenGet: string, amount: bigint): Promise<any>;
-  addLiquidity(amount1: BigNumber, amount2: bigint): Promise<any>;
+  addLiquidity(amount1: bigint, amount2: bigint): Promise<any>;
   removeLiquidity(shares: bigint): Promise<any>;
 }
 

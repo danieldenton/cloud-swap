@@ -1,4 +1,4 @@
-import ethers, { BigNumber} from "ethers"
+import { utils, providers, Contract } from "ethers";
 import { Web3Provider } from "@ethersproject/providers";
 import { setProvider, setNetwork, setAccount } from "./reducers/provider";
 import { setContracts, setSymbols, balancesLoaded } from "./reducers/tokens";
@@ -25,7 +25,7 @@ declare var window: any;
 type ContractRunner = any;
 
 export const loadProvider = (dispatch: Dispatch) => {
-  const provider = new ethers.providers.Web3Provider(window.ethereum);
+  const provider = new providers.Web3Provider(window.ethereum);
   dispatch(setProvider(provider));
   return provider;
 };
@@ -42,7 +42,7 @@ export const loadAccount = async (dispatch: Dispatch) => {
   const accounts = await window.ethereum.request({
     method: "eth_requestAccounts",
   });
-  const account = ethers.utils.getAddress(accounts[0]);
+  const account = utils.getAddress(accounts[0]);
   dispatch(setAccount(account));
   return account;
 };
@@ -52,16 +52,8 @@ export const loadTokens = async (
   chainId: number,
   dispatch: Dispatch
 ) => {
-  const rump = new ethers.Contract(
-    config[chainId].rump.address,
-    TOKEN_ABI,
-    provider
-  );
-  const usd = new ethers.Contract(
-    config[chainId].usd.address,
-    TOKEN_ABI,
-    provider
-  );
+  const rump = new Contract(config[chainId].rump.address, TOKEN_ABI, provider);
+  const usd = new Contract(config[chainId].usd.address, TOKEN_ABI, provider);
   dispatch(setContracts([rump, usd]));
   dispatch(setSymbols([await rump.symbol(), await usd.symbol()]));
 };
@@ -71,11 +63,7 @@ export const loadAMM = async (
   chainId: number,
   dispatch: Dispatch
 ) => {
-  const amm = new ethers.Contract(
-    config[chainId].amm.address,
-    AMM_ABI,
-    provider
-  );
+  const amm = new Contract(config[chainId].amm.address, AMM_ABI, provider);
   dispatch(setContract(amm));
   return amm;
 };
@@ -90,20 +78,20 @@ export const loadBalances = async (
   const balance2 = await tokens[1].balanceOf(account);
   dispatch(
     balancesLoaded([
-      ethers.utils.formatUnits(balance1.toString(), "ether"),
-      ethers.utils.formatUnits(balance2.toString(), "ether"),
+      utils.formatUnits(balance1.toString(), "ether"),
+      utils.formatUnits(balance2.toString(), "ether"),
     ])
   );
 
   const shares = await amm.shares(account);
-  dispatch(sharesLoaded(ethers.utils.formatUnits(shares.toString(), "ether")));
+  dispatch(sharesLoaded(utils.formatUnits(shares.toString(), "ether")));
 };
 
 export const addLiquidity = async (
   provider: Provider,
   amm: AMM,
   tokens: IERC20[],
-  amount1: BigNumber,
+  amount1: bigint,
   amount2: bigint,
   dispatch: Dispatch
 ) => {

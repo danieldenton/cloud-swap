@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { ethers } from "ethers";
+import { utils } from "ethers";
 import Card from "react-bootstrap/Card";
 import Form from "react-bootstrap/Form";
 import Row from "react-bootstrap/Row";
@@ -71,17 +71,17 @@ export const Swap = () => {
       setOutputAmount("");
     } else {
       setInputAmount(e.target.value);
-      const _token1Amount = ethers.parseUnits(e.target.value, "ether");
+      const _token1Amount = utils.parseUnits(e.target.value, "ether");
       const result = await amm.calculateTokenSwap(
         inputTokenAddress,
         outputTokenAddress,
         _token1Amount
       );
-      const _token2Amount = ethers.formatUnits(
+      const _token2Amount = utils.formatUnits(
         result[0].toString(),
         "ether"
       );
-      const _fee = ethers.formatUnits(result[1].toString(), "ether");
+      const _fee = utils.formatUnits(result[1].toString(), "ether");
       setOutputAmount(_token2Amount);
       setFee(_fee);
     }
@@ -94,7 +94,7 @@ export const Swap = () => {
       window.alert("Invalid token pair");
       return;
     }
-    const _inputAmount = ethers.parseUnits(inputAmount, "ether");
+    const _inputAmount = utils.parseUnits(inputAmount, "ether");
     if (inputToken === "RUMP") {
       await swap(provider, amm, tokens[0], tokens[1], _inputAmount, dispatch);
     } else {

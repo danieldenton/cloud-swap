@@ -1,8 +1,8 @@
-import { ethers } from "ethers";
+import { utils } from "ethers";
 import { IERC20 } from "./types/interactionTypes";
 
 export const formatEther = (amount: string) => {
-  const formattedEther = ethers.formatUnits(amount.toString(), "ether");
+  const formattedEther = utils.formatUnits(amount.toString(), "ether");
   return formattedEther;
 };
 
@@ -30,7 +30,11 @@ export const formatAddress = (address: string) => {
   return formattedAddy;
 };
 
-export const getSymbol = (token: string, tokens: IERC20[], symbols: string[]) => {
+export const getSymbol = (
+  token: string,
+  tokens: IERC20[],
+  symbols: string[]
+) => {
   if (token === tokens[0].address) {
     return symbols[0];
   } else if (token === tokens[1].address) {
