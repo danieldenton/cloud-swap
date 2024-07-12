@@ -52,18 +52,6 @@ export interface AMMState {
   depositing: Depositing;
 }
 
-interface Addresses {
-  rump: { address: string };
-  usd: { address: string };
-  bloodMoonSwap: { address: string };
-  cloudSwap: { address: string };
-  dexAggregator: { address: string };
-}
-
-export interface Config {
-  [key: number]: Addresses;
-}
-
 export interface RootState {
   provider: ProviderState;
   tokens: TokensState;

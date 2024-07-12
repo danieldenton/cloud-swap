@@ -46,8 +46,10 @@ var Form_1 = __importDefault(require("react-bootstrap/Form"));
 var Button_1 = __importDefault(require("react-bootstrap/Button"));
 var react_blockies_1 = __importDefault(require("react-blockies"));
 var interactions_1 = require("../store/interactions");
-var logo = "../logo.jpg";
-var config = "../config.json";
+var logo_jpg_1 = __importDefault(require("../logo.jpg"));
+// import config from "../config.json"
+var hardhatConfig_json_1 = __importDefault(require("../hardhatConfig.json"));
+var config = hardhatConfig_json_1.default;
 var Navigation = function () {
     var chainId = (0, react_redux_1.useSelector)(function (state) { return state.provider.chainId; });
     var account = (0, react_redux_1.useSelector)(function (state) { return state.provider.account; });
@@ -85,7 +87,7 @@ var Navigation = function () {
     }); };
     return (react_1.default.createElement(react_1.default.Fragment, null,
         react_1.default.createElement(Navbar_1.default, { className: "my-3 bg-lt-g", expand: "lg" },
-            react_1.default.createElement("img", { alt: "logo", src: logo, width: "50", height: "50", style: { borderRadius: "100%", border: "solid purple 2px" }, className: "d-inline-block align-top mx-3" }),
+            react_1.default.createElement("img", { alt: "logo", src: logo_jpg_1.default, width: "50", height: "50", style: { borderRadius: "100%", border: "solid purple 2px" }, className: "d-inline-block align-top mx-3" }),
             react_1.default.createElement(Navbar_1.default.Brand, { className: "purple fw-bold", href: "#" }, "Cloud Swap"),
             react_1.default.createElement(Navbar_1.default.Toggle, { "aria-controls": "nav" }),
             react_1.default.createElement(Navbar_1.default.Collapse, { id: "nav", className: "justify-content-end" },

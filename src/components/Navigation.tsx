@@ -7,9 +7,14 @@ import Blockies from "react-blockies";
 
 import { loadAccount, loadBalances } from "../store/interactions";
 import { RootState } from "../types/state";
+import { Config } from "../types/interactionTypes";
 
-const logo: string = "../logo.jpg";
-const config: string = "../config.json"
+import logo from "../logo.jpg"
+
+// import config from "../config.json"
+import configData from "../hardhatConfig.json";
+const config: Config = configData
+
 declare var window: any;
 
 const Navigation = () => {

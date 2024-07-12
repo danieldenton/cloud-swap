@@ -13,7 +13,12 @@ export const ButtonComponent = ({ spinner, title }: Props) => {
       {spinner ? (
         <Spinner
           animation="border"
-          style={{ display: "block", margin: "0 auto", color: "purple" }}
+          style={{
+            display: "block",
+            margin: "0 auto",
+            color: "purple",
+            marginTop: "25px",
+          }}
         />
       ) : (
         <Button
@@ -24,7 +29,7 @@ export const ButtonComponent = ({ spinner, title }: Props) => {
             color: "purple",
             border: "solid purple 2px",
             borderRadius: "5px",
-            marginTop: '15px'
+            marginTop: "15px",
           }}
         >
           {title}

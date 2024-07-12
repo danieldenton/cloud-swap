@@ -77,7 +77,6 @@ var Deposit = function () {
     var _a = (0, react_1.useState)(""), token1Amount = _a[0], setToken1Amount = _a[1];
     var _b = (0, react_1.useState)(""), token2Amount = _b[0], setToken2Amount = _b[1];
     var _c = (0, react_1.useState)(false), showAlert = _c[0], setShowAlert = _c[1];
-    var _token1Amount, _token2Amount;
     var dispatch = (0, react_redux_1.useDispatch)();
     var provider = (0, react_redux_1.useSelector)(function (state) { return state.provider.connection; });
     var account = (0, react_redux_1.useSelector)(function (state) { return state.provider.account; });
@@ -89,7 +88,7 @@ var Deposit = function () {
     var isSuccess = (0, react_redux_1.useSelector)(function (state) { return state.amm.depositing.isSuccess; });
     var transactionHash = (0, react_redux_1.useSelector)(function (state) { return state.amm.depositing.transactionHash; });
     var handleAmount = function (e) { return __awaiter(void 0, void 0, void 0, function () {
-        var result, token2State, result, token1State;
+        var _token1Amount, result, _token2Amount, _token2Amount, result, _token1Amount;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
@@ -99,9 +98,8 @@ var Deposit = function () {
                     return [4 /*yield*/, amm.calculateTokenDeposit(tokens[0].address, _token1Amount, tokens[1].address)];
                 case 1:
                     result = _a.sent();
-                    _token2Amount = ethers_1.utils.parseUnits(result, "ether");
-                    token2State = ethers_1.utils.formatUnits(result, "ether");
-                    setToken2Amount(token2State);
+                    _token2Amount = ethers_1.utils.formatEther(result);
+                    setToken2Amount(_token2Amount);
                     return [3 /*break*/, 4];
                 case 2:
                     setToken2Amount(e.target.value);
@@ -109,15 +107,15 @@ var Deposit = function () {
                     return [4 /*yield*/, amm.calculateTokenDeposit(tokens[1].address, _token2Amount, tokens[0].address)];
                 case 3:
                     result = _a.sent();
-                    _token1Amount = ethers_1.utils.parseUnits(result, "ether");
-                    token1State = ethers_1.utils.formatUnits(result, "ether");
-                    setToken1Amount(token1State);
+                    _token1Amount = ethers_1.utils.formatEther(result);
+                    setToken1Amount(_token1Amount);
                     _a.label = 4;
                 case 4: return [2 /*return*/];
             }
         });
     }); };
     var handleDeposit = function (e) { return __awaiter(void 0, void 0, void 0, function () {
+        var _token1Amount, _token2Amount;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:

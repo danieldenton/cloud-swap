@@ -8,7 +8,7 @@ export type Provider = {
 
 interface AMMConnect {
   swapToken(tokenGive: string, tokenGet: string, amount: BigNumber): Promise<any>;
-  addLiquidity(amount1: BigNumber, amount2: BigNumber): Promise<any>;
+  addLiquidity(amount1: BigNumber | string, amount2: BigNumber | string) : Promise<any>;
   removeLiquidity(shares: BigNumber): Promise<any>;
 }
 
@@ -28,3 +28,20 @@ export interface IERC20 {
   connect: (signer: { address: string }) => IERC20Connect;
   balanceOf: (account: string) => Promise<number>;
 }
+
+type ChainConfig = {
+  rump: {
+    address: string;
+  };
+  usd: {
+    address: string;
+  };
+  amm: {
+    address: string;
+  };
+};
+
+export type Config = {
+  [chainId: number]: ChainConfig;
+};
+

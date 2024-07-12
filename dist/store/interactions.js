@@ -46,7 +46,9 @@ var tokens_1 = require("./reducers/tokens");
 var amm_1 = require("./reducers/amm");
 var Token_json_1 = __importDefault(require("../abis/Token.json"));
 var AMM_json_1 = __importDefault(require("../abis/AMM.json"));
-var config = "../config.json";
+// import config from "../config.json"
+var hardhatConfig_json_1 = __importDefault(require("../hardhatConfig.json"));
+var config = hardhatConfig_json_1.default;
 var loadProvider = function (dispatch) {
     var provider = new ethers_1.providers.Web3Provider(window.ethereum);
     dispatch((0, provider_1.setProvider)(provider));
@@ -146,13 +148,17 @@ var addLiquidity = function (provider, amm, tokens, amount1, amount2, dispatch) 
             case 1:
                 signer = _a.sent();
                 transaction = void 0;
-                return [4 /*yield*/, tokens[0].connect(signer).approve(amm.address, amount1.toString())];
+                return [4 /*yield*/, tokens[0]
+                        .connect(signer)
+                        .approve(amm.address, amount1.toString())];
             case 2:
                 transaction = _a.sent();
                 return [4 /*yield*/, transaction.wait()];
             case 3:
                 _a.sent();
-                return [4 /*yield*/, tokens[1].connect(signer).approve(amm.address, amount2.toString())];
+                return [4 /*yield*/, tokens[1]
+                        .connect(signer)
+                        .approve(amm.address, amount2.toString())];
             case 4:
                 transaction = _a.sent();
                 return [4 /*yield*/, transaction.wait()];
@@ -213,7 +219,9 @@ var swap = function (provider, amm, tokenGive, tokenGet, amount, dispatch) { ret
                 return [4 /*yield*/, provider.getSigner()];
             case 1:
                 signer = _a.sent();
-                return [4 /*yield*/, tokenGive.connect(signer).approve(amm.address, amount.toString())];
+                return [4 /*yield*/, tokenGive
+                        .connect(signer)
+                        .approve(amm.address, amount.toString())];
             case 2:
                 transaction = _a.sent();
                 return [4 /*yield*/, transaction.wait()];
