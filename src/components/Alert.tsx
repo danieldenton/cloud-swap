@@ -1,6 +1,15 @@
 import React from "react";
 
-import AlertComponent from "./AlertComponent.tsx";
+import AlertComponent from "./AlertComponent";
+
+interface Props {
+  title: string;
+  transactionHash: string;
+  setShowAlert: (arg0: boolean) => void;
+  isAction: boolean;
+  isSuccess: boolean;
+  showAlert: boolean;
+}
 
 const Alert = ({
   title,
@@ -9,8 +18,7 @@ const Alert = ({
   isAction,
   isSuccess,
   showAlert,
-}) => {
-
+}: Props) => {
   const alertProps = [
     {
       message: `${title} Pending...`,
@@ -54,4 +62,4 @@ const Alert = ({
   );
 };
 
-export default Alert
+export default Alert;
