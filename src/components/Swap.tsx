@@ -51,7 +51,7 @@ export const Swap = () => {
     setOutputToken(target.innerHTML);
   };
 
-  const handleInput = async (e: React.ChangeEvent<any>) => {
+  const handleInput = async (e: React.ChangeEvent<HTMLInputElement>) =>  {
     if (!outputToken) {
       window.alert("Please select a token");
       return;
@@ -148,7 +148,7 @@ export const Swap = () => {
               symbols={symbols}
               balances={balances}
               handleInput={handleInput}
-              value={null}
+              value={undefined}
             />
             <InputWithSelection
               title={"Output"}
@@ -157,7 +157,7 @@ export const Swap = () => {
               token={outputToken}
               symbols={symbols}
               balances={balances}
-              handleInput={null}
+              handleInput={handleInput}
               value={outputAmount}
             />
             <Row>

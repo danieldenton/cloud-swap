@@ -5,11 +5,12 @@ import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import Blockies from "react-blockies";
 
-import logo from "../logo.jpg";
-
-import { loadAccount, loadBalances } from "../store/interactions.ts";
-import config from "../config.json";
+import { loadAccount, loadBalances } from "../store/interactions";
 import { RootState } from "../types/state";
+
+const logo: string = "../logo.jpg";
+const config: string = "../config.json"
+declare var window: any;
 
 const Navigation = () => {
   const chainId = useSelector((state: RootState) => state.provider.chainId);
@@ -23,7 +24,7 @@ const Navigation = () => {
     await loadBalances(amm, tokens, account, dispatch);
   };
 
-  const handleNetwork = async (e) => {
+  const handleNetwork = async (e: React.ChangeEvent<HTMLSelectElement>) => {
     console.log(e.target.value, chainId);
     await window.ethereum.request({
       method: "wallet_switchEthereumChain",
