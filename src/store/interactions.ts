@@ -100,9 +100,9 @@ export const addLiquidity = async (
     const signer = await provider.getSigner();
 
     let transaction: any;
-    transaction = await tokens[0].connect(signer).approve(amm.address, amount1);
+    transaction = await tokens[0].connect(signer).approve(amm.address, amount1.toString());
     await transaction.wait();
-    transaction = await tokens[1].connect(signer).approve(amm.address, amount2);
+    transaction = await tokens[1].connect(signer).approve(amm.address, amount2.toString());
     await transaction.wait();
     transaction = await amm.connect(signer).addLiquidity(amount1, amount2);
     await transaction.wait();
