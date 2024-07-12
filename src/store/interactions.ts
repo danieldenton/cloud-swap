@@ -1,4 +1,4 @@
-import { utils, providers, Contract } from "ethers";
+import { utils, providers, Contract, BigNumber } from "ethers";
 import { Web3Provider } from "@ethersproject/providers";
 import { setProvider, setNetwork, setAccount } from "./reducers/provider";
 import { setContracts, setSymbols, balancesLoaded } from "./reducers/tokens";
@@ -115,7 +115,7 @@ export const addLiquidity = async (
 export const removeLiquidity = async (
   provider: Web3Provider,
   amm: AMM,
-  shares: bigint,
+  shares: BigNumber,
   dispatch: Dispatch
 ) => {
   try {
@@ -136,7 +136,7 @@ export const swap = async (
   amm: AMM,
   tokenGive: IERC20,
   tokenGet: IERC20,
-  amount: bigint,
+  amount: BigNumber,
   dispatch: Dispatch
 ) => {
   try {
@@ -144,7 +144,7 @@ export const swap = async (
     let transaction: any;
     const signer = await provider.getSigner();
 
-    transaction = await tokenGive.connect(signer).approve(amm.address, amount);
+    transaction = await tokenGive.connect(signer).approve(amm.address, amount.toString());
     await transaction.wait();
 
     transaction = await amm
