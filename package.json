@@ -53,6 +53,6 @@
   "devDependencies": {
     "@nomicfoundation/hardhat-toolbox": "^1.0.2",
     "hardhat": "^2.10.1",
-    "typescript": "5.1.6"
+    "typescript": "^4.9.5"
   }
 }
