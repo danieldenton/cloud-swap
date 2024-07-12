@@ -112,7 +112,7 @@ function App() {
     }); };
     (0, react_1.useEffect)(function () {
         loadBlockchainData();
-    }, []);
+    });
     return (react_1.default.createElement(react_bootstrap_1.Container, { className: "bg-lt-g", style: { height: '100%' } },
         react_1.default.createElement(react_router_dom_1.HashRouter, null,
             react_1.default.createElement(Navigation_1.default, null),
