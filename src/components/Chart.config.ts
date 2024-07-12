@@ -1,4 +1,4 @@
-export const options = {
+export const options: any = {
   chart: {
     height: 350,
     type: "line",
@@ -61,4 +61,4 @@ export const options = {
   },
 };
 
-export const series = [{ data: [30, 40, 45, 50, 49, 60, 70, 91] }];
+export const series: any = [{ data: [30, 40, 45, 50, 49, 60, 70, 91] }];

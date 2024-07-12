@@ -38,6 +38,7 @@ var Chart_config_1 = require("./Chart.config");
 var utils_1 = require("../utils");
 require("./../App.css");
 var Charts = function () {
+    var _a;
     var dispatch = (0, react_redux_1.useDispatch)();
     var provider = (0, react_redux_1.useSelector)(function (state) { return state.provider.connection; });
     var tokens = (0, react_redux_1.useSelector)(function (state) { return state.tokens.contracts; });
@@ -49,17 +50,16 @@ var Charts = function () {
             (0, interactions_1.loadAllSwaps)(provider, amm, dispatch);
         }
     }, [provider, amm, dispatch]);
-    var tabledSwaps = chart.swaps &&
-        chart.swaps.map(function (swap, idx) {
-            return (react_1.default.createElement("tr", { key: idx },
-                react_1.default.createElement("td", null, (0, utils_1.formatHash)(swap.hash)),
-                react_1.default.createElement("td", null, (0, utils_1.getSymbol)(swap.args.tokenGive, tokens, symbols)),
-                react_1.default.createElement("td", null, (0, utils_1.formatEther)(swap.args.tokenGiveAmount)),
-                react_1.default.createElement("td", null, (0, utils_1.getSymbol)(swap.args.tokenGet, tokens, symbols)),
-                react_1.default.createElement("td", null, (0, utils_1.formatEther)(swap.args.tokenGetAmount)),
-                react_1.default.createElement("td", null, (0, utils_1.formatAddress)(swap.args.swapCaller)),
-                react_1.default.createElement("td", null, (0, utils_1.formatDate)(swap.args.timestamp))));
-        });
+    var tabledSwaps = (_a = chart === null || chart === void 0 ? void 0 : chart.swaps) === null || _a === void 0 ? void 0 : _a.map(function (swap, idx) {
+        return (react_1.default.createElement("tr", { key: idx },
+            react_1.default.createElement("td", null, (0, utils_1.formatHash)(swap.hash)),
+            react_1.default.createElement("td", null, (0, utils_1.getSymbol)(swap.args.tokenGive, tokens, symbols)),
+            react_1.default.createElement("td", null, (0, utils_1.formatEther)(swap.args.tokenGiveAmount)),
+            react_1.default.createElement("td", null, (0, utils_1.getSymbol)(swap.args.tokenGet, tokens, symbols)),
+            react_1.default.createElement("td", null, (0, utils_1.formatEther)(swap.args.tokenGetAmount)),
+            react_1.default.createElement("td", null, (0, utils_1.formatAddress)(swap.args.swapCaller)),
+            react_1.default.createElement("td", null, (0, utils_1.formatDate)(swap.args.timestamp))));
+    });
     return (react_1.default.createElement(react_1.default.Fragment, null, provider && amm ? (react_1.default.createElement("div", null,
         react_1.default.createElement(react_apexcharts_1.default, { options: Chart_config_1.options, series: chart ? chart.series : Chart_config_1.series, type: "line", width: "100%", height: "100%" }),
         react_1.default.createElement("hr", null),

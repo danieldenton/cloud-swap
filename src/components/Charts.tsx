@@ -13,7 +13,7 @@ import {
   formatDate,
   getSymbol,
 } from "../utils";
-import "./../App.css"
+import "./../App.css";
 import { RootState, Swap } from "../types/state";
 
 export const Charts = () => {
@@ -29,25 +29,22 @@ export const Charts = () => {
     if (provider && amm) {
       loadAllSwaps(provider, amm, dispatch);
     }
-    
   }, [provider, amm, dispatch]);
 
-  const tabledSwaps =
-    chart.swaps &&
-    chart.swaps.map((swap: Swap, idx: number) => {
-      return (
-        <tr key={idx}>
-          <td>{formatHash(swap.hash)}</td>
-          <td>{getSymbol(swap.args.tokenGive, tokens, symbols)}</td>
-          <td>{formatEther(swap.args.tokenGiveAmount)}</td>
-          <td>{getSymbol(swap.args.tokenGet, tokens, symbols)}</td>
-          <td>{formatEther(swap.args.tokenGetAmount)}</td>
-          <td>{formatAddress(swap.args.swapCaller)}</td>
-          <td>{formatDate(swap.args.timestamp)}</td>
-        </tr>
-      );
-    });
-    
+  const tabledSwaps = chart?.swaps?.map((swap: Swap, idx: number) => {
+    return (
+      <tr key={idx}>
+        <td>{formatHash(swap.hash)}</td>
+        <td>{getSymbol(swap.args.tokenGive, tokens, symbols)}</td>
+        <td>{formatEther(swap.args.tokenGiveAmount)}</td>
+        <td>{getSymbol(swap.args.tokenGet, tokens, symbols)}</td>
+        <td>{formatEther(swap.args.tokenGetAmount)}</td>
+        <td>{formatAddress(swap.args.swapCaller)}</td>
+        <td>{formatDate(swap.args.timestamp)}</td>
+      </tr>
+    );
+  });
+
   return (
     <>
       {provider && amm ? (
