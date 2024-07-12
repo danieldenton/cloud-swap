@@ -90,8 +90,8 @@ export const loadBalances = async (
   const balance2 = await tokens[1].balanceOf(account);
   dispatch(
     balancesLoaded([
-      ethers.formatUnits(balance1.toString(), "ether"),
-      ethers.formatUnits(balance2.toString(), "ether"),
+      ethers.utils.formatUnits(balance1.toString(), "ether"),
+      ethers.utils.formatUnits(balance2.toString(), "ether"),
     ])
   );
 
