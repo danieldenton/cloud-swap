@@ -45,7 +45,7 @@ export const Withdraw = () => {
       return;
     }
     setShowAlert(false);
-    const _shares = ethers.utils.parseUnits(amount.toString(), "ether");
+    const _shares = ethers.parseUnits(amount.toString(), "ether");
     await removeLiquidity(provider, amm, _shares, dispatch);
     await loadBalances(amm, tokens, account, dispatch);
     setShowAlert(true);
