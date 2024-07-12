@@ -6,19 +6,20 @@ export type Provider = {
 };
 
 interface AMMConnect {
-  swapToken(tokenGive: string, tokenGet: string, amount: number): Promise<any>
-  addLiquidity(amount1: number, amount2: number): Promise<any>
+  swapToken(tokenGive: string, tokenGet: string, amount: bigint): Promise<any>;
+  addLiquidity(amount1: bigint, amount2: bigint): Promise<any>;
+  removeLiquidity(shares: bigint): Promise<any>;
 }
 
 export type AMM = {
   address: string;
   shares: (address: string) => Promise<number>;
-  queryFilter(event: string, num: number, block: number): Promise<any>
-  connect: (signer: { address: string }) => AMMConnect;
+  queryFilter(event: string, num: number, block: number): Promise<any>;
+  connect: (signer: any) => AMMConnect;
 };
 
 interface IERC20Connect {
-  approve: (spender: string, amount: string) => Promise<boolean>;
+  approve: (spender: string, amount: bigint) => Promise<boolean>;
 }
 
 export interface IERC20 {

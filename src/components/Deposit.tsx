@@ -44,10 +44,7 @@ export const Deposit = () => {
         _token1Amount,
         tokens[1].address
       );
-      const _token2Amount = ethers.formatUnits(
-        result.toString(),
-        "ether"
-      );
+      const _token2Amount = ethers.formatUnits(result.toString(), "ether");
       setToken2Amount(_token2Amount);
     } else {
       setToken2Amount(e.target.value);
@@ -57,10 +54,7 @@ export const Deposit = () => {
         _token2Amount,
         tokens[0].address
       );
-      const _token1Amount = ethers.formatUnits(
-        result.toString(),
-        "ether"
-      );
+      const _token1Amount = ethers.formatUnits(result.toString(), "ether");
       setToken1Amount(_token1Amount);
     }
   };
@@ -69,13 +63,14 @@ export const Deposit = () => {
     e.preventDefault();
     setShowAlert(false);
 
-    const _token1Amount = ethers.parseUnits(token1Amount, "ether");
-    const _token2Amount = ethers.parseUnits(token2Amount, "ether");
+    const _token1Amount = ethers.parseUnits(token1Amount, "ether")
+    const _token2Amount = ethers.parseUnits(token2Amount, "ether")
     await addLiquidity(
       provider,
       amm,
       tokens,
-      [_token1Amount, _token2Amount],
+      _token1Amount,
+      _token2Amount,
       dispatch
     );
     await loadBalances(amm, tokens, account, dispatch);
@@ -106,11 +101,13 @@ export const Deposit = () => {
               tokenAmount={token1Amount}
               symbol={symbols[0]}
             />
-            <InputWithoutSelection balance={balances[1]}
+            <InputWithoutSelection
+              balance={balances[1]}
               shares={null}
               handleAmount={handleAmount}
               tokenAmount={token2Amount}
-              symbol={symbols[1]}/>
+              symbol={symbols[1]}
+            />
             <Row>
               <ButtonComponent spinner={isDepositing} title={"Deposit"} />
             </Row>

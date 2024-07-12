@@ -1,4 +1,4 @@
-import { ethers} from "ethers";
+import { ethers, providers } from "ethers";
 import { Web3Provider } from "@ethersproject/providers";
 import { setProvider, setNetwork, setAccount } from "./reducers/provider";
 import { setContracts, setSymbols, balancesLoaded } from "./reducers/tokens";
@@ -20,12 +20,22 @@ import TOKEN_ABI from "../abis/Token.json";
 import AMM_ABI from "../abis/AMM.json";
 import { Dispatch, AMM, Provider, IERC20 } from "../types/interactionTypes";
 
-const config: any = "../config.json"
-declare var window: any
-type ContractRunner = any
+const config: any = "../config.json";
+declare var window: any;
+type ContractRunner = any;
+declare module 'ethers' {
+  // Augment 'ethers' namespace with the 'providers' namespace
+  namespace providers {
+    // Define the Web3Provider class or any other providers you use
+    export class Web3Provider {
+      constructor(provider: any);
+      // Add other methods or properties as needed
+    }
+  }
+}
 
 export const loadProvider = (dispatch: Dispatch) => {
-  const provider = new ethers.providers.Web3Provider(window.ethereum);
+  const provider = new providers.Web3Provider(window.ethereum);
   dispatch(setProvider(provider));
   return provider;
 };
@@ -102,8 +112,9 @@ export const loadBalances = async (
 export const addLiquidity = async (
   provider: Provider,
   amm: AMM,
-  tokens: IERC20,
-  amounts: BigNumber[],
+  tokens: IERC20[],
+  amount1: bigint,
+  amount2: bigint,
   dispatch: Dispatch
 ) => {
   try {
@@ -111,17 +122,11 @@ export const addLiquidity = async (
     const signer = await provider.getSigner();
 
     let transaction: any;
-    transaction = await tokens[0]
-      .connect(signer)
-      .approve(amm.address, amounts[0]);
+    transaction = await tokens[0].connect(signer).approve(amm.address, amount1);
     await transaction.wait();
-    transaction = await tokens[1]
-      .connect(signer)
-      .approve(amm.address, amounts[1]);
+    transaction = await tokens[1].connect(signer).approve(amm.address, amount2);
     await transaction.wait();
-    transaction = await amm
-      .connect(signer)
-      .addLiquidity(amounts[0], amounts[1]);
+    transaction = await amm.connect(signer).addLiquidity(amount1, amount2);
     await transaction.wait();
     dispatch(depositSuccess(transaction.hash));
   } catch (error) {
@@ -129,7 +134,12 @@ export const addLiquidity = async (
   }
 };
 
-export const removeLiquidity = async (provider, amm, shares, dispatch) => {
+export const removeLiquidity = async (
+  provider: Web3Provider,
+  amm: AMM,
+  shares: bigint,
+  dispatch: Dispatch
+) => {
   try {
     dispatch(withdrawRequest());
 
@@ -148,7 +158,7 @@ export const swap = async (
   amm: AMM,
   tokenGive: IERC20,
   tokenGet: IERC20,
-  amount: BigNumber,
+  amount: bigint,
   dispatch: Dispatch
 ) => {
   try {
