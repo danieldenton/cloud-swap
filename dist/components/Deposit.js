@@ -69,10 +69,10 @@ var ethers_1 = require("ethers");
 var Card_1 = __importDefault(require("react-bootstrap/Card"));
 var Form_1 = __importDefault(require("react-bootstrap/Form"));
 var Row_1 = __importDefault(require("react-bootstrap/Row"));
-var interactions_ts_1 = require("../store/interactions.ts");
-var InputWithoutSelection_tsx_1 = __importDefault(require("./InputWithoutSelection.tsx"));
-var BottonComponent_tsx_1 = __importDefault(require("./BottonComponent.tsx"));
-var Alert_tsx_1 = __importDefault(require("./Alert.tsx"));
+var interactions_1 = require("../store/interactions");
+var InputWithoutSelection_1 = __importDefault(require("./InputWithoutSelection"));
+var BottonComponent_1 = __importDefault(require("./BottonComponent"));
+var Alert_1 = __importDefault(require("./Alert"));
 var Deposit = function () {
     var _a = (0, react_1.useState)(""), token1Amount = _a[0], setToken1Amount = _a[1];
     var _b = (0, react_1.useState)(""), token2Amount = _b[0], setToken2Amount = _b[1];
@@ -94,20 +94,20 @@ var Deposit = function () {
                 case 0:
                     if (!(e.target.id === "token1")) return [3 /*break*/, 2];
                     setToken1Amount(e.target.value);
-                    _token1Amount = ethers_1.ethers.utils.parseUnits(e.target.value, "ether");
+                    _token1Amount = ethers_1.ethers.parseUnits(e.target.value, "ether");
                     return [4 /*yield*/, amm.calculateTokenDeposit(tokens[0].address, _token1Amount, tokens[1].address)];
                 case 1:
                     result = _a.sent();
-                    _token2Amount = ethers_1.ethers.utils.formatUnits(result.toString(), "ether");
+                    _token2Amount = ethers_1.ethers.formatUnits(result.toString(), "ether");
                     setToken2Amount(_token2Amount);
                     return [3 /*break*/, 4];
                 case 2:
                     setToken2Amount(e.target.value);
-                    _token2Amount = ethers_1.ethers.utils.parseUnits(e.target.value, "ether");
+                    _token2Amount = ethers_1.ethers.parseUnits(e.target.value, "ether");
                     return [4 /*yield*/, amm.calculateTokenDeposit(tokens[1].address, _token2Amount, tokens[0].address)];
                 case 3:
                     result = _a.sent();
-                    _token1Amount = ethers_1.ethers.utils.formatUnits(result.toString(), "ether");
+                    _token1Amount = ethers_1.ethers.formatUnits(result.toString(), "ether");
                     setToken1Amount(_token1Amount);
                     _a.label = 4;
                 case 4: return [2 /*return*/];
@@ -121,12 +121,12 @@ var Deposit = function () {
                 case 0:
                     e.preventDefault();
                     setShowAlert(false);
-                    _token1Amount = ethers_1.ethers.utils.parseUnits(token1Amount, "ether");
-                    _token2Amount = ethers_1.ethers.utils.parseUnits(token2Amount, "ether");
-                    return [4 /*yield*/, (0, interactions_ts_1.addLiquidity)(provider, amm, tokens, [_token1Amount, _token2Amount], dispatch)];
+                    _token1Amount = ethers_1.ethers.parseUnits(token1Amount, "ether");
+                    _token2Amount = ethers_1.ethers.parseUnits(token2Amount, "ether");
+                    return [4 /*yield*/, (0, interactions_1.addLiquidity)(provider, amm, tokens, [_token1Amount, _token2Amount], dispatch)];
                 case 1:
                     _a.sent();
-                    return [4 /*yield*/, (0, interactions_ts_1.loadBalances)(amm, tokens, account, dispatch)];
+                    return [4 /*yield*/, (0, interactions_1.loadBalances)(amm, tokens, account, dispatch)];
                 case 2:
                     _a.sent();
                     setShowAlert(true);
@@ -142,11 +142,11 @@ var Deposit = function () {
                 borderRadius: "10px",
                 height: "398px",
             }, className: "mx-auto px-4" }, account ? (react_1.default.createElement(Form_1.default, { onSubmit: handleDeposit, style: { maxWidth: "450px", margin: "50px auto" } },
-            react_1.default.createElement(InputWithoutSelection_tsx_1.default, { balance: balances[0], shares: null, handleAmount: handleAmount, tokenAmount: token1Amount, symbol: symbols[0] }),
-            react_1.default.createElement(InputWithoutSelection_tsx_1.default, { balance: balances[1], shares: null, handleAmount: handleAmount, tokenAmount: token2Amount, symbol: symbols[1] }),
+            react_1.default.createElement(InputWithoutSelection_1.default, { balance: balances[0], shares: null, handleAmount: handleAmount, tokenAmount: token1Amount, symbol: symbols[0] }),
+            react_1.default.createElement(InputWithoutSelection_1.default, { balance: balances[1], shares: null, handleAmount: handleAmount, tokenAmount: token2Amount, symbol: symbols[1] }),
             react_1.default.createElement(Row_1.default, null,
-                react_1.default.createElement(BottonComponent_tsx_1.default, { spinner: isDepositing, title: "Deposit" })))) : (react_1.default.createElement("p", { className: "d-flex justify-content-center align-items-center", style: { height: "300px" } }, "Please connect wallet"))),
-        react_1.default.createElement(Alert_tsx_1.default, { title: "Deposit", transactionHash: transactionHash, setShowAlert: setShowAlert, isAction: isDepositing, isSuccess: isSuccess, showAlert: showAlert })));
+                react_1.default.createElement(BottonComponent_1.default, { spinner: isDepositing, title: "Deposit" })))) : (react_1.default.createElement("p", { className: "d-flex justify-content-center align-items-center", style: { height: "300px" } }, "Please connect wallet"))),
+        react_1.default.createElement(Alert_1.default, { title: "Deposit", transactionHash: transactionHash, setShowAlert: setShowAlert, isAction: isDepositing, isSuccess: isSuccess, showAlert: showAlert })));
 };
 exports.Deposit = Deposit;
 exports.default = exports.Deposit;

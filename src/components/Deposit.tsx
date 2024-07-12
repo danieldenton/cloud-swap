@@ -5,12 +5,12 @@ import Card from "react-bootstrap/Card";
 import Form from "react-bootstrap/Form";
 import Row from "react-bootstrap/Row";
 
-import { loadBalances, addLiquidity } from "../store/interactions.ts";
+import { loadBalances, addLiquidity } from "../store/interactions";
 import { RootState } from "../types/state";
 
-import InputWithoutSelection from "./InputWithoutSelection.tsx";
-import ButtonComponent from "./BottonComponent.tsx";
-import Alert from "./Alert.tsx";
+import InputWithoutSelection from "./InputWithoutSelection";
+import ButtonComponent from "./BottonComponent";
+import Alert from "./Alert";
 
 export const Deposit = () => {
   const [token1Amount, setToken1Amount] = useState("");
@@ -38,26 +38,26 @@ export const Deposit = () => {
   const handleAmount = async (e: React.ChangeEvent<any>) => {
     if (e.target.id === "token1") {
       setToken1Amount(e.target.value);
-      const _token1Amount = ethers.utils.parseUnits(e.target.value, "ether");
+      const _token1Amount = ethers.parseUnits(e.target.value, "ether");
       const result = await amm.calculateTokenDeposit(
         tokens[0].address,
         _token1Amount,
         tokens[1].address
       );
-      const _token2Amount = ethers.utils.formatUnits(
+      const _token2Amount = ethers.formatUnits(
         result.toString(),
         "ether"
       );
       setToken2Amount(_token2Amount);
     } else {
       setToken2Amount(e.target.value);
-      const _token2Amount = ethers.utils.parseUnits(e.target.value, "ether");
+      const _token2Amount = ethers.parseUnits(e.target.value, "ether");
       const result = await amm.calculateTokenDeposit(
         tokens[1].address,
         _token2Amount,
         tokens[0].address
       );
-      const _token1Amount = ethers.utils.formatUnits(
+      const _token1Amount = ethers.formatUnits(
         result.toString(),
         "ether"
       );
@@ -65,12 +65,12 @@ export const Deposit = () => {
     }
   };
 
-  const handleDeposit = async (e) => {
+  const handleDeposit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setShowAlert(false);
 
-    const _token1Amount = ethers.utils.parseUnits(token1Amount, "ether");
-    const _token2Amount = ethers.utils.parseUnits(token2Amount, "ether");
+    const _token1Amount = ethers.parseUnits(token1Amount, "ether");
+    const _token2Amount = ethers.parseUnits(token2Amount, "ether");
     await addLiquidity(
       provider,
       amm,
