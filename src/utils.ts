@@ -1,4 +1,3 @@
-
 import { ethers } from "ethers";
 import { IERC20 } from "./types/interactionTypes";
 

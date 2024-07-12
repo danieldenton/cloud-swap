@@ -8,7 +8,13 @@ interface Ethereum {
     ethereum: Ethereum;
   }
 
-  declare module "../utils"
+  declare module "./utils" {
+    export function formatEther(): string
+    export function formatDate(): string
+    export function formatHash(): string
+    export function formatAddress(): string
+    export function getSymbol(): string
+  }
 
 //   declare module '../store/interactions' {
 //     export function loadAccount(): void; 

@@ -10,6 +10,6 @@
       "skipLibCheck": true,
       "resolveJsonModule":true
     },
-    "include": ["src/**/*.ts", "src/**/*.tsx", "src/components/App.tsx", "src/global.d.ts", "src/components/Charts.js"],
+    "include": ["src/**/*.ts", "src/**/*.tsx", "src/components/App.tsx", "src/global.d.ts", "src/components/Charts.tsx"],
     "exclude": ["dist", "node_modules"]
   }

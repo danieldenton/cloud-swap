@@ -1,7 +1,8 @@
 import { createSelector } from "reselect";
+import { RootState, Swap } from "../types/state";
 
-const tokens = (state) => state.tokens.contracts;
-const swaps = (state) => state.amm.swaps;
+const tokens = (state: RootState) => state.tokens.contracts;
+const swaps = (state: RootState) => state.amm.swaps;
 
 export const chartSelector = createSelector(swaps, tokens, (swaps, tokens) => {
   if (!tokens[0] || !tokens[1]) {
@@ -19,7 +20,7 @@ export const chartSelector = createSelector(swaps, tokens, (swaps, tokens) => {
       s.args.tokenGive === tokens[1].address
   );
 
-  const decorateSwap = (swap) => {
+  const decorateSwap = (swap: Swap) => {
     let rate = swap.args.token2Balance / swap.args.token1Balance;
     rate = Math.round(rate * 100000) / 100000;
     return { ...swap, rate };
