@@ -14,14 +14,15 @@ import {
   getSymbol,
 } from "../utils";
 import "./../App.css"
+import { RootState, Swap } from "../types/state";
 
 export const Charts = () => {
   const dispatch = useDispatch();
 
-  const provider = useSelector((state) => state.provider.connection);
-  const tokens = useSelector((state) => state.tokens.contracts);
-  const symbols = useSelector((state) => state.tokens.symbols);
-  const amm = useSelector((state) => state.amm.contract);
+  const provider = useSelector((state: RootState) => state.provider.connection);
+  const tokens = useSelector((state: RootState) => state.tokens.contracts);
+  const symbols = useSelector((state: RootState) => state.tokens.symbols);
+  const amm = useSelector((state: RootState) => state.amm.contract);
   const chart = useSelector(chartSelector);
 
   useEffect(() => {
@@ -33,7 +34,7 @@ export const Charts = () => {
 
   const tabledSwaps =
     chart.swaps &&
-    chart.swaps.map((swap, idx) => {
+    chart.swaps.map((swap: Swap, idx: number) => {
       return (
         <tr key={idx}>
           <td>{formatHash(swap.hash)}</td>

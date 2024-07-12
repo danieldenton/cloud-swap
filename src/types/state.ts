@@ -29,10 +29,14 @@ interface Withdrawing {
 }
 
 export interface Swap {
+  hash: string;
   rate: any;
   args: {
+    swapCaller: string;
     tokenGive: string;
     tokenGet: string;
+    tokenGiveAmount: string;
+    tokenGetAmount: string;
     timestamp: number;
     token1Balance: number;
     token2Balance: number;
