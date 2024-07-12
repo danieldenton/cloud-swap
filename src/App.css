@@ -6,13 +6,9 @@ hr {
     color: purple;
 }
 
-p {
-    color: white;
-    font-size: 15px;
-}
-
 thead {
-    color: purple
+    color: purple;
+    background-color: #87CEEB
 }
 
 tr {

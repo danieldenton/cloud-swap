@@ -13,6 +13,7 @@ import {
   formatDate,
   getSymbol,
 } from "../utils";
+import "./../App.css"
 
 export const Charts = () => {
   const dispatch = useDispatch();

@@ -24,6 +24,7 @@ export const ButtonComponent = ({ spinner, title }: Props) => {
             color: "purple",
             border: "solid purple 2px",
             borderRadius: "5px",
+            marginTop: '15px'
           }}
         >
           {title}
