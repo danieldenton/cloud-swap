@@ -1,4 +1,4 @@
-import ethers from "ethers"
+import ethers, { BigNumber} from "ethers"
 import { Web3Provider } from "@ethersproject/providers";
 import { setProvider, setNetwork, setAccount } from "./reducers/provider";
 import { setContracts, setSymbols, balancesLoaded } from "./reducers/tokens";
@@ -42,7 +42,7 @@ export const loadAccount = async (dispatch: Dispatch) => {
   const accounts = await window.ethereum.request({
     method: "eth_requestAccounts",
   });
-  const account = ethers.getAddress(accounts[0]);
+  const account = ethers.utils.getAddress(accounts[0]);
   dispatch(setAccount(account));
   return account;
 };
@@ -96,14 +96,14 @@ export const loadBalances = async (
   );
 
   const shares = await amm.shares(account);
-  dispatch(sharesLoaded(ethers.formatUnits(shares.toString(), "ether")));
+  dispatch(sharesLoaded(ethers.utils.formatUnits(shares.toString(), "ether")));
 };
 
 export const addLiquidity = async (
   provider: Provider,
   amm: AMM,
   tokens: IERC20[],
-  amount1: bigint,
+  amount1: BigNumber,
   amount2: bigint,
   dispatch: Dispatch
 ) => {
