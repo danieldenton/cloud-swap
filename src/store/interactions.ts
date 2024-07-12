@@ -1,7 +1,7 @@
-import { ethers, BigNumber } from "ethers";
+import { ethers} from "ethers";
 import { Web3Provider } from "@ethersproject/providers";
-import { setProvider, setNetwork, setAccount } from "./reducers/provider.ts";
-import { setContracts, setSymbols, balancesLoaded } from "./reducers/tokens.ts";
+import { setProvider, setNetwork, setAccount } from "./reducers/provider";
+import { setContracts, setSymbols, balancesLoaded } from "./reducers/tokens";
 import {
   setContract,
   sharesLoaded,
@@ -15,11 +15,14 @@ import {
   withdrawRequest,
   withdrawSuccess,
   withdrawFail,
-} from "./reducers/amm.ts";
+} from "./reducers/amm";
 import TOKEN_ABI from "../abis/Token.json";
 import AMM_ABI from "../abis/AMM.json";
 import { Dispatch, AMM, Provider, IERC20 } from "../types/interactionTypes";
-import config from "../config.json";
+
+const config: any = "../config.json"
+declare var window: any
+type ContractRunner = any
 
 export const loadProvider = (dispatch: Dispatch) => {
   const provider = new ethers.providers.Web3Provider(window.ethereum);
@@ -39,13 +42,13 @@ export const loadAccount = async (dispatch: Dispatch) => {
   const accounts = await window.ethereum.request({
     method: "eth_requestAccounts",
   });
-  const account = ethers.utils.getAddress(accounts[0]);
+  const account = ethers.getAddress(accounts[0]);
   dispatch(setAccount(account));
   return account;
 };
 
 export const loadTokens = async (
-  provider: Web3Provider,
+  provider: ContractRunner,
   chainId: number,
   dispatch: Dispatch
 ) => {
@@ -64,7 +67,7 @@ export const loadTokens = async (
 };
 
 export const loadAMM = async (
-  provider: Web3Provider,
+  provider: ContractRunner,
   chainId: number,
   dispatch: Dispatch
 ) => {
@@ -79,7 +82,7 @@ export const loadAMM = async (
 
 export const loadBalances = async (
   amm: AMM,
-  tokens: IERC20,
+  tokens: IERC20[],
   account: string,
   dispatch: Dispatch
 ) => {
@@ -87,13 +90,13 @@ export const loadBalances = async (
   const balance2 = await tokens[1].balanceOf(account);
   dispatch(
     balancesLoaded([
-      ethers.utils.formatUnits(balance1.toString(), "ether"),
-      ethers.utils.formatUnits(balance2.toString(), "ether"),
+      ethers.formatUnits(balance1.toString(), "ether"),
+      ethers.formatUnits(balance2.toString(), "ether"),
     ])
   );
 
   const shares = await amm.shares(account);
-  dispatch(sharesLoaded(ethers.utils.formatUnits(shares.toString(), "ether")));
+  dispatch(sharesLoaded(ethers.formatUnits(shares.toString(), "ether")));
 };
 
 export const addLiquidity = async (

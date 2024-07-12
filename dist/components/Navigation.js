@@ -45,9 +45,9 @@ var Navbar_1 = __importDefault(require("react-bootstrap/Navbar"));
 var Form_1 = __importDefault(require("react-bootstrap/Form"));
 var Button_1 = __importDefault(require("react-bootstrap/Button"));
 var react_blockies_1 = __importDefault(require("react-blockies"));
-var logo_jpg_1 = __importDefault(require("../logo.jpg"));
-var interactions_ts_1 = require("../store/interactions.ts");
-var config_json_1 = __importDefault(require("../config.json"));
+var interactions_1 = require("../store/interactions");
+var logo = "../logo.jpg";
+var config = "../config.json";
 var Navigation = function () {
     var chainId = (0, react_redux_1.useSelector)(function (state) { return state.provider.chainId; });
     var account = (0, react_redux_1.useSelector)(function (state) { return state.provider.account; });
@@ -58,10 +58,10 @@ var Navigation = function () {
         var account;
         return __generator(this, function (_a) {
             switch (_a.label) {
-                case 0: return [4 /*yield*/, (0, interactions_ts_1.loadAccount)(dispatch)];
+                case 0: return [4 /*yield*/, (0, interactions_1.loadAccount)(dispatch)];
                 case 1:
                     account = _a.sent();
-                    return [4 /*yield*/, (0, interactions_ts_1.loadBalances)(amm, tokens, account, dispatch)];
+                    return [4 /*yield*/, (0, interactions_1.loadBalances)(amm, tokens, account, dispatch)];
                 case 2:
                     _a.sent();
                     return [2 /*return*/];
@@ -85,12 +85,12 @@ var Navigation = function () {
     }); };
     return (react_1.default.createElement(react_1.default.Fragment, null,
         react_1.default.createElement(Navbar_1.default, { className: "my-3 bg-lt-g", expand: "lg" },
-            react_1.default.createElement("img", { alt: "logo", src: logo_jpg_1.default, width: "50", height: "50", style: { borderRadius: "100%", border: "solid purple 2px" }, className: "d-inline-block align-top mx-3" }),
+            react_1.default.createElement("img", { alt: "logo", src: logo, width: "50", height: "50", style: { borderRadius: "100%", border: "solid purple 2px" }, className: "d-inline-block align-top mx-3" }),
             react_1.default.createElement(Navbar_1.default.Brand, { className: "purple fw-bold", href: "#" }, "Cloud Swap"),
             react_1.default.createElement(Navbar_1.default.Toggle, { "aria-controls": "nav" }),
             react_1.default.createElement(Navbar_1.default.Collapse, { id: "nav", className: "justify-content-end" },
                 react_1.default.createElement("div", { className: "d-flex justify-content-end mt-3 bg-lt-g border-danger" },
-                    react_1.default.createElement(Form_1.default.Select, { className: "border-primary purple fw-bold", "aria-label": "Network Selector", value: config_json_1.default[chainId] ? "0x".concat(chainId.toString(16)) : "0", onChange: handleNetwork, style: { maxWidth: "200px", marginRight: "20px" } },
+                    react_1.default.createElement(Form_1.default.Select, { className: "border-primary purple fw-bold", "aria-label": "Network Selector", value: config[chainId] ? "0x".concat(chainId.toString(16)) : "0", onChange: handleNetwork, style: { maxWidth: "200px", marginRight: "20px" } },
                         react_1.default.createElement("option", { value: "0", disabled: true }, "Select Network"),
                         react_1.default.createElement("option", { value: "0x7A69" }, "Localhost"),
                         react_1.default.createElement("option", { value: "0xaa36a7" }, "Sepolia")),

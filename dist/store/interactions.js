@@ -41,15 +41,15 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.loadAllSwaps = exports.swap = exports.removeLiquidity = exports.addLiquidity = exports.loadBalances = exports.loadAMM = exports.loadTokens = exports.loadAccount = exports.loadNetwork = exports.loadProvider = void 0;
 var ethers_1 = require("ethers");
-var provider_ts_1 = require("./reducers/provider.ts");
-var tokens_ts_1 = require("./reducers/tokens.ts");
-var amm_ts_1 = require("./reducers/amm.ts");
+var provider_1 = require("./reducers/provider");
+var tokens_1 = require("./reducers/tokens");
+var amm_1 = require("./reducers/amm");
 var Token_json_1 = __importDefault(require("../abis/Token.json"));
 var AMM_json_1 = __importDefault(require("../abis/AMM.json"));
 var config_json_1 = __importDefault(require("../config.json"));
 var loadProvider = function (dispatch) {
     var provider = new ethers_1.ethers.providers.Web3Provider(window.ethereum);
-    dispatch((0, provider_ts_1.setProvider)(provider));
+    dispatch((0, provider_1.setProvider)(provider));
     return provider;
 };
 exports.loadProvider = loadProvider;
@@ -60,7 +60,7 @@ var loadNetwork = function (provider, dispatch) { return __awaiter(void 0, void 
             case 0: return [4 /*yield*/, provider.getNetwork()];
             case 1:
                 chainId = (_a.sent()).chainId;
-                dispatch((0, provider_ts_1.setNetwork)(chainId));
+                dispatch((0, provider_1.setNetwork)(chainId));
                 return [2 /*return*/, chainId];
         }
     });
@@ -75,8 +75,8 @@ var loadAccount = function (dispatch) { return __awaiter(void 0, void 0, void 0,
                 })];
             case 1:
                 accounts = _a.sent();
-                account = ethers_1.ethers.utils.getAddress(accounts[0]);
-                dispatch((0, provider_ts_1.setAccount)(account));
+                account = ethers_1.ethers.getAddress(accounts[0]);
+                dispatch((0, provider_1.setAccount)(account));
                 return [2 /*return*/, account];
         }
     });
@@ -89,9 +89,9 @@ var loadTokens = function (provider, chainId, dispatch) { return __awaiter(void 
             case 0:
                 rump = new ethers_1.ethers.Contract(config_json_1.default[chainId].rump.address, Token_json_1.default, provider);
                 usd = new ethers_1.ethers.Contract(config_json_1.default[chainId].usd.address, Token_json_1.default, provider);
-                dispatch((0, tokens_ts_1.setContracts)([rump, usd]));
+                dispatch((0, tokens_1.setContracts)([rump, usd]));
                 _a = dispatch;
-                _b = tokens_ts_1.setSymbols;
+                _b = tokens_1.setSymbols;
                 return [4 /*yield*/, rump.symbol()];
             case 1:
                 _c = [_d.sent()];
@@ -107,7 +107,7 @@ var loadAMM = function (provider, chainId, dispatch) { return __awaiter(void 0, 
     var amm;
     return __generator(this, function (_a) {
         amm = new ethers_1.ethers.Contract(config_json_1.default[chainId].amm.address, AMM_json_1.default, provider);
-        dispatch((0, amm_ts_1.setContract)(amm));
+        dispatch((0, amm_1.setContract)(amm));
         return [2 /*return*/, amm];
     });
 }); };
@@ -122,14 +122,14 @@ var loadBalances = function (amm, tokens, account, dispatch) { return __awaiter(
                 return [4 /*yield*/, tokens[1].balanceOf(account)];
             case 2:
                 balance2 = _a.sent();
-                dispatch((0, tokens_ts_1.balancesLoaded)([
+                dispatch((0, tokens_1.balancesLoaded)([
                     ethers_1.ethers.utils.formatUnits(balance1.toString(), "ether"),
                     ethers_1.ethers.utils.formatUnits(balance2.toString(), "ether"),
                 ]));
                 return [4 /*yield*/, amm.shares(account)];
             case 3:
                 shares = _a.sent();
-                dispatch((0, amm_ts_1.sharesLoaded)(ethers_1.ethers.utils.formatUnits(shares.toString(), "ether")));
+                dispatch((0, amm_1.sharesLoaded)(ethers_1.ethers.utils.formatUnits(shares.toString(), "ether")));
                 return [2 /*return*/];
         }
     });
@@ -141,7 +141,7 @@ var addLiquidity = function (provider, amm, tokens, amounts, dispatch) { return 
         switch (_a.label) {
             case 0:
                 _a.trys.push([0, 8, , 9]);
-                dispatch((0, amm_ts_1.depositRequest)());
+                dispatch((0, amm_1.depositRequest)());
                 return [4 /*yield*/, provider.getSigner()];
             case 1:
                 signer = _a.sent();
@@ -170,11 +170,11 @@ var addLiquidity = function (provider, amm, tokens, amounts, dispatch) { return 
                 return [4 /*yield*/, transaction.wait()];
             case 7:
                 _a.sent();
-                dispatch((0, amm_ts_1.depositSuccess)(transaction.hash));
+                dispatch((0, amm_1.depositSuccess)(transaction.hash));
                 return [3 /*break*/, 9];
             case 8:
                 error_1 = _a.sent();
-                dispatch((0, amm_ts_1.depositFail)());
+                dispatch((0, amm_1.depositFail)());
                 return [3 /*break*/, 9];
             case 9: return [2 /*return*/];
         }
@@ -187,7 +187,7 @@ var removeLiquidity = function (provider, amm, shares, dispatch) { return __awai
         switch (_a.label) {
             case 0:
                 _a.trys.push([0, 4, , 5]);
-                dispatch((0, amm_ts_1.withdrawRequest)());
+                dispatch((0, amm_1.withdrawRequest)());
                 return [4 /*yield*/, provider.getSigner()];
             case 1:
                 signer = _a.sent();
@@ -197,11 +197,11 @@ var removeLiquidity = function (provider, amm, shares, dispatch) { return __awai
                 return [4 /*yield*/, transaction.wait()];
             case 3:
                 _a.sent();
-                dispatch((0, amm_ts_1.withdrawSuccess)(transaction.hash));
+                dispatch((0, amm_1.withdrawSuccess)(transaction.hash));
                 return [3 /*break*/, 5];
             case 4:
                 error_2 = _a.sent();
-                dispatch((0, amm_ts_1.withdrawFail)());
+                dispatch((0, amm_1.withdrawFail)());
                 return [3 /*break*/, 5];
             case 5: return [2 /*return*/];
         }
@@ -214,7 +214,7 @@ var swap = function (provider, amm, tokenGive, tokenGet, amount, dispatch) { ret
         switch (_a.label) {
             case 0:
                 _a.trys.push([0, 6, , 7]);
-                dispatch((0, amm_ts_1.swapRequest)());
+                dispatch((0, amm_1.swapRequest)());
                 transaction = void 0;
                 return [4 /*yield*/, provider.getSigner()];
             case 1:
@@ -233,11 +233,11 @@ var swap = function (provider, amm, tokenGive, tokenGet, amount, dispatch) { ret
                 return [4 /*yield*/, transaction.wait()];
             case 5:
                 _a.sent();
-                dispatch((0, amm_ts_1.swapSuccess)(transaction.hash));
+                dispatch((0, amm_1.swapSuccess)(transaction.hash));
                 return [3 /*break*/, 7];
             case 6:
                 error_3 = _a.sent();
-                dispatch((0, amm_ts_1.swapFail)());
+                dispatch((0, amm_1.swapFail)());
                 return [3 /*break*/, 7];
             case 7: return [2 /*return*/];
         }
@@ -257,7 +257,7 @@ var loadAllSwaps = function (provider, amm, dispatch) { return __awaiter(void 0,
                 swaps = swapStream.map(function (event) {
                     return { hash: event.transactionHash, args: event.args };
                 });
-                dispatch((0, amm_ts_1.swapsLoaded)(swaps));
+                dispatch((0, amm_1.swapsLoaded)(swaps));
                 return [2 /*return*/];
         }
     });

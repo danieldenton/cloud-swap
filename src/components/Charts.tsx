@@ -23,7 +23,7 @@ export const Charts = () => {
   const tokens = useSelector((state: RootState) => state.tokens.contracts);
   const symbols = useSelector((state: RootState) => state.tokens.symbols);
   const amm = useSelector((state: RootState) => state.amm.contract);
-  const chart = useSelector(chartSelector);
+  const chart = useSelector(chartSelector) as { swaps?: Swap[]; series: any };
 
   useEffect(() => {
     if (provider && amm) {
