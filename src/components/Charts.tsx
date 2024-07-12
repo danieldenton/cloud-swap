@@ -1,18 +1,18 @@
-import { useEffect } from "react";
+import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import Table from "react-bootstrap/Table";
 import Chart from "react-apexcharts";
-import { chartSelector } from "../store/selectors";
+import { chartSelector } from "../store/selectors.js";
 import Loading from "./Loading.tsx";
 import { loadAllSwaps } from "../store/interactions.ts";
-import { options, series } from "./Chart.config";
+import { options, series } from "./Chart.config.js";
 import {
   formatEther,
   formatAddress,
   formatHash,
   formatDate,
   getSymbol,
-} from "../utils";
+} from "../utils.js";
 import "./../App.css"
 
 export const Charts = () => {

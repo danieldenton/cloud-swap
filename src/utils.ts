@@ -1,11 +1,13 @@
 
 import { ethers } from "ethers";
-export const formatEther = (amount) => {
-  const formattedEther = ethers.utils.formatUnits(amount.toString(), "ether");
+import { IERC20 } from "./types/interactionTypes";
+
+export const formatEther = (amount: string) => {
+  const formattedEther = ethers.formatUnits(amount.toString(), "ether");
   return formattedEther;
 };
 
-export const formatDate = (date) => {
+export const formatDate = (date: number) => {
   const formattedDate = new Date(
     Number(date.toString() + "000")
   ).toLocaleDateString(undefined, {
@@ -19,17 +21,17 @@ export const formatDate = (date) => {
   return formattedDate;
 };
 
-export const formatHash = (hash) => {
+export const formatHash = (hash: string) => {
   const formattedString = hash.slice(0, 5) + "..." + hash.slice(61, 66);
   return formattedString;
 };
 
-export const formatAddress = (address) => {
+export const formatAddress = (address: string) => {
   const formattedAddy = address.slice(0, 5) + "..." + address.slice(38, 42);
   return formattedAddy;
 };
 
-export const getSymbol = (token, tokens, symbols) => {
+export const getSymbol = (token: string, tokens: IERC20[], symbols: string[]) => {
   if (token === tokens[0].address) {
     return symbols[0];
   } else if (token === tokens[1].address) {

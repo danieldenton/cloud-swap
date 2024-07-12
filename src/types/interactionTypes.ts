@@ -20,7 +20,7 @@ export type AMM = {
 };
 
 interface IERC20Connect {
-  approve: (spender: string, amount: BigNumber) => Promise<boolean>;
+  approve: (spender: string, amount: string) => Promise<boolean>;
 }
 
 export interface IERC20 {
