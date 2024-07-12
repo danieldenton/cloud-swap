@@ -93,13 +93,50 @@ var Swap = function () {
     var isSwapping = (0, react_redux_1.useSelector)(function (state) { return state.amm.swapping.isSwapping; });
     var isSuccess = (0, react_redux_1.useSelector)(function (state) { return state.amm.swapping.isSuccess; });
     var transactionHash = (0, react_redux_1.useSelector)(function (state) { return state.amm.swapping.transactionHash; });
+    var getPrice = function () { return __awaiter(void 0, void 0, void 0, function () {
+        var _a, _b, _c, _d;
+        return __generator(this, function (_e) {
+            switch (_e.label) {
+                case 0:
+                    if (inputToken === outputToken) {
+                        setPrice(0);
+                        return [2 /*return*/];
+                    }
+                    if (!(inputToken === "RUMP")) return [3 /*break*/, 3];
+                    _a = setPrice;
+                    return [4 /*yield*/, amm.token2Balance()];
+                case 1:
+                    _b = (_e.sent());
+                    return [4 /*yield*/, amm.token1Balance()];
+                case 2:
+                    _a.apply(void 0, [_b / (_e.sent())]);
+                    return [3 /*break*/, 6];
+                case 3:
+                    _c = setPrice;
+                    return [4 /*yield*/, amm.token1Balance()];
+                case 4:
+                    _d = (_e.sent());
+                    return [4 /*yield*/, amm.token2Balance()];
+                case 5:
+                    _c.apply(void 0, [_d / (_e.sent())]);
+                    _e.label = 6;
+                case 6: return [2 /*return*/];
+            }
+        });
+    }); };
     var handleInputToken = function (e) {
         var target = e.target;
         setInputToken(target.innerHTML);
+        if (inputToken && outputToken) {
+            getPrice();
+        }
     };
     var handleOutputToken = function (e) {
         var target = e.target;
         setOutputToken(target.innerHTML);
+        if (inputToken && outputToken) {
+            getPrice();
+        }
     };
     var handleInput = function (e) { return __awaiter(void 0, void 0, void 0, function () {
         var _token1Amount, result, _token2Amount, _fee;
@@ -172,42 +209,6 @@ var Swap = function () {
             }
         });
     }); };
-    var getPrice = function () { return __awaiter(void 0, void 0, void 0, function () {
-        var _a, _b, _c, _d;
-        return __generator(this, function (_e) {
-            switch (_e.label) {
-                case 0:
-                    if (inputToken === outputToken) {
-                        setPrice(0);
-                        return [2 /*return*/];
-                    }
-                    if (!(inputToken === "RUMP")) return [3 /*break*/, 3];
-                    _a = setPrice;
-                    return [4 /*yield*/, amm.token2Balance()];
-                case 1:
-                    _b = (_e.sent());
-                    return [4 /*yield*/, amm.token1Balance()];
-                case 2:
-                    _a.apply(void 0, [_b / (_e.sent())]);
-                    return [3 /*break*/, 6];
-                case 3:
-                    _c = setPrice;
-                    return [4 /*yield*/, amm.token1Balance()];
-                case 4:
-                    _d = (_e.sent());
-                    return [4 /*yield*/, amm.token2Balance()];
-                case 5:
-                    _c.apply(void 0, [_d / (_e.sent())]);
-                    _e.label = 6;
-                case 6: return [2 /*return*/];
-            }
-        });
-    }); };
-    (0, react_1.useEffect)(function () {
-        if (inputToken && outputToken) {
-            getPrice();
-        }
-    }, [inputToken, outputToken]);
     return (react_1.default.createElement("div", null,
         react_1.default.createElement(Card_1.default, { style: {
                 maxWidth: "500px",
