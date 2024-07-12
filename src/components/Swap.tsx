@@ -5,11 +5,11 @@ import Card from "react-bootstrap/Card";
 import Form from "react-bootstrap/Form";
 import Row from "react-bootstrap/Row";
 
-import { swap, loadBalances } from "../store/interactions.ts";
+import { swap, loadBalances } from "../store/interactions";
 
-import InputWithSelection from "./InputWithSelection.tsx";
-import ButtonComponent from "./BottonComponent.tsx";
-import Alert from "./Alert.tsx";
+import InputWithSelection from "./InputWithSelection";
+import ButtonComponent from "./BottonComponent";
+import Alert from "./Alert";
 import { RootState } from "../types/state";
 
 export const Swap = () => {
@@ -71,17 +71,17 @@ export const Swap = () => {
       setOutputAmount("");
     } else {
       setInputAmount(e.target.value);
-      const _token1Amount = ethers.utils.parseUnits(e.target.value, "ether");
+      const _token1Amount = ethers.parseUnits(e.target.value, "ether");
       const result = await amm.calculateTokenSwap(
         inputTokenAddress,
         outputTokenAddress,
         _token1Amount
       );
-      const _token2Amount = ethers.utils.formatUnits(
+      const _token2Amount = ethers.formatUnits(
         result[0].toString(),
         "ether"
       );
-      const _fee = ethers.utils.formatUnits(result[1].toString(), "ether");
+      const _fee = ethers.formatUnits(result[1].toString(), "ether");
       setOutputAmount(_token2Amount);
       setFee(_fee);
     }
@@ -94,7 +94,7 @@ export const Swap = () => {
       window.alert("Invalid token pair");
       return;
     }
-    const _inputAmount = ethers.utils.parseUnits(inputAmount, "ether");
+    const _inputAmount = ethers.parseUnits(inputAmount, "ether");
     if (inputToken === "RUMP") {
       await swap(provider, amm, tokens[0], tokens[1], _inputAmount, dispatch);
     } else {

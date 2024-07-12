@@ -4,11 +4,11 @@ import { ethers } from "ethers";
 import Card from "react-bootstrap/Card";
 import Form from "react-bootstrap/Form";
 import Row from "react-bootstrap/Row";
-import { removeLiquidity, loadBalances } from "../store/interactions.ts";
+import { removeLiquidity, loadBalances } from "../store/interactions";
 
-import InputWithoutSelection from "./InputWithoutSelection.tsx";
-import ButtonComponent from "./BottonComponent.tsx";
-import Alert from "./Alert.tsx";
+import InputWithoutSelection from "./InputWithoutSelection";
+import ButtonComponent from "./BottonComponent";
+import Alert from "./Alert";
 import { RootState } from "../types/state";
 
 export const Withdraw = () => {

@@ -4,12 +4,12 @@ import { useDispatch } from "react-redux";
 import { HashRouter, Routes, Route } from "react-router-dom";
 import "./../App.css"
 
-import Navigation from "./Navigation.tsx";
-import Tabs from "./Tabs.tsx";
-import Swap from "./Swap.tsx";
-import Deposit from "./Deposit.tsx";
+import Navigation from "./Navigation";
+import Tabs from "./Tabs";
+import Swap from "./Swap";
+import Deposit from "./Deposit";
 import Charts from "./Charts";
-import Withdraw from "./Withdraw.tsx";
+import Withdraw from "./Withdraw";
 
 import {
   loadProvider,
@@ -17,7 +17,7 @@ import {
   loadAccount,
   loadTokens,
   loadAMM,
-} from "../store/interactions.ts";
+} from "../store/interactions";
 
 function App() {
   const dispatch = useDispatch();
