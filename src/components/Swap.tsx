@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { utils } from "ethers";
 import Card from "react-bootstrap/Card";
@@ -41,17 +41,35 @@ export const Swap = () => {
     (state: RootState) => state.amm.swapping.transactionHash
   );
 
+  const getPrice = async () => {
+    if (inputToken === outputToken) {
+      setPrice(0);
+      return;
+    }
+    if (inputToken === "RUMP") {
+      setPrice((await amm.token2Balance()) / (await amm.token1Balance()));
+    } else {
+      setPrice((await amm.token1Balance()) / (await amm.token2Balance()));
+    }
+  };
+
   const handleInputToken = (e: React.MouseEvent<HTMLElement, MouseEvent>) => {
     const target = e.target as HTMLButtonElement;
     setInputToken(target.innerHTML);
+    if (inputToken && outputToken) {
+      getPrice();
+    }
   };
 
   const handleOutputToken = (e: React.MouseEvent<HTMLElement, MouseEvent>) => {
     const target = e.target as HTMLButtonElement;
     setOutputToken(target.innerHTML);
+    if (inputToken && outputToken) {
+      getPrice();
+    }
   };
 
-  const handleInput = async (e: React.ChangeEvent<HTMLInputElement>) =>  {
+  const handleInput = async (e: React.ChangeEvent<HTMLInputElement>) => {
     if (!outputToken) {
       window.alert("Please select a token");
       return;
@@ -77,10 +95,7 @@ export const Swap = () => {
         outputTokenAddress,
         _token1Amount
       );
-      const _token2Amount = utils.formatUnits(
-        result[0].toString(),
-        "ether"
-      );
+      const _token2Amount = utils.formatUnits(result[0].toString(), "ether");
       const _fee = utils.formatUnits(result[1].toString(), "ether");
       setOutputAmount(_token2Amount);
       setFee(_fee);
@@ -104,24 +119,6 @@ export const Swap = () => {
     await getPrice();
     setShowAlert(true);
   };
-
-  const getPrice = async () => {
-    if (inputToken === outputToken) {
-      setPrice(0);
-      return;
-    }
-    if (inputToken === "RUMP") {
-      setPrice((await amm.token2Balance()) / (await amm.token1Balance()));
-    } else {
-      setPrice((await amm.token1Balance()) / (await amm.token2Balance()));
-    }
-  };
-
-  useEffect(() => {
-    if (inputToken && outputToken) {
-      getPrice();
-    }
-  }, [inputToken, outputToken]);
 
   return (
     <div>
