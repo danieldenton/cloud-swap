@@ -20,8 +20,8 @@ import TOKEN_ABI from "../abis/Token.json";
 import AMM_ABI from "../abis/AMM.json";
 import { Dispatch, AMM, Provider, IERC20, Config } from "../types/interactionTypes";
 
-// import config from "../config.json"
-import configData from "../hardhatConfig.json";
+import configData from "../config.json"
+// import configData from "../hardhatConfig.json";
 const config: Config = configData
 
 declare var window: any;
