@@ -123,7 +123,7 @@ var Deposit = function () {
                     setShowAlert(false);
                     _token1Amount = ethers_1.ethers.parseUnits(token1Amount, "ether");
                     _token2Amount = ethers_1.ethers.parseUnits(token2Amount, "ether");
-                    return [4 /*yield*/, (0, interactions_1.addLiquidity)(provider, amm, tokens, [_token1Amount, _token2Amount], dispatch)];
+                    return [4 /*yield*/, (0, interactions_1.addLiquidity)(provider, amm, tokens, _token1Amount, _token2Amount, dispatch)];
                 case 1:
                     _a.sent();
                     return [4 /*yield*/, (0, interactions_1.loadBalances)(amm, tokens, account, dispatch)];

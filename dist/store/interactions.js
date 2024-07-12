@@ -40,15 +40,15 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.loadAllSwaps = exports.swap = exports.removeLiquidity = exports.addLiquidity = exports.loadBalances = exports.loadAMM = exports.loadTokens = exports.loadAccount = exports.loadNetwork = exports.loadProvider = void 0;
-var ethers_1 = require("ethers");
+var ethers_1 = __importDefault(require("ethers"));
 var provider_1 = require("./reducers/provider");
 var tokens_1 = require("./reducers/tokens");
 var amm_1 = require("./reducers/amm");
 var Token_json_1 = __importDefault(require("../abis/Token.json"));
 var AMM_json_1 = __importDefault(require("../abis/AMM.json"));
-var config_json_1 = __importDefault(require("../config.json"));
+var config = "../config.json";
 var loadProvider = function (dispatch) {
-    var provider = new ethers_1.ethers.providers.Web3Provider(window.ethereum);
+    var provider = new ethers_1.default.providers.Web3Provider(window.ethereum);
     dispatch((0, provider_1.setProvider)(provider));
     return provider;
 };
@@ -75,7 +75,7 @@ var loadAccount = function (dispatch) { return __awaiter(void 0, void 0, void 0,
                 })];
             case 1:
                 accounts = _a.sent();
-                account = ethers_1.ethers.getAddress(accounts[0]);
+                account = ethers_1.default.getAddress(accounts[0]);
                 dispatch((0, provider_1.setAccount)(account));
                 return [2 /*return*/, account];
         }
@@ -87,8 +87,8 @@ var loadTokens = function (provider, chainId, dispatch) { return __awaiter(void 
     return __generator(this, function (_d) {
         switch (_d.label) {
             case 0:
-                rump = new ethers_1.ethers.Contract(config_json_1.default[chainId].rump.address, Token_json_1.default, provider);
-                usd = new ethers_1.ethers.Contract(config_json_1.default[chainId].usd.address, Token_json_1.default, provider);
+                rump = new ethers_1.default.Contract(config[chainId].rump.address, Token_json_1.default, provider);
+                usd = new ethers_1.default.Contract(config[chainId].usd.address, Token_json_1.default, provider);
                 dispatch((0, tokens_1.setContracts)([rump, usd]));
                 _a = dispatch;
                 _b = tokens_1.setSymbols;
@@ -106,7 +106,7 @@ exports.loadTokens = loadTokens;
 var loadAMM = function (provider, chainId, dispatch) { return __awaiter(void 0, void 0, void 0, function () {
     var amm;
     return __generator(this, function (_a) {
-        amm = new ethers_1.ethers.Contract(config_json_1.default[chainId].amm.address, AMM_json_1.default, provider);
+        amm = new ethers_1.default.Contract(config[chainId].amm.address, AMM_json_1.default, provider);
         dispatch((0, amm_1.setContract)(amm));
         return [2 /*return*/, amm];
     });
@@ -123,19 +123,19 @@ var loadBalances = function (amm, tokens, account, dispatch) { return __awaiter(
             case 2:
                 balance2 = _a.sent();
                 dispatch((0, tokens_1.balancesLoaded)([
-                    ethers_1.ethers.utils.formatUnits(balance1.toString(), "ether"),
-                    ethers_1.ethers.utils.formatUnits(balance2.toString(), "ether"),
+                    ethers_1.default.formatUnits(balance1.toString(), "ether"),
+                    ethers_1.default.formatUnits(balance2.toString(), "ether"),
                 ]));
                 return [4 /*yield*/, amm.shares(account)];
             case 3:
                 shares = _a.sent();
-                dispatch((0, amm_1.sharesLoaded)(ethers_1.ethers.utils.formatUnits(shares.toString(), "ether")));
+                dispatch((0, amm_1.sharesLoaded)(ethers_1.default.formatUnits(shares.toString(), "ether")));
                 return [2 /*return*/];
         }
     });
 }); };
 exports.loadBalances = loadBalances;
-var addLiquidity = function (provider, amm, tokens, amounts, dispatch) { return __awaiter(void 0, void 0, void 0, function () {
+var addLiquidity = function (provider, amm, tokens, amount1, amount2, dispatch) { return __awaiter(void 0, void 0, void 0, function () {
     var signer, transaction, error_1;
     return __generator(this, function (_a) {
         switch (_a.label) {
@@ -146,25 +146,19 @@ var addLiquidity = function (provider, amm, tokens, amounts, dispatch) { return 
             case 1:
                 signer = _a.sent();
                 transaction = void 0;
-                return [4 /*yield*/, tokens[0]
-                        .connect(signer)
-                        .approve(amm.address, amounts[0])];
+                return [4 /*yield*/, tokens[0].connect(signer).approve(amm.address, amount1)];
             case 2:
                 transaction = _a.sent();
                 return [4 /*yield*/, transaction.wait()];
             case 3:
                 _a.sent();
-                return [4 /*yield*/, tokens[1]
-                        .connect(signer)
-                        .approve(amm.address, amounts[1])];
+                return [4 /*yield*/, tokens[1].connect(signer).approve(amm.address, amount2)];
             case 4:
                 transaction = _a.sent();
                 return [4 /*yield*/, transaction.wait()];
             case 5:
                 _a.sent();
-                return [4 /*yield*/, amm
-                        .connect(signer)
-                        .addLiquidity(amounts[0], amounts[1])];
+                return [4 /*yield*/, amm.connect(signer).addLiquidity(amount1, amount2)];
             case 6:
                 transaction = _a.sent();
                 return [4 /*yield*/, transaction.wait()];

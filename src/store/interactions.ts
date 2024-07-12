@@ -1,5 +1,5 @@
-import ethers from "ethers";
-import { JsonRpcProvider } from "@ethersproject/providers";
+import ethers from "ethers"
+import { Web3Provider } from "@ethersproject/providers";
 import { setProvider, setNetwork, setAccount } from "./reducers/provider";
 import { setContracts, setSymbols, balancesLoaded } from "./reducers/tokens";
 import {
@@ -25,12 +25,12 @@ declare var window: any;
 type ContractRunner = any;
 
 export const loadProvider = (dispatch: Dispatch) => {
-  const provider = new ethers.JsonRpcProvider();
+  const provider = new ethers.providers.Web3Provider(window.ethereum);
   dispatch(setProvider(provider));
   return provider;
 };
 export const loadNetwork = async (
-  provider: JsonRpcProvider,
+  provider: Web3Provider,
   dispatch: Dispatch
 ) => {
   const { chainId } = await provider.getNetwork();
@@ -125,7 +125,7 @@ export const addLiquidity = async (
 };
 
 export const removeLiquidity = async (
-  provider: JsonRpcProvider,
+  provider: Web3Provider,
   amm: AMM,
   shares: bigint,
   dispatch: Dispatch
@@ -172,7 +172,7 @@ export const swap = async (
 };
 
 export const loadAllSwaps = async (
-  provider: JsonRpcProvider,
+  provider: Web3Provider,
   amm: AMM,
   dispatch: Dispatch
 ) => {
