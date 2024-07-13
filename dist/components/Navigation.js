@@ -95,7 +95,7 @@ var Navigation = function () {
                     react_1.default.createElement(Form_1.default.Select, { className: "border-primary purple fw-bold", "aria-label": "Network Selector", value: config[chainId] ? "0x".concat(chainId.toString(16)) : "0", onChange: handleNetwork, style: { maxWidth: "200px", marginRight: "20px" } },
                         react_1.default.createElement("option", { value: "0", disabled: true }, "Select Network"),
                         react_1.default.createElement("option", { value: "0x7A69" }, "Localhost"),
-                        react_1.default.createElement("option", { value: "0xaa36a7" }, "Sepolia")),
+                        react_1.default.createElement("option", { value: "11155111" }, "Sepolia")),
                     account ? (react_1.default.createElement(Navbar_1.default.Text, { className: "d-flex align-items-center purple fw-bold" },
                         account.slice(0, 5) + "..." + account.slice(38, 42),
                         react_1.default.createElement(react_blockies_1.default, { seed: account, size: 10, scale: 3, color: "purple", bgColor: "white", spotColor: "blue", className: "identicon mx-2" }))) : (react_1.default.createElement(Button_1.default, { className: "purple fw-bold", style: {
