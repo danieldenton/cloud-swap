@@ -1,5 +1,5 @@
 const hre = require("hardhat");
-const config = require("../src/config.json");
+const config = require("../src/hardhatConfig.json");
 
 const tokens = (n) => {
   return hre.ethers.utils.parseUnits(n.toString(), "ether");
@@ -23,6 +23,7 @@ async function main() {
     "Token",
     config[chainId].rump.address
   );
+
   console.log(`Rumpelina Token fetched at: ${rump.address}\n`);
   const usd = await hre.ethers.getContractAt(
     "Token",
