@@ -12,7 +12,7 @@ import { Config } from "../types/interactionTypes";
 import logo from "../logo.jpg"
 
 // import configData from "../config.json"
-import configData from "../hardhatConfig.json";
+import configData from "../localhostConfig.json";
 const config: Config = configData
 
 declare var window: any;
