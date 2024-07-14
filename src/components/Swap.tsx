@@ -167,7 +167,7 @@ export const Swap = () => {
                     Exchange Rate: {price}
                   </Form.Text>
                   <Form.Text className="purple fw-bold">
-                    .03% Fee: {fee}
+                    .03% Fee: {fee}{" "}{inputToken}
                   </Form.Text>
                 </>
               )}
