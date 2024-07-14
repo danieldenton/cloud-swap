@@ -51,7 +51,7 @@ async function main() {
     "AMM",
     config[chainId].amm.address
   );
-  console.log(`AMM Token fetched at: ${amm.address}\n`);
+  console.log(`AMM fetched at: ${amm.address}\n`);
 
   transaction = await rump.connect(deployer).approve(amm.address, amount);
   await transaction.wait();
@@ -62,6 +62,8 @@ async function main() {
   transaction = await amm.connect(deployer).addLiquidity(amount, amount);
   await transaction.wait();
 
+  const dShares = await amm.shares(deployer.address)
+  console.log(`Deployer shares: ${dShares}`)
   console.log("Swapping");
   transaction = await rump.connect(investor1).approve(amm.address, tokens(10));
   await transaction.wait();
