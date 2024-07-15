@@ -21,7 +21,7 @@ const InputWithoutSelection = ({
   return (
     <Row className="my-3">
       <Form.Text className="text-end my-2 purple fw-bold">
-        {balance ? `Balance: ${balance}` : `Shares: ${shares}`}
+        {symbol !== "Shares" ? `Balance: ${balance}` : `Shares: ${shares}`}
       </Form.Text>
       <InputGroup>
         <Form.Control
