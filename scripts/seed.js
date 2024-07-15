@@ -1,5 +1,5 @@
 const hre = require("hardhat");
-const config = require("../src/hardhatConfig.json");
+const config = require("../src/localhostConfig.json");
 
 const tokens = (n) => {
   return hre.ethers.utils.parseUnits(n.toString(), "ether");

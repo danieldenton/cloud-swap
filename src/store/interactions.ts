@@ -44,7 +44,7 @@ export const loadNetwork = async (
 ) => {
   const { chainId } = await provider.getNetwork();
   dispatch(setNetwork(chainId));
-  config = chainId === 111155111 ? sepoliaData : localhostData;
+  config = chainId === 11155111 ? sepoliaData : localhostData;
   return chainId;
 };
 

@@ -22,7 +22,7 @@ const Navigation = () => {
   const tokens = useSelector((state: RootState) => state.tokens.contracts);
   const amm = useSelector((state: RootState) => state.amm.contract);
   const dispatch = useDispatch();
-  const config: Config = chainId === 111155111 ? sepoliaData : localhostData;
+  const config: Config = chainId === 11155111 ? sepoliaData : localhostData;
 
   const handleConnect = async () => {
     const account = await loadAccount(dispatch);
