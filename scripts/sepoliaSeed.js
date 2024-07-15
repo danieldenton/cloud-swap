@@ -10,8 +10,9 @@ const shares = ether;
 
 async function main() {
   console.log(`fetching accounts and network \n`);
-  const deployer = "0x10a845E3ff30B4c88aF9E097f092382BfFC0b7eb" //Bootcamp
-  const investor1 = "0x1Eb4f0eade5278f629e24d32eB6b722aD379B09b" //DevAcc
+  const accounts = await hre.ethers.getSigners();
+  const deployer = accounts[0];
+  const investor1 = "0x1Eb4f0eade5278f629e24d32eB6b722aD379B09b" //DevAcc1
   const investor2 = "0x64A502b94B232e95f4D68CA5BE74F4586BF58a6c" //DevAcc2
   const investor3 = "0x4104353f717b5f943C620870E4E45AC1bf9090A9" //DevAcc3
   const investor4 = "0xb1417B952075fE8695A0FA7326918350700c8522" //DevAcc4
@@ -32,18 +33,18 @@ async function main() {
 
   let transaction;
 
-  transaction = await rump
-    .connect(deployer)
-    .transfer(investor1.address, tokens(10));
-  transaction = await usd
-    .connect(deployer)
-    .transfer(investor2.address, tokens(10));
-  transaction = await rump
-    .connect(deployer)
-    .transfer(investor3.address, tokens(10));
-  transaction = await usd
-    .connect(deployer)
-    .transfer(investor4.address, tokens(10));
+//   transaction = await rump
+//     .connect(deployer)
+//     .transfer(investor1, tokens(10));
+//   transaction = await usd
+//     .connect(deployer)
+//     .transfer(investor2, tokens(10));
+//   transaction = await rump
+//     .connect(deployer)
+//     .transfer(investor3, tokens(10));
+//   transaction = await usd
+//     .connect(deployer)
+//     .transfer(investor4, tokens(10));
 
   let amount = tokens(100);
 
@@ -63,7 +64,7 @@ async function main() {
 
   
   console.log("Swapping");
-  transaction = await rump.connect(investor1).approve(amm.address, tokens(10));
+  transaction = await rump.connect(deployer).approve(amm.address, tokens(10));
   await transaction.wait();
 
   transaction = await amm
@@ -71,7 +72,7 @@ async function main() {
     .swapToken(rump.address, usd.address, tokens(1));
   await transaction.wait();
 
-  transaction = await usd.connect(investor2).approve(amm.address, tokens(10));
+  transaction = await usd.connect(deployer).approve(amm.address, tokens(10));
   await transaction.wait();
 
   transaction = await amm
