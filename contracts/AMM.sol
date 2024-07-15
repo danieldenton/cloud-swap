@@ -2,6 +2,7 @@
 pragma solidity ^0.8.0;
 
 import "hardhat/console.sol";
+
 // import "./Token.sol";
 
 interface IERC20 {
@@ -98,12 +99,18 @@ contract AMM {
         IERC20 _token2Contract = IERC20(_token2Address);
         uint256 _token1Balance = _token1Contract.balanceOf(address(this));
         uint256 _token2Balance = _token2Contract.balanceOf(address(this));
-        token2Amount = (_token2Balance * _token1Amount) / _token1Balance;
+        if (_token1Balance == _token2Balance) {
+            token2Amount = _token1Amount;
+        } else {
+            require(
+                _token2Balance > 0 || _token1Balance > 0,
+                "insufficient liquidity to trade this pair"
+            );
+            token2Amount = (_token2Balance * _token1Amount) / _token1Balance;
+        }
     }
 
-    function calculateFee(
-        uint256 _amount
-    ) public pure returns (uint256 fee) {
+    function calculateFee(uint256 _amount) public pure returns (uint256 fee) {
         fee = (_amount * 3) / 10000; // 0.03% fee
     }
 
