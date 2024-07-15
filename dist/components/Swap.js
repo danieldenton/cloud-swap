@@ -227,7 +227,9 @@ var Swap = function () {
                         price),
                     react_1.default.createElement(Form_1.default.Text, { className: "purple fw-bold" },
                         ".03% Fee: ",
-                        fee)))))) : (react_1.default.createElement("p", { className: "d-flex justify-content-center align-items-center", style: { height: "300px" } }, "Please connect wallet"))),
+                        fee,
+                        " ",
+                        inputToken)))))) : (react_1.default.createElement("p", { className: "d-flex justify-content-center align-items-center", style: { height: "300px" } }, "Please connect wallet"))),
         react_1.default.createElement(Alert_1.default, { title: "Swap", transactionHash: transactionHash, setShowAlert: setShowAlert, isAction: isSwapping, isSuccess: isSuccess, showAlert: showAlert })));
 };
 exports.Swap = Swap;

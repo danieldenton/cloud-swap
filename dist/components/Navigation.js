@@ -47,15 +47,15 @@ var Button_1 = __importDefault(require("react-bootstrap/Button"));
 var react_blockies_1 = __importDefault(require("react-blockies"));
 var interactions_1 = require("../store/interactions");
 var logo_jpg_1 = __importDefault(require("../logo.jpg"));
-var config_json_1 = __importDefault(require("../config.json"));
-// import configData from "../hardhatConfig.json";
-var config = config_json_1.default;
+var sepoliaConfig_json_1 = __importDefault(require("../sepoliaConfig.json"));
+var localhostConfig_json_1 = __importDefault(require("../localhostConfig.json"));
 var Navigation = function () {
     var chainId = (0, react_redux_1.useSelector)(function (state) { return state.provider.chainId; });
     var account = (0, react_redux_1.useSelector)(function (state) { return state.provider.account; });
     var tokens = (0, react_redux_1.useSelector)(function (state) { return state.tokens.contracts; });
     var amm = (0, react_redux_1.useSelector)(function (state) { return state.amm.contract; });
     var dispatch = (0, react_redux_1.useDispatch)();
+    var config = chainId === 11155111 ? sepoliaConfig_json_1.default : localhostConfig_json_1.default;
     var handleConnect = function () { return __awaiter(void 0, void 0, void 0, function () {
         var account;
         return __generator(this, function (_a) {

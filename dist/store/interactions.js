@@ -46,9 +46,9 @@ var tokens_1 = require("./reducers/tokens");
 var amm_1 = require("./reducers/amm");
 var Token_json_1 = __importDefault(require("../abis/Token.json"));
 var AMM_json_1 = __importDefault(require("../abis/AMM.json"));
-var config_json_1 = __importDefault(require("../config.json"));
-// import configData from "../hardhatConfig.json";
-var config = config_json_1.default;
+var sepoliaConfig_json_1 = __importDefault(require("../sepoliaConfig.json"));
+var localhostConfig_json_1 = __importDefault(require("../localhostConfig.json"));
+var config;
 var loadProvider = function (dispatch) {
     var provider = new ethers_1.providers.Web3Provider(window.ethereum);
     dispatch((0, provider_1.setProvider)(provider));
@@ -63,6 +63,7 @@ var loadNetwork = function (provider, dispatch) { return __awaiter(void 0, void 
             case 1:
                 chainId = (_a.sent()).chainId;
                 dispatch((0, provider_1.setNetwork)(chainId));
+                config = chainId === 11155111 ? sepoliaConfig_json_1.default : localhostConfig_json_1.default;
                 return [2 /*return*/, chainId];
         }
     });
