@@ -18,11 +18,17 @@ import {
 } from "./reducers/amm";
 import TOKEN_ABI from "../abis/Token.json";
 import AMM_ABI from "../abis/AMM.json";
-import { Dispatch, AMM, Provider, IERC20, Config } from "../types/interactionTypes";
+import {
+  Dispatch,
+  AMM,
+  Provider,
+  IERC20,
+  Config,
+} from "../types/interactionTypes";
 
-// import configData from "../config.json"
-import configData from "../localhostConfig.json";
-const config: Config = configData
+import sepoliaData from "../sepoliaConfig.json";
+import localhostData from "../localhostConfig.json";
+let config: Config;
 
 declare var window: any;
 type ContractRunner = any;
@@ -38,6 +44,7 @@ export const loadNetwork = async (
 ) => {
   const { chainId } = await provider.getNetwork();
   dispatch(setNetwork(chainId));
+  config = chainId === 111155111 ? sepoliaData : localhostData;
   return chainId;
 };
 
