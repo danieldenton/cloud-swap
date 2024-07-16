@@ -37,12 +37,11 @@ async function main() {
   await transaction.wait();
   transaction = await usd.connect(deployer[0]).approve(amm.address, amount);
   await transaction.wait();
-  const ammRumpB = await rump.allowance(deployer[0].address, amm.address);
-  const ammUSDB = await usd.allowance(deployer[0].address, amm.address);
-  console.log(ammRumpB, ammUSDB);
+
   console.log("Adding Liquidity");
   transaction = await amm.connect(deployer[0]).addLiquidity(amount, amount);
   await transaction.wait();
+  console.log("Finished")
 }
 
 main().catch((error) => {
