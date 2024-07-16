@@ -8,9 +8,6 @@ const tokens = (n) => {
 async function main() {
   console.log(`fetching accounts and network \n`);
   const deployer = await hre.ethers.getSigners();
-  const deployerAddress = deployer[0].address
-//   const deployer = accounts[0];
-//   const deployer = "0x10a845E3ff30B4c88aF9E097f092382BfFC0b7eb"
 
   const { chainId } = await hre.ethers.provider.getNetwork();
 
@@ -34,15 +31,18 @@ async function main() {
   );
   console.log(`AMM fetched at: ${amm.address}\n`);
 
-  let amount = tokens(100);
-console.log(deployer[0].address)
-    transaction = await rump.connect(deployer).approve(amm.address, amount);
-    await transaction.wait();
-    transaction = await usd.connect(deployer).approve(amm.address, amount);
-    await transaction.wait();
-    console.log("Adding Liquidity");
-    transaction = await amm.connect(deployer).addLiquidity(amount, amount);
-    await transaction.wait();
+  let amount = tokens(70);
+
+  transaction = await rump.connect(deployer[0]).approve(amm.address, amount);
+  await transaction.wait();
+  transaction = await usd.connect(deployer[0]).approve(amm.address, amount);
+  await transaction.wait();
+  const ammRumpB = await rump.allowance(deployer[0].address, amm.address);
+  const ammUSDB = await usd.allowance(deployer[0].address, amm.address);
+  console.log(ammRumpB, ammUSDB);
+  console.log("Adding Liquidity");
+  transaction = await amm.connect(deployer[0]).addLiquidity(amount, amount);
+  await transaction.wait();
 }
 
 main().catch((error) => {

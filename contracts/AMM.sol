@@ -54,7 +54,7 @@ contract AMM {
     function addLiquidity(
         uint256 _token1Amount,
         uint256 _token2Amount
-    ) external payable {
+    ) external {
         // Deposit tokens
         require(
             token1.transferFrom(msg.sender, address(this), _token1Amount),
@@ -65,7 +65,7 @@ contract AMM {
             "failed transfer from token 2"
         );
 
-        // Issue shares
+        // Issue shares. This should handle 0 shares easily
         uint256 share;
         if (totalShares == 0) {
             share = 100 * PRECISION;
