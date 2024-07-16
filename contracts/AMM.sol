@@ -54,7 +54,7 @@ contract AMM {
     function addLiquidity(
         uint256 _token1Amount,
         uint256 _token2Amount
-    ) external {
+    ) external payable {
         // Deposit tokens
         require(
             token1.transferFrom(msg.sender, address(this), _token1Amount),

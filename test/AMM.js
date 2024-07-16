@@ -64,8 +64,8 @@ describe("AMM", () => {
   describe("Calculates token deposits", () => {
     it("calculates the first token deposit when the amount is 0", async () => {
       amount = tokens(100000);
-      // expect(await amm.token1Balance()).to.equal(0)
-      // expect(await amm.token2Balance()).to.equal(0)
+      expect(await amm.token1Balance()).to.equal(0)
+      expect(await amm.token2Balance()).to.equal(0)
       const token2DepositAmount = await amm.calculateTokenDeposit(
         token1.address,
         amount,
@@ -73,7 +73,6 @@ describe("AMM", () => {
       );
       expect(await token2DepositAmount).to.equal(amount)
     });
-    
   });
   describe("Receives Liquidity and Distributes Shares", () => {
     beforeEach(async () => {
