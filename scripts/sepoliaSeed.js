@@ -46,55 +46,56 @@ async function main() {
 //     .connect(deployer)
 //     .transfer(investor4, tokens(10));
 
-  let amount = tokens(100);
-
   const amm = await hre.ethers.getContractAt(
     "AMM",
     config[chainId].amm.address
   );
   console.log(`AMM fetched at: ${amm.address}\n`);
 
-  console.log("Adding Liquidity");
+  let amount = tokens(100);
+
+  
   transaction = await rump.connect(deployer).approve(amm.address, amount);
   await transaction.wait();
   transaction = await usd.connect(deployer).approve(amm.address, amount);
   await transaction.wait();
+  console.log("Adding Liquidity");
   transaction = await amm.connect(deployer).addLiquidity(amount, amount);
   await transaction.wait();
 
   
-  console.log("Swapping");
-  transaction = await rump.connect(deployer).approve(amm.address, tokens(10));
-  await transaction.wait();
+//   console.log("Swapping");
+//   transaction = await rump.connect(deployer).approve(amm.address, tokens(10));
+//   await transaction.wait();
 
-  transaction = await amm
-    .connect(investor1)
-    .swapToken(rump.address, usd.address, tokens(1));
-  await transaction.wait();
+//   transaction = await amm
+//     .connect(investor1)
+//     .swapToken(rump.address, usd.address, tokens(1));
+//   await transaction.wait();
 
-  transaction = await usd.connect(deployer).approve(amm.address, tokens(10));
-  await transaction.wait();
+//   transaction = await usd.connect(deployer).approve(amm.address, tokens(10));
+//   await transaction.wait();
 
-  transaction = await amm
-    .connect(investor2)
-    .swapToken(usd.address, rump.address, tokens(1));
-  await transaction.wait();
+//   transaction = await amm
+//     .connect(investor2)
+//     .swapToken(usd.address, rump.address, tokens(1));
+//   await transaction.wait();
 
-  transaction = await rump.connect(investor3).approve(amm.address, tokens(10));
-  await transaction.wait();
+//   transaction = await rump.connect(investor3).approve(amm.address, tokens(10));
+//   await transaction.wait();
 
-  transaction = await amm
-    .connect(investor3)
-    .swapToken(rump.address, usd.address, tokens(10));
-  await transaction.wait();
+//   transaction = await amm
+//     .connect(investor3)
+//     .swapToken(rump.address, usd.address, tokens(10));
+//   await transaction.wait();
 
-  transaction = await usd.connect(investor4).approve(amm.address, tokens(10));
-  await transaction.wait();
+//   transaction = await usd.connect(investor4).approve(amm.address, tokens(10));
+//   await transaction.wait();
 
-  transaction = await amm
-    .connect(investor4)
-    .swapToken(usd.address, rump.address, tokens(5));
-  await transaction.wait();
+//   transaction = await amm
+//     .connect(investor4)
+//     .swapToken(usd.address, rump.address, tokens(5));
+//   await transaction.wait();
 }
 
 main().catch((error) => {

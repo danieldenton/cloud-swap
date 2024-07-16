@@ -51,7 +51,6 @@ contract AMM {
         token2 = _token2;
     }
 
-    //What does the original liquididty base it's price on?
     function addLiquidity(
         uint256 _token1Amount,
         uint256 _token2Amount
