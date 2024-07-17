@@ -49,6 +49,7 @@ export const loadNetwork = async (
 };
 
 export const loadAccount = async (dispatch: Dispatch) => {
+  console.log("hey")
   const accounts = await window.ethereum.request({
     method: "eth_requestAccounts",
   });
