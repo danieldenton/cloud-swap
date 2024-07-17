@@ -1,4 +1,4 @@
-import { utils, providers, Contract, BigNumber } from "ethers";
+import { utils, providers, Contract, BigNumber, ethers } from "ethers";
 import { Web3Provider } from "@ethersproject/providers";
 import { setProvider, setNetwork, setAccount } from "./reducers/provider";
 import { setContracts, setSymbols, balancesLoaded } from "./reducers/tokens";
@@ -49,12 +49,10 @@ export const loadNetwork = async (
 };
 
 export const loadAccount = async (dispatch: Dispatch) => {
-  console.log("hey")
   const accounts = await window.ethereum.request({
     method: "eth_requestAccounts",
   });
-  const account = utils.getAddress(accounts[0]);
-  console.log(account)
+  const account = ethers.utils.getAddress(accounts[0]);
   dispatch(setAccount(account));
   return account;
 };
