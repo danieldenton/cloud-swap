@@ -25,21 +25,21 @@ async function main() {
 
   let transaction;
 
-  const amm = await hre.ethers.getContractAt(
+  const bloodMoon = await hre.ethers.getContractAt(
     "AMM",
-    config[chainId].amm.address
+    config[chainId].bloodMoonSwap.address
   );
-  console.log(`AMM fetched at: ${amm.address}\n`);
+  console.log(`Blood Moon fetched at: ${bloodMoon.address}\n`);
 
   let amount = tokens(70);
 
-  transaction = await rump.connect(deployer[0]).approve(amm.address, amount);
+  transaction = await rump.connect(deployer[0]).approve(bloodMoon.address, amount);
   await transaction.wait();
-  transaction = await usd.connect(deployer[0]).approve(amm.address, amount);
+  transaction = await usd.connect(deployer[0]).approve(bloodMoon.address, amount);
   await transaction.wait();
 
   console.log("Adding Liquidity");
-  transaction = await amm.connect(deployer[0]).addLiquidity(amount, amount);
+  transaction = await bloodMoon.connect(deployer[0]).addLiquidity(amount, amount);
   await transaction.wait();
   console.log("Finished")
 }

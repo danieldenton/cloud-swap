@@ -54,6 +54,7 @@ export const loadAccount = async (dispatch: Dispatch) => {
     method: "eth_requestAccounts",
   });
   const account = utils.getAddress(accounts[0]);
+  console.log(account)
   dispatch(setAccount(account));
   return account;
 };
