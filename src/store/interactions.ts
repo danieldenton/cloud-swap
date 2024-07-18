@@ -44,7 +44,6 @@ export const loadNetwork = async (
 ) => {
   const { chainId } = await provider.getNetwork();
   dispatch(setNetwork(chainId));
-  config = chainId === 11155111 ? sepoliaData : localhostData;
   return chainId;
 };
 
@@ -62,6 +61,7 @@ export const loadTokens = async (
   chainId: number,
   dispatch: Dispatch
 ) => {
+  config = chainId === 11155111 ? sepoliaData : localhostData;
   const rump = new Contract(config[chainId].rump.address, TOKEN_ABI, provider);
   const usd = new Contract(config[chainId].usd.address, TOKEN_ABI, provider);
   dispatch(setContracts([rump, usd]));
@@ -73,6 +73,7 @@ export const loadAMM = async (
   chainId: number,
   dispatch: Dispatch
 ) => {
+  config = chainId === 11155111 ? sepoliaData : localhostData;
   const amm = new Contract(config[chainId].amm.address, AMM_ABI, provider);
   dispatch(setContract(amm));
   return amm;
