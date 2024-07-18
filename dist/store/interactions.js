@@ -63,7 +63,6 @@ var loadNetwork = function (provider, dispatch) { return __awaiter(void 0, void 
             case 1:
                 chainId = (_a.sent()).chainId;
                 dispatch((0, provider_1.setNetwork)(chainId));
-                config = chainId === 11155111 ? sepoliaConfig_json_1.default : localhostConfig_json_1.default;
                 return [2 /*return*/, chainId];
         }
     });
@@ -78,7 +77,7 @@ var loadAccount = function (dispatch) { return __awaiter(void 0, void 0, void 0,
                 })];
             case 1:
                 accounts = _a.sent();
-                account = ethers_1.utils.getAddress(accounts[0]);
+                account = ethers_1.ethers.utils.getAddress(accounts[0]);
                 dispatch((0, provider_1.setAccount)(account));
                 return [2 /*return*/, account];
         }
@@ -90,6 +89,7 @@ var loadTokens = function (provider, chainId, dispatch) { return __awaiter(void 
     return __generator(this, function (_d) {
         switch (_d.label) {
             case 0:
+                config = chainId === 11155111 ? sepoliaConfig_json_1.default : localhostConfig_json_1.default;
                 rump = new ethers_1.Contract(config[chainId].rump.address, Token_json_1.default, provider);
                 usd = new ethers_1.Contract(config[chainId].usd.address, Token_json_1.default, provider);
                 dispatch((0, tokens_1.setContracts)([rump, usd]));
@@ -109,6 +109,7 @@ exports.loadTokens = loadTokens;
 var loadAMM = function (provider, chainId, dispatch) { return __awaiter(void 0, void 0, void 0, function () {
     var amm;
     return __generator(this, function (_a) {
+        config = chainId === 11155111 ? sepoliaConfig_json_1.default : localhostConfig_json_1.default;
         amm = new ethers_1.Contract(config[chainId].amm.address, AMM_json_1.default, provider);
         dispatch((0, amm_1.setContract)(amm));
         return [2 /*return*/, amm];
